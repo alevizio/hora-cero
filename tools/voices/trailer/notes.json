@@ -1,0 +1,92 @@
+{
+ "what": "The narrator of the Hora Cero cinematic trailer (tools/trailer/hc2_*): synthetic, designed from a written description, never a copy of anyone. No recording of any person was used, and no actor, announcer or narrator is named or meant in the description.",
+ "description_en": "A porteño man of about sixty. A deep, warm, slightly husky voice, slow and measured, like a 1950s radio storyteller; serious and restrained, not melodramatic. A clear Rioplatense accent: ll and y as [ʃ]/[ʒ] ('calle', 'llegaron', 'ellos'), voseo.",
+ "design_instruct_es": "Español rioplatense de Buenos Aires, Argentina, con el acento porteño. Narrador: un hombre porteño de unos sesenta años. Voz masculina grave, profunda y cálida, apenas ronca y gastada por los años. Habla lento y medido, con pausas entre las frases, como un narrador de los radioteatros de los años cincuenta que cuenta una historia de noche: serio, contenido, sin dramatizar ni exagerar, en voz baja y con autoridad tranquila. Pronuncia la 'll' y la 'y' a la porteña, como 'sh' o 'zh': 'calle' suena 'cashe', 'llegaron' suena 'shegaron', 'yo' suena 'sho'. La 'c' y la 'z' suenan como 's'. Entonación porteña que cae al final de cada frase.",
+ "design_text": "Yo me acuerdo bien de aquella noche. La calle estaba callada, y allá en la plaza ya brillaban los faroles. Llegaron de todos lados a mirar el cielo.",
+ "design_seed": 1958,
+ "chosen_design_take": "A2",
+ "runners_up": [
+  "C3",
+  "A4"
+ ],
+ "candidates": 12,
+ "design_model": "Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign (Apache-2.0)",
+ "clone_model": "Qwen/Qwen3-TTS-12Hz-1.7B-Base (Apache-2.0), every line cloned from the chosen design take",
+ "accent_check_design": {
+  "calle": 0.13,
+  "llegaron": 0.98,
+  "note": "hiss of the ll/y consonant (3-8 kHz) relative to an /s/ of the same take; >= 0.3 counts as hissing ([ʃ]/[ʒ]), near 0 is the [ʝ]/[j] of other Spanish"
+ },
+ "accent_check_lines": {
+  "06_1.wav": {
+   "llevar": 0.62
+  },
+  "08_2.wav": {
+   "llegaron": 1.03,
+   "ellos": 0.5
+  }
+ },
+ "accent_check_clone": {
+  "accent_0.wav": {
+   "heard": "Yo lo vi desde la calle y entonces de pronto llegaron ellos.",
+   "match": 1.0,
+   "seed": 1958,
+   "hiss_vs_s": {
+    "yo": 0.38,
+    "calle": 0.09,
+    "llegaron": 0.4,
+    "ellos": 0.18
+   }
+  },
+  "accent_1.wav": {
+   "heard": "Yo lo vi desde la calle y entonces de pronto llegaron ellos.",
+   "match": 1.0,
+   "seed": 1958,
+   "hiss_vs_s": {
+    "yo": 0.46,
+    "calle": 0.25,
+    "llegaron": 0.34,
+    "ellos": 0.27
+   }
+  },
+  "accent_2.wav": {
+   "heard": "Yo lo vi desde la calle y entonces de pronto llegaron ellos.",
+   "match": 1.0,
+   "seed": 1958,
+   "hiss_vs_s": {
+    "yo": 0.6,
+    "calle": 0.09,
+    "llegaron": 1.34,
+    "ellos": 0.43
+   }
+  },
+  "accent_3.wav": {
+   "heard": "Yo lo vi desde la calle y entonces, de pronto, llegaron ellos.",
+   "match": 1.0,
+   "seed": 1958,
+   "hiss_vs_s": {
+    "yo": 0.46,
+    "calle": 0.13,
+    "llegaron": 0.21,
+    "ellos": 0.02
+   }
+  }
+ },
+ "chosen_lines": {
+  "01": "01_3.wav",
+  "02": "02_3.wav",
+  "03": "03_3.wav",
+  "04": "04_4.wav",
+  "05a": "05a_2.wav",
+  "05b": "05b_1.wav",
+  "05c": "05c_3.wav",
+  "05d": "05d_3.wav",
+  "05e": "05e_3.wav",
+  "06": "06_1.wav",
+  "07": "07_0.wav",
+  "08": "08_2.wav",
+  "09": "09_0.wav"
+ },
+ "post": "clean(): trimmed, de-clicked, breaths down 18 dB, pauses inside a line lengthened (BREATHE 0.8, at most 0.22 s), slowed to 0.95 (ffmpeg atempo, pitch kept)",
+ "caveat": "Judged by measurement (Whisper, ECAPA, the hiss measure), not by ear: listen before it ships."
+}

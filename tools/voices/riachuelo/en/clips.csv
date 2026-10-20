@@ -1,0 +1,65 @@
+voice,file,text,ai_voice,duration_s,take,heard,words_match,voice_match,f0_hz
+hornero,hornero_select_1.wav,"Go on, then.","Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign hornero/Z2, see voices.csv)",1.12,en_01_1.wav,Go on then.,1.0,0.63,93.1
+hornero,hornero_select_2.wav,Right here.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign hornero/Z2, see voices.csv)",1.36,en_02_1.wav,Right here.,1.0,0.586,112.6
+hornero,hornero_move_1.wav,Next stop.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign hornero/Z2, see voices.csv)",1.6,en_03_1.wav,"Next, stop.",1.0,0.61,64.7
+hornero,hornero_move_2.wav,Off we go. Gently.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign hornero/Z2, see voices.csv)",2.72,en_04_1.wav,"Off we go, gently.",1.0,0.61,108.2
+hornero,hornero_attack_1.wav,This one gets off here.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign hornero/Z2, see voices.csv)",1.68,en_05_0.wav,This one gets off here.,1.0,0.714,99.5
+hornero,hornero_attack_2.wav,"Bedtime, friend.","Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign hornero/Z2, see voices.csv)",1.6,en_06_0.wav,"Bedtime, friend.",1.0,0.649,103.9
+hornero,hornero_work_1.wav,Leave it to me.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign hornero/Z2, see voices.csv)",1.76,en_07_1.wav,Leave it to me.,1.0,0.676,115.2
+hornero,hornero_work_2.wav,I'll sort it out.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign hornero/Z2, see voices.csv)",1.44,en_08_0.wav,I'll sort it out.,1.0,0.653,112.6
+hornero,hornero_done_1.wav,There. All mended.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign hornero/Z2, see voices.csv)",2.24,en_09_0.wav,There. All mended.,1.0,0.686,103.0
+hornero,hornero_done_2.wav,Done. On we go.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign hornero/Z2, see voices.csv)",2.0,en_10_2.wav,"Done, on we go.",1.0,0.65,105.1
+hornero,hornero_refuse_1.wav,I can't get through there.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign hornero/Z2, see voices.csv)",1.68,en_11_2.wav,It can't get through there.,0.98,0.619,124.2
+hornero,hornero_refuse_2.wav,That can't be done.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign hornero/Z2, see voices.csv)",1.44,en_12_1.wav,That can't be done.,1.0,0.609,118.6
+hornero,hornero_refuse_3.wav,No tram runs that way.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign hornero/Z2, see voices.csv)",2.16,en_13_2.wav,No tram runs that way.,1.0,0.694,126.4
+hornero,hornero_spotted_1.wav,"Look out, they've seen us!","Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign hornero/Z2, see voices.csv)",1.92,en_14_2.wav,Look out! They've seen us!,1.0,0.493,226.5
+hornero,hornero_spotted_2.wav,"Blast, they've spotted me!","Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign hornero/Z2, see voices.csv)",1.84,en_15_1.wav,Blast! They've spotted me!,1.0,0.471,163.5
+hornero,hornero_hurt_1.wav,Ah! I'm hit!,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign hornero/Z2, see voices.csv)",1.36,en_16_0.wav,"Ah, I'm hit!",1.0,0.415,177.7
+hornero,hornero_hurt_2.wav,Not dead yet.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign hornero/Z2, see voices.csv)",0.96,en_17_2.wav,Not dead yet.,1.0,0.487,175.7
+lechuza,lechuza_select_1.wav,"I'm listening, lad.","Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign lechuza/A1, see voices.csv)",1.52,en_01_2.wav,"I'm listening, lad.",1.0,0.639,155.3
+lechuza,lechuza_select_2.wav,Now what?,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign lechuza/A1, see voices.csv)",1.2,en_02_2.wav,Now what?,1.0,0.498,160.2
+lechuza,lechuza_move_1.wav,"Coming, coming. No hurry.","Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign lechuza/A1, see voices.csv)",2.8,en_03_2.wav,Coming! Coming! No hurry!,1.0,0.709,169.7
+lechuza,lechuza_move_2.wav,"Through the dark, as always.","Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign lechuza/A1, see voices.csv)",2.16,en_04_1.wav,"Through the dark, as always.",1.0,0.687,162.0
+lechuza,lechuza_attack_1.wav,Two turns of cord and that's him.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign lechuza/A1, see voices.csv)",2.0,en_05_2.wav,Two turns of chord and that's him.,0.98,0.668,170.7
+lechuza,lechuza_attack_2.wav,Hold still now. I'll tie you.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign lechuza/A1, see voices.csv)",2.64,en_06_2.wav,Hold still now. I'll tie you.,1.0,0.663,171.7
+lechuza,lechuza_work_1.wav,Easy as changing a fuse.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign lechuza/A1, see voices.csv)",2.08,en_07_2.wav,Easy as changing a foose.,0.94,0.703,164.4
+lechuza,lechuza_work_2.wav,I know this by heart.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign lechuza/A1, see voices.csv)",1.44,en_08_0.wav,I know this by heart.,1.0,0.64,163.5
+lechuza,lechuza_done_1.wav,Lights out.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign lechuza/A1, see voices.csv)",1.44,en_09_1.wav,Lights out.,1.0,0.568,159.7
+lechuza,lechuza_done_2.wav,Neat and tidy.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign lechuza/A1, see voices.csv)",1.44,en_10_1.wav,Neat and tidy.,1.0,0.589,143.5
+lechuza,lechuza_refuse_1.wav,At my age? Not a chance.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign lechuza/A1, see voices.csv)",2.4,en_11_1.wav,"At my age, not a chance.",1.0,0.634,171.2
+lechuza,lechuza_refuse_2.wav,There's no way through there.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign lechuza/A1, see voices.csv)",1.36,en_12_0.wav,There's no way through there.,1.0,0.541,171.7
+lechuza,lechuza_refuse_3.wav,That won't work.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign lechuza/A1, see voices.csv)",1.36,en_13_1.wav,That won't work.,1.0,0.486,166.8
+lechuza,lechuza_spotted_1.wav,"Look out, they've seen me!","Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign lechuza/A1, see voices.csv)",2.64,en_14_2.wav,Look out! They've seen me!,1.0,0.752,228.5
+lechuza,lechuza_spotted_2.wav,"Oh no, the law!","Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign lechuza/A1, see voices.csv)",2.32,en_15_1.wav,Oh no! The law!,1.0,0.605,217.6
+lechuza,lechuza_hurt_1.wav,"Oh, my old bones!","Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign lechuza/A1, see voices.csv)",1.84,en_16_0.wav,"Oh, my old bones!",1.0,0.66,242.8
+lechuza,lechuza_hurt_2.wav,"They got me, damn it!","Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign lechuza/A1, see voices.csv)",2.32,en_17_2.wav,They got me! Damn it!,1.0,0.547,200.7
+benteveo,benteveo_select_1.wav,"Here, boss!","Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign benteveo/C3, see voices.csv)",1.2,en_01_2.wav,"Here, boss!",1.0,0.511,275.7
+benteveo,benteveo_select_2.wav,"What's the game, then?","Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign benteveo/C3, see voices.csv)",1.68,en_02_1.wav,What's the game then?,1.0,0.52,233.2
+benteveo,benteveo_move_1.wav,"Come on, come on!","Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign benteveo/C3, see voices.csv)",2.0,en_03_0.wav,"Come on, come on!",1.0,0.417,229.2
+benteveo,benteveo_move_2.wav,"Off I go, quick as you like!","Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign benteveo/C3, see voices.csv)",2.48,en_04_1.wav,"Off I go, quick as you like!",1.0,0.564,233.2
+benteveo,benteveo_work_1.wav,Late edition! Read all about it!,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign benteveo/C3, see voices.csv)",2.8,en_05_0.wav,Latte edition! Read all about it!,0.98,0.622,231.8
+benteveo,benteveo_work_2.wav,I could do that blindfold!,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign benteveo/C3, see voices.csv)",2.08,en_06_2.wav,I could do that blind fold.,0.98,0.572,176.7
+benteveo,benteveo_refuse_1.wav,Me? Not a chance!,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign benteveo/C3, see voices.csv)",2.48,en_07_2.wav,Me? Not a chance!,1.0,0.599,198.9
+benteveo,benteveo_refuse_2.wav,"Not on your life, boss!","Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign benteveo/C3, see voices.csv)",1.84,en_08_2.wav,"Not on your life, boss.",1.0,0.615,167.8
+benteveo,benteveo_refuse_3.wav,Can't get through there.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign benteveo/C3, see voices.csv)",1.68,en_09_1.wav,Can't get through there.,1.0,0.54,152.1
+benteveo,benteveo_spotted_1.wav,Coppers! Leg it!,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign benteveo/C3, see voices.csv)",1.44,en_10_2.wav,"Coppers, leg it!",1.0,0.491,283.0
+benteveo,benteveo_spotted_2.wav,"Uh-oh, they've seen me!","Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign benteveo/C3, see voices.csv)",2.32,en_11_2.wav,Oh! Oh! They've seen me!,0.95,0.409,305.0
+benteveo,benteveo_hurt_1.wav,Ow! Rotten luck!,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign benteveo/C3, see voices.csv)",1.92,en_12_0.wav,"Ow, rotten luck!",1.0,0.479,294.6
+benteveo,benteveo_hurt_2.wav,"Ow, ow, they got me!","Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign benteveo/C3, see voices.csv)",2.4,en_13_0.wav,"Oh, oh, they got me!",0.88,0.335,282.1
+bigua,bigua_select_1.wav,I'm here.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign bigua/A4, see voices.csv)",0.72,en_01_0.wav,I'm here,1.0,0.463,83.2
+bigua,bigua_select_2.wav,What d'you need?,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign bigua/A4, see voices.csv)",0.8,en_02_2.wav,What do you need?,0.97,0.508,105.1
+bigua,bigua_move_1.wav,"Slow, like the tide.","Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign bigua/A4, see voices.csv)",1.92,en_03_1.wav,"Slow, like the tide.",1.0,0.653,86.1
+bigua,bigua_move_2.wav,Let's go. No noise.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign bigua/A4, see voices.csv)",2.08,en_04_0.wav,Let's go. No noise.,1.0,0.66,132.4
+bigua,bigua_attack_1.wav,I'll do it. Quiet.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign bigua/A4, see voices.csv)",2.0,en_05_1.wav,I'll do it. Quiet.,1.0,0.636,96.9
+bigua,bigua_attack_2.wav,The current takes him.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign bigua/A4, see voices.csv)",2.0,en_06_2.wav,The current takes him.,1.0,0.558,73.4
+bigua,bigua_work_1.wav,I'll see to it.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign bigua/A4, see voices.csv)",0.96,en_07_1.wav,I'll see to it,1.0,0.414,81.0
+bigua,bigua_work_2.wav,Steady. Like rowing.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign bigua/A4, see voices.csv)",1.92,en_08_0.wav,"Steady, like rowing.",1.0,0.689,90.4
+bigua,bigua_done_1.wav,"That's it, brother.","Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign bigua/A4, see voices.csv)",0.96,en_09_0.wav,"That's it, brother.",1.0,0.615,84.9
+bigua,bigua_done_2.wav,Done. On to the far bank.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign bigua/A4, see voices.csv)",2.24,en_10_1.wav,Done. On to the far bank.,1.0,0.789,89.9
+bigua,bigua_refuse_1.wav,Not that way.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign bigua/A4, see voices.csv)",0.88,en_11_0.wav,Not that way.,1.0,0.582,73.4
+bigua,bigua_refuse_2.wav,Not even the river gets through there.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign bigua/A4, see voices.csv)",2.64,en_12_0.wav,Not even the river gets through there.,1.0,0.578,96.4
+bigua,bigua_refuse_3.wav,"Can't be done, brother.","Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign bigua/A4, see voices.csv)",0.96,en_13_1.wav,"Can't be done, brother.",1.0,0.474,92.0
+bigua,bigua_spotted_1.wav,I'm seen. Quick.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign bigua/A4, see voices.csv)",1.68,en_14_1.wav,I'm seen. Quick.,1.0,0.575,160.2
+bigua,bigua_spotted_2.wav,"Watch it, the Guardia!","Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign bigua/A4, see voices.csv)",1.28,en_15_0.wav,"Watch it, the Guardia.",1.0,0.655,130.9
+bigua,bigua_hurt_1.wav,I'm hit. I'll hold.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign bigua/A4, see voices.csv)",1.52,en_16_0.wav,I'm hit I'll hold,1.0,0.646,
+bigua,bigua_hurt_2.wav,Still going. Still going.,"Qwen3-TTS-12Hz-1.7B-Base, designed voice cloned (VoiceDesign bigua/A4, see voices.csv)",2.64,en_17_2.wav,Still going. Still going.,1.0,0.483,77.6

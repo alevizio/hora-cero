@@ -1,0 +1,15 @@
+VEHICLE SOURCES (Hora Cero)
+
+The models as delivered by Santiago Siri (the Línea 60 colectivo and its lettering, two cars of the Retro
+Vehicle Pack and that pack's generator), and six cars of the 1940s and 50s made for Hora Cero on that generator
+(source/build_vehicles_1950s.py and models/1*_*.glb). tools/vehicles.gd makes the game's meshes from them, in
+godot/assets/vehicles/.
+
+Author:      Santiago Siri; the six cars of the 1940s and 50s and their script were made for Hora Cero on that
+             generator (its Model, materials and conventions) and are under the same terms.
+Permission:  granted to Ale (Alejandro Vizio) for use in Hora Cero, and to redistribute them in this repository for
+             use with Hora Cero, October 2026.
+Licence:     no public licence. All rights reserved by their authors. NOT covered by the repository's MIT licence or
+             by CC BY 4.0: do not reuse them outside Hora Cero without asking their authors.
+
+The full list of what is here and what was changed: godot/assets/vehicles/CREDITS.txt.

@@ -1,0 +1,32 @@
+MIT License
+
+Copyright (c) 2026 Alejandro Vizio
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+This licence covers the source code of Hora Cero: the GDScript (godot/scripts, godot/tests), the shaders
+(godot/shaders), the scene and project files, the web page template (godot/web), the tools (tools/) and the
+documentation (README.md, docs/). The game's own assets are under LICENSE-ASSETS (CC BY 4.0). It does NOT cover the
+friends' licensed models, what was made from them and the scripts that generate the vehicles
+(godot/art_pack/juan_salvo/, godot/art_pack/cascarudo/, art/juan_salvo/, godot/icon.png, godot/assets/vehicles/,
+art/vehicles/, including art/vehicles/source/): all rights reserved by their authors, included with their permission
+for use with Hora Cero. Those, third-party material and the elements of the comic that
+are NOT covered by either licence are listed in NOTICE.

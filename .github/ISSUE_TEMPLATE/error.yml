@@ -1,0 +1,50 @@
+name: Reportar un error (bug report)
+description: Algo del juego no anda como debería.
+title: "[Error] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ¡Gracias por avisar! Contanos qué pasó con todo el detalle que puedas. *English is fine too.*
+  - type: textarea
+    id: que-paso
+    attributes:
+      label: ¿Qué pasó?
+      description: Lo que viste, y en qué nivel (Plaza de Mayo o Riachuelo).
+      placeholder: En la Plaza de Mayo, cuando Hornero arrancó el tranvía...
+    validations:
+      required: true
+  - type: textarea
+    id: esperabas
+    attributes:
+      label: ¿Qué esperabas que pasara?
+  - type: textarea
+    id: pasos
+    attributes:
+      label: ¿Cómo hacemos para que vuelva a pasar?
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+  - type: dropdown
+    id: donde
+    attributes:
+      label: ¿Dónde jugaste?
+      options:
+        - En el navegador, en la compu
+        - En el navegador, en el celular o la tablet
+        - Con Godot, desde este repositorio
+        - En otro lado
+    validations:
+      required: true
+  - type: input
+    id: equipo
+    attributes:
+      label: Navegador y equipo
+      placeholder: Chrome en Windows 11, Safari en un iPhone 15...
+  - type: textarea
+    id: capturas
+    attributes:
+      label: Capturas o video
+      description: Si tenés, arrastralos acá.

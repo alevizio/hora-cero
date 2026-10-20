@@ -1,0 +1,31 @@
+# The takes the Hora Cero edit uses (compose_horacero.py), one horacero_run.sh run each: width height shot [ENV=value ...]
+# horacero_takes.sh renders them all (about three hours on two CPUs with llvmpipe; a take is 3-10 minutes, the end 27).
+1920 1080 open
+1920 1080 rosada
+1920 1080 cabildo TAKE_MAX=2.4
+1920 1080 people TAKE_MAX=2.4
+1920 1080 wave2 TAKE_MAX=3.2
+1920 1080 hornero TAKE_MAX=3.0
+1920 1080 benteveo TAKE_MAX=3.0
+1920 1080 lechuza TAKE_MAX=3.0
+1920 1080 bigua BIGUA_AT=31 TAKE_MAX=3.0
+1920 1080 subte RESCUE_FF=0.2 TAKE_MAX=3.0
+1920 1080 juan_in TAKE_MAX=3.0
+1920 1080 carry_hud
+1920 1080 carry
+1920 1080 rush RUSH_X=166 RUSH_Z=87 TAKE_MAX=3.0
+1920 1080 rush_hud RUSH_X=166 RUSH_Z=92 TAKE_MAX=3.0
+1920 1080 bell TAKE_MAX=3.2
+1920 1080 aim
+1920 1080 ria_boca TAKE_MAX=3.0
+1920 1080 ria_gondola TAKE_MAX=3.0
+1920 1080 end
+1080 1920 rosada TAKE_MAX=3.0
+1080 1920 wave2 TAKE_MAX=3.2
+1080 1920 benteveo TAKE_MAX=3.0
+1080 1920 hornero TAKE_MAX=3.0
+1080 1920 subte RESCUE_FF=0.2 TAKE_MAX=3.0
+1080 1920 carry_hud TAKE_MAX=3.0
+1080 1920 rush RUSH_X=166 RUSH_Z=87 RUSH_SECONDS=5.2
+1080 1920 aim AIM_SECONDS=4.2
+1080 1920 end TAKE_MAX=5.4

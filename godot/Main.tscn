@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c3ytf5s54ft2l"]
+
+[ext_resource type="Script" uid="uid://bkf3pknjq0mtx" path="res://scripts/three_d/main.gd" id="1_main"]
+
+[node name="HoraCero" type="Node3D"]
+script = ExtResource("1_main")

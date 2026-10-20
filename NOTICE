@@ -1,0 +1,113 @@
+Hora Cero · Invasión Buenos Aires
+Copyright (c) 2026 Alejandro Vizio
+
+The code is MIT-licensed (LICENSE) and the game's own assets are CC BY 4.0 (LICENSE-ASSETS). This file lists what is
+NOT covered by those licences (the comic's elements, and Santiago Siri's licensed models included with permission),
+the third-party material the game uses, and what was left out of this repository.
+
+
+1. The comic
+------------
+
+Juan Salvo, the cascarudos, the deadly snowfall and the other characters, creatures, names and story elements of the
+comic by Héctor Germán Oesterheld (script) and Francisco Solano López (art), first published in Hora Cero Semanal
+(Editorial Frontera, Buenos Aires, 1957–1959), are used in this game with the permission of their rights holders.
+They are NOT covered by the MIT licence or by CC BY 4.0, and nothing in this repository grants any right to them. To
+use them in anything else, ask their rights holders.
+
+The comic's title, El Eternauta, is a trademark of its rights holders. This project names it only to say which comic
+the game is inspired by, with their permission; it is not the game's name. "Hora Cero" is the name of the magazine in
+which the comic first appeared. This repository licenses no name or trademark: the MIT licence and CC BY 4.0 cover
+code and assets, not the game's name, its logo or the comic's names.
+
+
+2. Santiago Siri's licensed models (included, NOT under MIT or CC BY)
+---------------------------------------------------------------------
+
+The 3D models of Juan Salvo, of the cascarudo and of the Plaza de Mayo's vehicles were made by Santiago Siri and are
+included in this repository with the author's permission, for use with Hora Cero. They are NOT covered by the MIT
+licence or by CC BY 4.0: all rights are reserved by their author, and nothing in this repository grants any right to
+use them outside Hora Cero; ask the author. Each folder has a CREDITS.txt.
+
+  - godot/art_pack/juan_salvo/: the game's Juan Salvo since 20 October 2026, a blue-suit survivor (juan_salvo.glb,
+    on a 61-bone skeleton, with its colour, normal and metal-roughness maps), made ready for the game from its
+    original file (not in this repository) by tools/juan_suit.py, and his HUD portrait (portrait.png), the avatar
+    that came with the model. The rifle in his hands (art/juan_salvo/source/rifle.glb, and its maps,
+    juan_salvo_rifle_*_v4.png) comes from Alejandro Vizio's earlier Juan Salvo and is under these same terms;
+  - godot/art_pack/cascarudo/: the 3D model of the cascarudo (cascarudo.glb), its shape as made, with a skeleton for
+    its legs added by tools/art_pack.py rig-creature (tools/creature_rig.py), and its lighter copy (cascarudo_lod.glb,
+    decimated from it and rigged alike);
+  - godot/icon.png: the game's icon, a render of the cascarudo's model (tools/dev/creature_icon.gd);
+  - docs/design/: the PNG exports of the Figma design kit; what they show of Juan Salvo, the cascarudos, the vehicles
+    and the icon is under these same terms, and the rest follows LICENSE-ASSETS like the files it shows;
+  - art/vehicles/: the Plaza de Mayo's vehicles as delivered (the Línea 60 colectivo, colectivo60_lod1.glb, and its
+    lettering, colectivo60_lettering.png, with the operator's name and the route boards as made; two cars of the
+    Retro Vehicle Pack, models/07_microcar.glb and models/08_work_pickup.glb, and the pack's generator,
+    source/build_vehicles.py), and six cars of the 1940s and 50s made for Hora Cero on that generator
+    (source/build_vehicles_1950s.py and the models it writes, models/1*_*.glb, models/manifest_1950s.json), under
+    the same terms;
+  - godot/assets/vehicles/: the game-ready meshes made from those sources by tools/vehicles.gd (*.res) and the
+    lettering texture scaled down; godot/assets/vehicles/CREDITS.txt lists what was changed.
+
+What was made from these models for Hora Cero (the game-ready Juan Salvo, the cascarudo's rig, the icon, the six
+cars, the game-ready meshes) is under the same terms as the models: not MIT, not CC BY. The scripts that do it
+(tools/juan_suit.py, tools/person_refine.py, tools/creature_rig.py, tools/vehicles.gd, tools/dev/*) are code, under
+MIT, except the vehicle generators in art/vehicles/source/.
+
+Juan Salvo and the cascarudos are, besides, characters and creatures of the comic (section 1), used with the
+permission of its rights holders.
+
+The game does not need these files to run. A build without them shows neutral stand-ins (a grey mannequin and a grey
+block, each with a LICENSED ART PENDING plate) and the level kit's own unbranded colectivo and cars; README.md says how
+(delete the folders and empty the two slots' file, portrait and lod in godot/art_pack/manifest.json).
+
+
+3. Third-party software and assets
+----------------------------------
+
+Godot Engine (https://godotengine.org): MIT licence, Copyright (c) 2014-present Godot Engine contributors, (c)
+2007-2014 Juan Linietsky, Ariel Manzur. The engine is not in this repository; an exported build contains it, and
+with it Godot's own third-party notices (https://godotengine.org/license).
+
+Fonts, in godot/assets/fonts/ beside their licence texts (which must go with them):
+  - Barlow Condensed (Medium, SemiBold): Copyright 2017 The Barlow Project Authors
+    (https://github.com/jpt/barlow), SIL Open Font License 1.1 (BarlowCondensed-OFL.txt).
+  - Big Shoulders Stencil Display: Copyright 2019 The Big Shoulders Project Authors
+    (https://github.com/xotypeco/big_shoulders), SIL Open Font License 1.1 (BigShouldersStencilDisplay-OFL.txt).
+  - Special Elite: by Astigmatic, Apache License 2.0 (SpecialElite-LICENSE.txt).
+
+MakeHuman (http://www.makehumancommunity.org): the people's figures in godot/assets/figures/ were baked by tools/mh
+from MakeHuman's base mesh, targets, skeleton and system assets (skins, eyes, eyebrows, eyelashes, hair, clothes),
+all released under CC0 1.0 (makehuman_system_assets_cc0.zip and the MakeHuman 1.x data). No MakeHuman file is in
+this repository as it was; the baked figures, and the textures painted over the CC0 originals, are CC BY 4.0 as part
+of the game's assets. The MakeHuman software itself (AGPL) is not used by or included in the game.
+
+Synthetic voices (godot/assets/audio/voice/): no recording of any real person was used, and no real person's voice
+was cloned. The four neighbours' voices, in Spanish and in English, were designed from written descriptions with
+Qwen3-TTS-12Hz-1.7B-VoiceDesign and every line cloned from those designs with Qwen3-TTS-12Hz-1.7B-Base (Qwen team,
+Alibaba Cloud; Apache License 2.0); the passenger's lines were made with Kokoro-82M (hexgrad; Apache License 2.0) in
+English and Qwen3-TTS in Spanish. The takes were judged with faster-whisper (MIT) and SpeechBrain's ECAPA speaker
+model (Apache License 2.0). None of these models is in this repository; their licences put no restriction on their
+output. Provenance of every line: tools/voices/riachuelo/.
+
+The four neighbours' portraits (godot/assets/operatives.webp) were made with Figma's AI image generator, painted to
+match the game's style; nothing was taken from an existing image.
+
+Everything else of the game's assets is original and made for the game: the textures and interface art come out of
+the scripts in tools/ (numpy, SciPy and Pillow, BSD-style licences, are used by those scripts and are not included),
+the sounds out of tools/gen_audio.py (no samples are read from anywhere), the 3D icons out of tools/icons3d/, the
+level layouts out of tools/dev/*_layout.py.
+
+The buildings, monuments and streets of the Plaza de Mayo and of La Boca are drawn after the public places as they
+stood in 1958; no photograph or plan is reproduced.
+
+
+4. Left out of this repository
+------------------------------
+
+This repository was carved out of a larger private project, and everything of it that Hora Cero does not use was
+left out: its other levels and their data, scenes, scripts, textures, sounds, voices, portraits and history
+pictures, trailers and social images; its online services (a leaderboard, crash reports, a mailing list) and their
+keys; its store and signing material. (Hora Cero's own launch tools, tools/trailer/horacero_* and
+tools/social/horacero/, are included; what they render is not.) No file whose licence could not be established is
+included.

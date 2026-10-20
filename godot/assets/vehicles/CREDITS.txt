@@ -1,0 +1,65 @@
+VEHICLES OF THE PLAZA DE MAYO (Hora Cero)
+
+Author:      Santiago Siri
+Permission:  granted to Ale (Alejandro Vizio) for use in Hora Cero, and to redistribute them in this repository
+             for use with Hora Cero, October 2026.
+Licence:     no public licence. All rights reserved by their authors. NOT covered by the repository's MIT
+             licence or by CC BY 4.0: do not reuse them outside Hora Cero without asking the authors.
+
+Sources (as delivered, kept unchanged in art/vehicles/ at the repository root):
+  colectivo60_lod1.glb               "Colectivo 60 - game model", lighter detail level (43,436 triangles)
+  colectivo60_lettering.png          its lettering texture (2048 x 2048; also inside the GLB)
+  models/07_microcar.glb             "Retro Vehicle Pack", Microcar 70 (a small saloon of the Fiat 600 kind)
+  models/08_work_pickup.glb          "Retro Vehicle Pack", Work Pickup 79 (a light pickup of the Rastrojero kind)
+  source/build_vehicles.py           the Retro Vehicle Pack's generator (Python + NumPy), unchanged
+Of the Retro Vehicle Pack's eight cars only these two are used; the other six (designs of 1969-92) and the
+detailed colectivo60.glb are not in the repository.
+
+Made for Hora Cero on the friends' generator (credit: the Retro Vehicle Pack's build_vehicles.py, whose
+Model, materials and conventions it uses; same permission):
+  source/build_vehicles_1950s.py     six generic cars of the 1940s and 50s, written to models/:
+    11_sedan_49      a big rounded sedan with separate wings, the rear wheels skirted, whitewall tyres
+    12_taxi_49       the same as a Buenos Aires taxi: black, its roof yellow, a small lamp on it
+    13_saloon_53     a smaller rounded European-style saloon with a sloping back
+    14_pickup_51     a pickup with separate wings, running boards and a step-side bed
+    15_van_51        a delivery van with the same front, its body a tall rounded box
+    16_coupe_48      a fastback two-door coupé
+  Generic shapes only: no maker's badge, emblem, name, logo or any real model's grille. Each with the small things
+  of a car of the time (chrome window surrounds and side spears, grille bars and teeth, bumpers with overriders,
+  headlamps with reflectors and lenses, small round tail lamps, door handles and gaps, bonnet seams and boot lids,
+  a plain chrome mascot, wipers, a mirror, an aerial on some, running boards, tyres with a tread, hubcaps, dark
+  wheel wells, a taxi's meter flag) and its inside (seats, a painted dashboard, an ivory steering wheel).
+
+Game meshes in this folder (made by tools/vehicles.gd from the sources; run it to rebuild them):
+  colectivo60_open.res (the rules' colectivo on Hipolito Yrigoyen: doors folded open, its doorway lit, its lit
+    inside behind see-through glass)
+  colectivo60_far.res (the lighter one, for the colectivos on the streets beyond the map)
+  microcar.res, work_pickup.res, sedan49.res, taxi49.res, saloon53.res, pickup51.res, van51.res, coupe48.res
+    (the far copies, for the city's streets)
+  microcar_near.res, work_pickup_near.res, sedan49_near.res, taxi49_near.res, saloon53_near.res,
+  pickup51_near.res, van51_near.res, coupe48_near.res
+    (the near copies, for the cars parked in the plaza's streets: inside and fine details kept, glass see-through)
+  colectivo60_lettering.png (the lettering texture, scaled to 1024 x 1024)
+When a mesh is missing (a build without these models), the kit's own procedural car or colectivo stands in.
+
+What was changed from the sources:
+  - The three-pointed star badge on the colectivo's grille and the round badge on its bonnet were removed
+    (no makes' badges in the game). Everything else of the colectivo is as made, its route boards
+    ("CONSTITUCION 60 TIGRE HOTEL") and its lettering included; the operator's name on its sides,
+    "Micro Omnibus Norte S.A.", is in the lettering texture.
+  - The colectivo mirrored left to right, so its doors are on the right, the kerb side (lettering kept readable).
+  - Each model simplified (meshoptimizer, through Godot's LOD generation; the lamps, plates, route boards and
+    lettering kept apart so they survive), the cars' flat faces shaded smooth (creases kept), with a snow cap over
+    it. Triangles, snow cap included: the rules' colectivo 24,620 (its inside kept, lit, a lining round it, its
+    glass a second surface), the distant one 5,450 (no inside); the far copies of the cars (no inside, no fine
+    details, one surface): microcar 2,950, work pickup 3,490, sedan 3,410, taxi 2,890, saloon 2,410,
+    pickup 2,790, van 2,720, coupe 3,440; their near copies (inside and fine details kept, glass a second
+    surface): microcar 7,190, work pickup 7,420, sedan 9,770, taxi 10,710, saloon 7,640, pickup 9,010,
+    van 9,090, coupe 9,440.
+  - Added: a snow cap over the faces that look up, which the game raises as the night's snow deepens; on the
+    colectivo, a fileteado panel under the rear window (our own drawing, plaza_b.png); on every car, number
+    plates drawn on its plate boxes: eight invented registrations in the manner of the time (black enamel, a cream
+    rim, "CAPITAL", numbers like 48-217), in plaza_b.png, none of them a real number.
+  - Colours and materials re-made in the game's shader (godot/shaders/plaza_vehicle.gdshader): the colectivo's
+    yellow and black from its own materials; the cars painted in sober colours of the 1950s (black, dark green,
+    navy, maroon, grey, cream; work colours on the pickups and the van), the taxis black and yellow.

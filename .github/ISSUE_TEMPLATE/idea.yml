@@ -1,0 +1,17 @@
+name: Proponer una idea (feature request)
+description: Algo que sumarías o cambiarías en el juego.
+title: "[Idea] "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: ¿Qué se te ocurrió?
+      description: Un personaje, una herramienta, un lugar de Buenos Aires, un cambio en cómo se juega...
+    validations:
+      required: true
+  - type: textarea
+    id: por-que
+    attributes:
+      label: ¿Por qué?
+      description: Qué lo haría mejor, o qué problema resuelve.

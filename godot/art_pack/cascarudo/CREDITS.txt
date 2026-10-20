@@ -1,0 +1,17 @@
+CASCARUDO (Hora Cero)
+
+Author:      Santiago Siri
+Permission:  granted to Ale (Alejandro Vizio) for use in Hora Cero, and to redistribute it in this repository for
+             use with Hora Cero, October 2026.
+Licence:     no public licence. All rights reserved by its authors. NOT covered by the repository's MIT licence or
+             by CC BY 4.0: do not reuse it outside Hora Cero without asking its authors.
+Creature:    the cascarudos are creatures of the comic by Héctor Germán Oesterheld and Francisco Solano López, used
+             with the permission of its rights holders (NOTICE).
+
+Files:
+  cascarudo.glb      Santiago Siri's model (about 45,000 triangles), its shape as made, with a skeleton for its six legs
+                     and its occlusion and convexity baked into its vertex colours by python3 tools/art_pack.py
+                     rig-creature (tools/creature_rig.py)
+  cascarudo_lod.glb  a lighter copy of it for far views (about 13,500 triangles), decimated and rigged alike
+
+To build the game without it, empty the slot's "file" and "lod" in ../manifest.json: a neutral stand-in shows.

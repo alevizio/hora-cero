@@ -1,0 +1,13 @@
+JUAN SALVO, SOURCES (Hora Cero)
+
+  source/rifle.glb   the rifle in Juan Salvo's hands, taken from Alejandro Vizio's earlier Juan Salvo (the blue-hood
+                     survivor, made with Codex) with where that Juan's chest, wrists and elbows were:
+                     tools/juan_suit.py puts it on the game's model, godot/art_pack/juan_salvo/juan_salvo.glb (see its
+                     CREDITS.txt).
+
+Author:      Alejandro Vizio
+Permission:  part of Juan Salvo's model in Hora Cero; redistributed in this repository for use with Hora Cero.
+Licence:     no public licence, like the rest of Juan Salvo's model. NOT covered by the repository's MIT licence or
+             by CC BY 4.0: do not reuse it outside Hora Cero.
+Character:   Juan Salvo is a character of the comic by Héctor Germán Oesterheld and Francisco Solano López, used
+             with the permission of its rights holders (NOTICE).

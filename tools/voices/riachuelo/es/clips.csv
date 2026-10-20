@@ -1,0 +1,65 @@
+voz,archivo,texto,voz_ia,duracion_s,toma,oido,palabras,parecido_voz,f0_hz
+hornero,hornero_select_1.wav,"Decime, che.","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign hornero/Z2, ver voices.csv)",2.08,es_01_1.wav,"Decíme, Che.",1.0,0.726,119.3
+hornero,hornero_select_2.wav,Acá estoy.,"Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign hornero/Z2, ver voices.csv)",1.6,es_02_2.wav,Acá estoy.,1.0,0.746,66.6
+hornero,hornero_move_1.wav,Próxima parada.,"Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign hornero/Z2, ver voices.csv)",1.76,es_03_1.wav,Próxima parada.,1.0,0.717,98.6
+hornero,hornero_move_2.wav,"Vamos, despacito.","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign hornero/Z2, ver voices.csv)",2.24,es_04_2.wav,"Vamos, despacito.",1.0,0.758,112.6
+hornero,hornero_attack_1.wav,Este se baja acá.,"Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign hornero/Z2, ver voices.csv)",1.68,es_05_1.wav,Este se baja acá.,1.0,0.75,116.6
+hornero,hornero_attack_2.wav,"A dormir, amigo.","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign hornero/Z2, ver voices.csv)",2.0,es_06_2.wav,"Adormir, amigo.",0.96,0.737,120.7
+hornero,hornero_work_1.wav,Dejámelo a mí.,"Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign hornero/Z2, ver voices.csv)",1.6,es_07_0.wav,Déjamelo a mí.,1.0,0.738,106.6
+hornero,hornero_work_2.wav,Ya lo arreglo.,"Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign hornero/Z2, ver voices.csv)",1.2,es_08_2.wav,Ya lo arreglo.,1.0,0.688,96.9
+hornero,hornero_done_1.wav,Ya está. Arreglado.,"Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign hornero/Z2, ver voices.csv)",2.16,es_09_0.wav,Ya está arreglado.,1.0,0.653,98.6
+hornero,hornero_done_2.wav,Listo. Sigamos.,"Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign hornero/Z2, ver voices.csv)",2.16,es_10_1.wav,Listo. Sigamos.,1.0,0.754,97.5
+hornero,hornero_refuse_1.wav,Por ahí no paso.,"Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign hornero/Z2, ver voices.csv)",1.52,es_11_2.wav,Por ahí no paso.,1.0,0.755,97.2
+hornero,hornero_refuse_2.wav,"Eso no se puede, che.","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign hornero/Z2, ver voices.csv)",1.92,es_12_2.wav,"Eso no se puede, Che.",1.0,0.763,120.0
+hornero,hornero_refuse_3.wav,Ese recorrido no existe.,"Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign hornero/Z2, ver voices.csv)",2.48,es_13_0.wav,Ese recorrido no existe.,1.0,0.773,117.3
+hornero,hornero_spotted_1.wav,"¡Guarda, nos vieron!","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign hornero/Z2, ver voices.csv)",1.76,es_14_2.wav,¡Guarda! ¡Nos vieron!,1.0,0.636,189.4
+hornero,hornero_spotted_2.wav,"¡La pucha, me junaron!","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign hornero/Z2, ver voices.csv)",2.08,es_15_0.wav,"La pucha, me junaron.",1.0,0.615,163.0
+hornero,hornero_hurt_1.wav,"¡Uy, me dieron!","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign hornero/Z2, ver voices.csv)",1.84,es_16_2.wav,"¡Uy, me dieron!",1.0,0.693,
+hornero,hornero_hurt_2.wav,"Aguanto, aguanto.","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign hornero/Z2, ver voices.csv)",1.6,es_17_1.wav,"¡Aguanto, aguanto!",1.0,0.6,
+lechuza,lechuza_select_1.wav,"Te escucho, pibe.","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign lechuza/A1, ver voices.csv)",1.6,es_01_2.wav,"Te escucho, pibe.",1.0,0.674,157.4
+lechuza,lechuza_select_2.wav,¿Y ahora qué?,"Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign lechuza/A1, ver voices.csv)",1.2,es_02_2.wav,¿Y ahora qué?,1.0,0.703,163.9
+lechuza,lechuza_move_1.wav,"Voy, voy. Sin apuro.","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign lechuza/A1, ver voices.csv)",2.64,es_03_0.wav,"Voy, voy, sin apuro.",1.0,0.727,172.2
+lechuza,lechuza_move_2.wav,"Por lo oscuro, como siempre.","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign lechuza/A1, ver voices.csv)",2.08,es_04_1.wav,"Por lo oscuro, como siempre.",1.0,0.788,139.8
+lechuza,lechuza_attack_1.wav,Dos vueltas de cable y listo.,"Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign lechuza/A1, ver voices.csv)",2.16,es_05_2.wav,Dos vueltas de cable y listo.,1.0,0.767,174.7
+lechuza,lechuza_attack_2.wav,"Quieto ahí, que te ato.","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign lechuza/A1, ver voices.csv)",2.4,es_06_0.wav,"Quieto ahí, que te ato.",1.0,0.723,171.7
+lechuza,lechuza_work_1.wav,Esto es como cambiar un fusible.,"Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign lechuza/A1, ver voices.csv)",2.4,es_07_2.wav,Esto es como cambiar un fusible.,1.0,0.835,179.3
+lechuza,lechuza_work_2.wav,Esto lo conozco de memoria.,"Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign lechuza/A1, ver voices.csv)",1.84,es_08_0.wav,Esto lo conozco de memoria.,1.0,0.755,166.8
+lechuza,lechuza_done_1.wav,Se cortó la luz.,"Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign lechuza/A1, ver voices.csv)",1.76,es_09_1.wav,Se cortó la luz.,1.0,0.722,187.8
+lechuza,lechuza_done_2.wav,Hecho. Limpito.,"Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign lechuza/A1, ver voices.csv)",2.24,es_10_0.wav,Hecho. Limpito.,1.0,0.722,146.9
+lechuza,lechuza_refuse_1.wav,¿A mi edad? Minga.,"Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign lechuza/A1, ver voices.csv)",2.32,es_11_1.wav,"A mi edad, minga.",1.0,0.665,134.7
+lechuza,lechuza_refuse_2.wav,Por ahí no hay paso.,"Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign lechuza/A1, ver voices.csv)",1.6,es_12_2.wav,Por ahí no hay paso.,1.0,0.752,153.4
+lechuza,lechuza_refuse_3.wav,"Eso no anda, che.","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign lechuza/A1, ver voices.csv)",2.0,es_13_0.wav,"Eso no anda, Che.",1.0,0.765,174.2
+lechuza,lechuza_spotted_1.wav,"¡Araca, me vieron!","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign lechuza/A1, ver voices.csv)",2.48,es_14_1.wav,"Araca, me vieron.",1.0,0.79,198.4
+lechuza,lechuza_spotted_2.wav,"¡Uy, la cana!","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign lechuza/A1, ver voices.csv)",2.32,es_15_2.wav,¡Uy! ¡La cana!,1.0,0.708,233.9
+lechuza,lechuza_hurt_1.wav,"¡Ay, mis huesos!","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign lechuza/A1, ver voices.csv)",1.84,es_16_1.wav,"¡Ay, mis huesos!",1.0,0.689,190.5
+lechuza,lechuza_hurt_2.wav,"¡Me dieron, carajo!","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign lechuza/A1, ver voices.csv)",1.68,es_17_1.wav,Me dieron carajo.,1.0,0.805,222.6
+benteveo,benteveo_select_1.wav,"¡Presente, jefe!","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign benteveo/C3, ver voices.csv)",1.84,es_01_1.wav,"¡Presente, jefe!",1.0,0.697,223.9
+benteveo,benteveo_select_2.wav,"¿Qué hacemos, che?","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign benteveo/C3, ver voices.csv)",1.44,es_02_0.wav,"¿Qué hacemos, Che?",1.0,0.577,244.2
+benteveo,benteveo_move_1.wav,"¡Vamo, vamo!","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign benteveo/C3, ver voices.csv)",1.44,es_03_1.wav,¡Vamos! ¡Vamos!,0.9,0.47,
+benteveo,benteveo_move_2.wav,"¡Ahí voy, rapidito!","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign benteveo/C3, ver voices.csv)",1.92,es_04_0.wav,"¡Ahí voy, rapidito!",1.0,0.676,254.4
+benteveo,benteveo_work_1.wav,"¡Diario, diario! ¡La Sexta!","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign benteveo/C3, ver voices.csv)",2.8,es_05_2.wav,"Diario, diario. La sexta.",1.0,0.694,273.3
+benteveo,benteveo_work_2.wav,¡Eso lo hago con los ojos cerrados!,"Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign benteveo/C3, ver voices.csv)",2.72,es_06_1.wav,Eso lo hago con los ojos cerrados.,1.0,0.673,225.2
+benteveo,benteveo_refuse_1.wav,¿Yo? ¡Minga!,"Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign benteveo/C3, ver voices.csv)",1.68,es_07_1.wav,¡Yo minga!,1.0,0.62,335.5
+benteveo,benteveo_refuse_2.wav,"¡Ni loco, jefe!","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign benteveo/C3, ver voices.csv)",1.84,es_08_0.wav,Ni loco jefe,1.0,0.668,243.5
+benteveo,benteveo_refuse_3.wav,"Por ahí no se pasa, che.","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign benteveo/C3, ver voices.csv)",2.56,es_09_1.wav,"Por ahí no se pasa, ché.",1.0,0.736,227.8
+benteveo,benteveo_spotted_1.wav,"¡Cana, cana! ¡Rajemos!","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign benteveo/C3, ver voices.csv)",2.24,es_10_1.wav,¡Cana! ¡Cana! ¡Rajemos!,1.0,0.609,383.2
+benteveo,benteveo_spotted_2.wav,"¡Uy, me junaron!","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign benteveo/C3, ver voices.csv)",1.6,es_11_2.wav,"¡Uy, me junaron!",1.0,0.438,345.3
+benteveo,benteveo_hurt_1.wav,¡Ay! ¡Qué yeta!,"Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign benteveo/C3, ver voices.csv)",1.76,es_12_1.wav,¡Ay! ¡Qué dieta!,0.87,0.458,318.5
+benteveo,benteveo_hurt_2.wav,"¡Ay, ay, me dieron!","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign benteveo/C3, ver voices.csv)",2.08,es_13_1.wav,"¡Ay, ay, me dieron!",1.0,0.458,250.6
+bigua,bigua_select_1.wav,Acá ando.,"Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign bigua/A4, ver voices.csv)",0.88,es_01_1.wav,Acá ando.,1.0,0.542,80.6
+bigua,bigua_select_2.wav,¿Qué precisás?,"Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign bigua/A4, ver voices.csv)",1.12,es_02_0.wav,¡Qué precisas!,1.0,0.68,89.9
+bigua,bigua_move_1.wav,"Despacito, como la marea.","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign bigua/A4, ver voices.csv)",2.48,es_03_0.wav,"Despacito, como la marea.",1.0,0.788,82.2
+bigua,bigua_move_2.wav,"Vamos, sin ruido.","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign bigua/A4, ver voices.csv)",1.76,es_04_1.wav,"¡Vamos, sin ruido!",1.0,0.725,93.9
+bigua,bigua_attack_1.wav,"Lo hago yo, callado.","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign bigua/A4, ver voices.csv)",1.6,es_05_2.wav,"Lo hago yo, callado.",1.0,0.579,96.4
+bigua,bigua_attack_2.wav,Se lo lleva la corriente.,"Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign bigua/A4, ver voices.csv)",1.36,es_06_2.wav,Se lo lleva a la corriente.,0.96,0.767,96.4
+bigua,bigua_work_1.wav,Yo me encargo.,"Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign bigua/A4, ver voices.csv)",0.8,es_07_2.wav,Yo me encargo.,1.0,0.622,113.3
+bigua,bigua_work_2.wav,"Con calma, como remar.","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign bigua/A4, ver voices.csv)",1.76,es_08_1.wav,Con calma como remar.,1.0,0.604,90.4
+bigua,bigua_done_1.wav,"Listo, hermano.","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign bigua/A4, ver voices.csv)",1.04,es_09_0.wav,"Listo, hermano.",1.0,0.584,78.5
+bigua,bigua_done_2.wav,Hecho. A la otra orilla.,"Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign bigua/A4, ver voices.csv)",2.32,es_10_1.wav,Hecho a la otra orilla.,1.0,0.769,76.9
+bigua,bigua_refuse_1.wav,"Por ahí, no.","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign bigua/A4, ver voices.csv)",0.72,es_11_2.wav,"Por ahí, ¿no?",1.0,0.526,102.1
+bigua,bigua_refuse_2.wav,Ni el río pasa por ahí.,"Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign bigua/A4, ver voices.csv)",1.44,es_12_1.wav,Ni el río pasa por ahí.,1.0,0.785,106.9
+bigua,bigua_refuse_3.wav,"Imposible, hermano.","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign bigua/A4, ver voices.csv)",1.84,es_13_1.wav,Imposible hermano,1.0,0.743,82.0
+bigua,bigua_spotted_1.wav,Me vieron. Rápido.,"Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign bigua/A4, ver voices.csv)",2.08,es_14_2.wav,¡Me vieron! ¡Rápido!,1.0,0.789,63.2
+bigua,bigua_spotted_2.wav,"¡Ojo, la Guardia!","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign bigua/A4, ver voices.csv)",1.04,es_15_2.wav,¡Ojo la Guardia!,1.0,0.669,
+bigua,bigua_hurt_1.wav,Me dieron. Aguanto.,"Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign bigua/A4, ver voices.csv)",2.08,es_16_0.wav,Me dieron. Aguanto.,1.0,0.784,103.0
+bigua,bigua_hurt_2.wav,"Sigo, sigo.","Qwen3-TTS-12Hz-1.7B-Base, voz diseñada clonada (VoiceDesign bigua/A4, ver voices.csv)",0.88,es_17_2.wav,"Sigo, sigo.",1.0,0.464,

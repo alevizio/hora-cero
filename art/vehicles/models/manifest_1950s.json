@@ -1,0 +1,194 @@
+[
+  {
+    "id": "11_sedan_49",
+    "display_name": "Big Sedan 49",
+    "wheel_radius_m": 0.37,
+    "wheelbase_m": 2.92,
+    "forward_axis": "-Z",
+    "up_axis": "+Y",
+    "units": "meters",
+    "reference_style": "sedan",
+    "period": "1940s-50s, generic",
+    "notes": "Hora Cero: a generic rounded car of the time, no maker's badge, name or grille of a real model. Built on the Retro Vehicle Pack generator (build_vehicles.py). The cabin's inside (seats, dashboard, steering wheel, headlining) in the node Interior.",
+    "triangles": 13156,
+    "mesh_nodes": 8,
+    "material_surfaces": 38,
+    "bounds_m": {
+      "min": [
+        -0.986,
+        0.0,
+        -2.683
+      ],
+      "max": [
+        0.986,
+        1.83082,
+        2.66697
+      ]
+    },
+    "dimensions_m": {
+      "width": 1.972,
+      "height": 1.8308,
+      "length": 5.35
+    }
+  },
+  {
+    "id": "12_taxi_49",
+    "display_name": "Taxi 49",
+    "wheel_radius_m": 0.37,
+    "wheelbase_m": 2.92,
+    "forward_axis": "-Z",
+    "up_axis": "+Y",
+    "units": "meters",
+    "reference_style": "taxi",
+    "period": "1940s-50s, generic",
+    "notes": "Hora Cero: a generic rounded car of the time, no maker's badge, name or grille of a real model. Built on the Retro Vehicle Pack generator (build_vehicles.py). The cabin's inside (seats, dashboard, steering wheel, headlining) in the node Interior.",
+    "triangles": 13308,
+    "mesh_nodes": 8,
+    "material_surfaces": 36,
+    "bounds_m": {
+      "min": [
+        -0.986,
+        0.0,
+        -2.683
+      ],
+      "max": [
+        0.986,
+        1.785,
+        2.66697
+      ]
+    },
+    "dimensions_m": {
+      "width": 1.972,
+      "height": 1.785,
+      "length": 5.35
+    }
+  },
+  {
+    "id": "13_saloon_53",
+    "display_name": "Small Saloon 53",
+    "wheel_radius_m": 0.33,
+    "wheelbase_m": 2.45,
+    "forward_axis": "-Z",
+    "up_axis": "+Y",
+    "units": "meters",
+    "reference_style": "saloon",
+    "period": "1940s-50s, generic",
+    "notes": "Hora Cero: a generic rounded car of the time, no maker's badge, name or grille of a real model. Built on the Retro Vehicle Pack generator (build_vehicles.py). The cabin's inside (seats, dashboard, steering wheel, headlining) in the node Interior.",
+    "triangles": 9800,
+    "mesh_nodes": 8,
+    "material_surfaces": 31,
+    "bounds_m": {
+      "min": [
+        -0.935,
+        0.0,
+        -2.22197
+      ],
+      "max": [
+        0.836,
+        1.5568,
+        2.22197
+      ]
+    },
+    "dimensions_m": {
+      "width": 1.771,
+      "height": 1.5568,
+      "length": 4.4439
+    }
+  },
+  {
+    "id": "14_pickup_51",
+    "display_name": "Pickup 51",
+    "wheel_radius_m": 0.38,
+    "wheelbase_m": 2.9,
+    "forward_axis": "-Z",
+    "up_axis": "+Y",
+    "units": "meters",
+    "reference_style": "pickup",
+    "period": "1940s-50s, generic",
+    "notes": "Hora Cero: a generic rounded car of the time, no maker's badge, name or grille of a real model. Built on the Retro Vehicle Pack generator (build_vehicles.py). The cabin's inside (seats, dashboard, steering wheel, headlining) in the node Interior.",
+    "triangles": 11180,
+    "mesh_nodes": 8,
+    "material_surfaces": 38,
+    "bounds_m": {
+      "min": [
+        -1.15,
+        0.0,
+        -2.555
+      ],
+      "max": [
+        1.04,
+        1.9208,
+        2.5
+      ]
+    },
+    "dimensions_m": {
+      "width": 2.19,
+      "height": 1.9208,
+      "length": 5.055
+    }
+  },
+  {
+    "id": "15_van_51",
+    "display_name": "Delivery Van 51",
+    "wheel_radius_m": 0.38,
+    "wheelbase_m": 2.9,
+    "forward_axis": "-Z",
+    "up_axis": "+Y",
+    "units": "meters",
+    "reference_style": "van",
+    "period": "1940s-50s, generic",
+    "notes": "Hora Cero: a generic rounded car of the time, no maker's badge, name or grille of a real model. Built on the Retro Vehicle Pack generator (build_vehicles.py). The cabin's inside (seats, dashboard, steering wheel, headlining) in the node Interior.",
+    "triangles": 11488,
+    "mesh_nodes": 8,
+    "material_surfaces": 38,
+    "bounds_m": {
+      "min": [
+        -1.15,
+        0.0,
+        -2.53
+      ],
+      "max": [
+        1.06,
+        2.108,
+        2.475
+      ]
+    },
+    "dimensions_m": {
+      "width": 2.21,
+      "height": 2.108,
+      "length": 5.005
+    }
+  },
+  {
+    "id": "16_coupe_48",
+    "display_name": "Fastback Coupe 48",
+    "wheel_radius_m": 0.37,
+    "wheelbase_m": 2.9,
+    "forward_axis": "-Z",
+    "up_axis": "+Y",
+    "units": "meters",
+    "reference_style": "coupe",
+    "period": "1940s-50s, generic",
+    "notes": "Hora Cero: a generic rounded car of the time, no maker's badge, name or grille of a real model. Built on the Retro Vehicle Pack generator (build_vehicles.py). The cabin's inside (seats, dashboard, steering wheel, headlining) in the node Interior.",
+    "triangles": 12712,
+    "mesh_nodes": 8,
+    "material_surfaces": 38,
+    "bounds_m": {
+      "min": [
+        -0.976,
+        0.0,
+        -2.658
+      ],
+      "max": [
+        0.976,
+        1.83082,
+        2.64197
+      ]
+    },
+    "dimensions_m": {
+      "width": 1.952,
+      "height": 1.8308,
+      "length": 5.3
+    }
+  }
+]

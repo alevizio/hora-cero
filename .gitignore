@@ -1,0 +1,29 @@
+# Godot: the import cache and editor state, and a local override of the project settings
+godot/.godot/
+godot/override.cfg
+*.translation
+# Exports and builds (tools/web_site_build.py writes wherever you tell it; build/ is the presets' default)
+build/
+export/
+*.pck
+*.wasm
+*.apk
+*.aab
+*.ipa
+# Signing material never goes in the repository
+*.keystore
+*.jks
+*.p8
+*.p12
+*.mobileprovision
+# Python caches
+__pycache__/
+*.pyc
+# macOS, editors
+.DS_Store
+*.swp
+.vscode/
+.idea/
+# local archives
+*.tar.gz
+*.zip

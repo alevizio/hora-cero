@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, viewport-fit=cover">
+		<meta name="theme-color" content="#0c1211">
+		<meta name="description" content="Hora Cero · Invasión Buenos Aires. Buenos Aires, 1958, la noche en que empieza a nevar: poné a cubierto a la gente de la Plaza de Mayo antes de que la nieve la tape, y después cruzá el Riachuelo.">
+		<title>Hora Cero · Invasión Buenos Aires</title>
+		<style>
+@font-face {
+	font-family: 'Stencil';
+	src: url('fonts/BigShouldersStencilDisplay-wght.ttf') format('truetype');
+	font-weight: 100 900;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Barlow Condensed';
+	src: url('fonts/BarlowCondensed-SemiBold.ttf') format('truetype');
+	font-weight: 600;
+	font-display: swap;
+}
+:root {
+	--ground: #0c1211;
+	--ivory: #ece6d2;
+	--muted: #bdb8a0;
+	--brass: #e0ad4c;
+	--red: #d9482f;
+}
+html, body, #canvas {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+html, body {
+	height: 100%;
+}
+body {
+	color: var(--ivory);
+	background-color: var(--ground);
+	overflow: hidden;
+	touch-action: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+#canvas {
+	display: block;
+}
+#canvas:focus {
+	outline: none;
+}
+#status {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 0;
+	padding: 24px 16px;
+	box-sizing: border-box;
+	background:
+		radial-gradient(120% 90% at 50% 40%, rgba(60, 74, 52, 0.35) 0%, rgba(12, 18, 17, 0) 60%),
+		var(--ground);
+	visibility: hidden;
+	z-index: 1;
+}
+.kicker {
+	font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+	font-weight: 600;
+	font-size: 14px;
+	letter-spacing: 0.32em;
+	text-transform: uppercase;
+	color: var(--brass);
+	margin: 0 0 6px;
+}
+.wordmark {
+	font-family: 'Stencil', 'Impact', 'Arial Narrow', sans-serif;
+	font-weight: 800;
+	font-size: clamp(56px, 13vw, 132px);
+	line-height: 0.9;
+	letter-spacing: 0.02em;
+	text-transform: uppercase;
+	margin: 0;
+}
+.tagline {
+	font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+	font-weight: 600;
+	font-size: 18px;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--muted);
+	margin: 14px 0 40px;
+}
+.meter {
+	width: min(320px, 70vw);
+}
+.track {
+	height: 3px;
+	background: rgba(236, 230, 210, 0.14);
+	overflow: hidden;
+}
+.fill {
+	height: 100%;
+	width: 0%;
+	background: var(--brass);
+	transition: width 0.25s ease-out;
+}
+.fill.waiting {
+	width: 30%;
+	animation: sweep 1.2s ease-in-out infinite;
+}
+@keyframes sweep {
+	0% { transform: translateX(-100%); }
+	100% { transform: translateX(340%); }
+}
+.readout {
+	display: flex;
+	justify-content: space-between;
+	font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+	font-weight: 600;
+	font-size: 13px;
+	letter-spacing: 0.24em;
+	text-transform: uppercase;
+	color: var(--muted);
+	margin-top: 10px;
+}
+.foot {
+	position: absolute;
+	bottom: max(20px, env(safe-area-inset-bottom));
+	left: 0;
+	right: 0;
+	text-align: center;
+	font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+	font-weight: 600;
+	font-size: 13px;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: rgba(189, 184, 160, 0.7);
+}
+#status-notice {
+	display: none;
+	max-width: 520px;
+	margin-top: 8px;
+	padding: 14px 18px;
+	border-left: 3px solid var(--red);
+	background: rgba(217, 72, 47, 0.12);
+	color: var(--ivory);
+	font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+	font-size: 17px;
+	line-height: 1.35;
+	text-align: left;
+}
+/* a phone, before anything is downloaded: what to expect, and the choice */
+#status-choice {
+	display: none;
+	max-width: 440px;
+	margin-top: 4px;
+	padding: 14px 18px;
+	border-left: 3px solid var(--brass);
+	background: rgba(224, 173, 76, 0.1);
+	font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+	font-size: 18px;
+	line-height: 1.35;
+	text-align: left;
+}
+#status-choice p {
+	margin: 0 0 8px;
+}
+#status-choice p:last-child {
+	margin-bottom: 0;
+}
+#status-choice .address {
+	color: var(--muted);
+	font-size: 16px;
+	word-break: break-all;
+	-webkit-user-select: text;
+	user-select: text;
+}
+#status-actions {
+	display: none;
+	flex-direction: column;
+	gap: 10px;
+	width: min(440px, 100%);
+	margin-top: 18px;
+}
+#status-actions button {
+	min-height: 52px;
+	padding: 0 18px;
+	border: 1px solid rgba(236, 230, 210, 0.45);
+	border-radius: 2px;
+	background: transparent;
+	color: var(--ivory);
+	font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+	font-weight: 600;
+	font-size: 18px;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	cursor: pointer;
+	touch-action: manipulation;
+}
+#status-actions button.primary {
+	border-color: var(--brass);
+	background: var(--brass);
+	color: var(--ground);
+}
+#status-actions button:focus-visible {
+	outline: 2px solid var(--ivory);
+	outline-offset: 2px;
+}
+@media (max-height: 560px) {
+	/* a phone on its side: the name smaller, the words wider, the two buttons side by side, all on the screen */
+	#status { justify-content: flex-start; overflow-y: auto; padding: 14px 16px; }
+	.kicker { font-size: 12px; margin-bottom: 2px; }
+	.wordmark { font-size: clamp(36px, 10vh, 56px); }
+	.tagline { font-size: 15px; margin: 6px 0 12px; }
+	#status-choice { max-width: 640px; padding: 10px 14px; font-size: 16px; }
+	#status-actions { flex-direction: row; width: min(640px, 100%); margin-top: 12px; }
+	#status-actions button { flex: 1; min-height: 46px; }
+	.foot { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+	.fill, .fill.waiting { transition: none; animation: none; }
+}
+		</style>
+		$GODOT_HEAD_INCLUDE
+	</head>
+	<body>
+		<canvas id="canvas">
+			Your browser does not support the canvas tag.
+		</canvas>
+
+		<noscript>
+			Hora Cero necesita JavaScript para funcionar. Hora Cero needs JavaScript to run.
+		</noscript>
+
+		<div id="status">
+			<p class="kicker" id="status-kicker">Buenos Aires, 1958 · Adelanto</p>
+			<h1 class="wordmark">Hora Cero</h1>
+			<p class="tagline" id="status-tagline">Invasión Buenos Aires</p>
+			<div class="meter" id="status-progress">
+				<div class="track"><div class="fill waiting" id="status-fill"></div></div>
+				<div class="readout"><span id="status-label">Cargando</span><span id="status-percent"></span></div>
+			</div>
+			<div id="status-choice"></div>
+			<div id="status-notice"></div>
+			<div id="status-actions">
+				<button type="button" class="primary" id="action-play"></button>
+				<button type="button" id="action-link"></button>
+			</div>
+			<div class="foot" id="status-foot">Con sonido &middot; Mejor con mouse o trackpad</div>
+		</div>
+
+		<script src="$GODOT_URL"></script>
+		<script>
+const GODOT_CONFIG = $GODOT_CONFIG;
+const GODOT_THREADS_ENABLED = $GODOT_THREADS_ENABLED;
+const engine = new Engine(GODOT_CONFIG);
+
+// The words of this page are in Spanish, as the game starts; in English for a browser set to another language (the
+// game itself has its ES / EN keys on the launch screen).
+const ENGLISH = {
+	'Buenos Aires, 1958 · Adelanto': 'Buenos Aires, 1958 · Preview',
+	'Invasión Buenos Aires': 'Invasión Buenos Aires',
+	'Cargando': 'Loading',
+	'Preparando': 'Briefing',
+	'Con sonido · Mejor con mouse o trackpad': 'Sound on · Best with a mouse or trackpad',
+	'Con sonido · Vertical u horizontal': 'Sound on · Upright or sideways',
+	'Hora Cero se juega mejor en una computadora, con mouse o trackpad. En el celular es una descarga grande (unos {mb} MB) y necesita un teléfono reciente, con memoria de sobra.':
+		'Hora Cero plays best on a computer, with a mouse or a trackpad. On a phone it is a big download (about {mb} MB) and needs a recent phone with memory to spare.',
+	'Probalo acá, o copiá el link y abrilo en una computadora.': 'Try it here, or copy the link and open it on a computer.',
+	'La última vez el juego se cerró en este celular, seguramente por falta de memoria. Se juega mejor en una computadora: copiá el link y abrilo ahí.':
+		'The game closed on this phone last time, most likely for lack of memory. It plays best on a computer: copy the link and open it there.',
+	'Jugar en el celular': 'Play on this phone',
+	'Probar de nuevo': 'Try again',
+	'Copiar el link': 'Copy the link',
+	'Link copiado': 'Link copied',
+	'A este navegador le faltan funciones que el juego necesita:': 'This browser is missing features the game needs:',
+	'Algo salió mal al iniciar el juego.': 'Something went wrong while starting the game.',
+	'Probá con un Chrome, Edge, Firefox o Safari reciente en una computadora.': 'Try a recent Chrome, Edge, Firefox or Safari on a computer.',
+	'No se pudo descargar el juego ({status}). Recargá la página para volver a intentarlo.': 'The game could not be downloaded ({status}). Reload the page to try again.',
+	'La descarga del juego no es la esperada. Recargá la página para volver a intentarlo.': 'The game download was not what was expected. Reload the page to try again.',
+	'La descarga del juego se cortó. Recargá la página para volver a intentarlo.': 'The game download was cut short. Reload the page to try again.',
+};
+
+(function () {
+	const statusOverlay = document.getElementById('status');
+	const statusProgress = document.getElementById('status-progress');
+	const statusFill = document.getElementById('status-fill');
+	const statusLabel = document.getElementById('status-label');
+	const statusPercent = document.getElementById('status-percent');
+	const statusNotice = document.getElementById('status-notice');
+	const statusChoice = document.getElementById('status-choice');
+	const statusActions = document.getElementById('status-actions');
+	const playButton = document.getElementById('action-play');
+	const linkButton = document.getElementById('action-link');
+	const english = !/^es\b/i.test(navigator.language || 'es');
+	function T(text) {
+		return (english && ENGLISH[text]) || text;
+	}
+	document.documentElement.lang = english ? 'en' : 'es';
+	// the engine names the tab after the project ("Hora Cero") as it starts: the page keeps its own, longer title
+	const pageTitle = document.title;
+	const titleElement = document.querySelector('title');
+	if (titleElement && window.MutationObserver) {
+		new MutationObserver(() => {
+			if (document.title !== pageTitle) {
+				document.title = pageTitle;
+			}
+		}).observe(titleElement, { 'childList': true, 'characterData': true, 'subtree': true });
+	}
+	['status-kicker', 'status-tagline', 'status-label', 'status-foot'].forEach((id) => {
+		const element = document.getElementById(id);
+		element.textContent = T(element.textContent.replace(/\s+/g, ' ').trim());
+	});
+	const touchOnly = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+	// a phone (not a tablet): it is asked first, before anything is downloaded
+	const phone = touchOnly && Math.min(window.screen.width, window.screen.height) < 600;
+	if (touchOnly) {
+		document.getElementById('status-foot').textContent = T('Con sonido · Vertical u horizontal');
+	}
+
+	// A phone browser that runs out of memory closes the tab and loads the page again, and the page is told nothing.
+	// So the time the game was started is kept until the page is left the ordinary way (pagehide): finding it on a
+	// phone means the game closed by itself last time, and the page says so instead of trying again at once.
+	const MARK = 'horacero.started:' + location.pathname;
+	let started = false;
+	function mark(on) {
+		try {
+			if (on) {
+				localStorage.setItem(MARK, String(Date.now()));
+			} else {
+				localStorage.removeItem(MARK);
+			}
+		} catch (e) {
+			// no storage (a private window): nothing to remember
+		}
+	}
+	function closedLastTime() {
+		try {
+			const at = Number(localStorage.getItem(MARK)) || 0;
+			return at > 0 && Date.now() - at < 30 * 60 * 1000;
+		} catch (e) {
+			return false;
+		}
+	}
+	window.addEventListener('pagehide', () => mark(false));
+	window.addEventListener('pageshow', (event) => {
+		if (event.persisted && started) {
+			mark(true);
+		}
+	});
+
+	let initializing = true;
+	let statusMode = '';
+
+	function setStatusMode(mode) {
+		if (statusMode === mode || !initializing) {
+			return;
+		}
+		if (mode === 'hidden') {
+			statusOverlay.remove();
+			initializing = false;
+			return;
+		}
+		statusOverlay.style.visibility = 'visible';
+		statusProgress.style.display = mode === 'progress' ? 'block' : 'none';
+		statusNotice.style.display = mode === 'notice' ? 'block' : 'none';
+		statusChoice.style.display = mode === 'choice' ? 'block' : 'none';
+		// a phone that cannot play here can still take the link to a computer
+		statusActions.style.display = mode === 'choice' || (mode === 'notice' && phone) ? 'flex' : 'none';
+		playButton.style.display = mode === 'choice' ? 'block' : 'none';
+		statusMode = mode;
+	}
+
+	function setStatusNotice(text) {
+		while (statusNotice.lastChild) {
+			statusNotice.removeChild(statusNotice.lastChild);
+		}
+		text.split('\n').forEach((line) => {
+			statusNotice.appendChild(document.createTextNode(line));
+			statusNotice.appendChild(document.createElement('br'));
+		});
+	}
+
+	function displayFailureNotice(err) {
+		console.error(err);
+		let message = T('Algo salió mal al iniciar el juego.');
+		if (err instanceof Error) {
+			message = err.message;
+		} else if (typeof err === 'string') {
+			message = err;
+		}
+		mark(false);
+		setStatusNotice(message + '\n' + T('Probá con un Chrome, Edge, Firefox o Safari reciente en una computadora.'));
+		setStatusMode('notice');
+		initializing = false;
+	}
+
+	// COPY THE LINK: to the clipboard, else the phone's share sheet, else the address written out to copy by hand.
+	linkButton.textContent = T('Copiar el link');
+	linkButton.addEventListener('click', () => {
+		const address = location.href.split('#')[0];
+		function writeOut() {
+			if (navigator.share) {
+				navigator.share({ 'title': document.title, 'url': address }).catch(() => {});
+				return;
+			}
+			if (statusChoice.querySelector('.address')) {
+				return;
+			}
+			const line = document.createElement('p');
+			line.className = 'address';
+			line.textContent = address;
+			statusChoice.appendChild(line);
+			statusChoice.style.display = 'block';
+		}
+		if (navigator.clipboard && navigator.clipboard.writeText) {
+			navigator.clipboard.writeText(address).then(() => {
+				linkButton.textContent = T('Link copiado');
+			}, writeOut);
+		} else {
+			writeOut();
+		}
+	});
+
+	const missing = Engine.getMissingFeatures({
+		threads: GODOT_THREADS_ENABLED,
+	});
+
+	if (missing.length !== 0) {
+		displayFailureNotice(T('A este navegador le faltan funciones que el juego necesita:') + '\n' + missing.join('\n'));
+		return;
+	}
+
+	function showProgress(fraction) {
+		if (fraction > 0) {
+			const pct = Math.min(100, Math.round(fraction * 100));
+			statusFill.classList.remove('waiting');
+			statusFill.style.width = pct + '%';
+			statusPercent.textContent = pct + '%';
+			if (pct >= 100) {
+				statusLabel.textContent = T('Preparando');
+			}
+		} else {
+			statusFill.classList.add('waiting');
+			statusPercent.textContent = '';
+		}
+	}
+
+	const sizes = GODOT_CONFIG['fileSizes'] || {};
+	const packTotal = sizes['index.pck'] || 1;
+
+	// A phone is asked first: the game is made for a computer, the download is big and a phone needs memory to spare.
+	// If it can run it is let run; if it closed by itself last time, the page says so.
+	if (phone) {
+		const megabytes = Math.max(10, Math.round(((sizes['index.pck'] || 0) + (sizes['index.wasm'] || 0)) / 1048576 / 10) * 10);
+		const lines = closedLastTime()
+			? [T('La última vez el juego se cerró en este celular, seguramente por falta de memoria. Se juega mejor en una computadora: copiá el link y abrilo ahí.')]
+			: [T('Hora Cero se juega mejor en una computadora, con mouse o trackpad. En el celular es una descarga grande (unos {mb} MB) y necesita un teléfono reciente, con memoria de sobra.').replace('{mb}', megabytes),
+				T('Probalo acá, o copiá el link y abrilo en una computadora.')];
+		lines.forEach((text) => {
+			const line = document.createElement('p');
+			line.textContent = text;
+			statusChoice.appendChild(line);
+		});
+		playButton.textContent = T(closedLastTime() ? 'Probar de nuevo' : 'Jugar en el celular');
+		playButton.addEventListener('click', () => {
+			setStatusMode('progress');
+			startGame();
+		}, { once: true });
+		setStatusMode('choice');
+		return;
+	}
+	setStatusMode('progress');
+	startGame();
+
+	function startGame() {
+		started = true;
+		mark(true);
+		// A host that limits the size of one file (a site deployed from a Git repository: GitHub takes nothing over 100 MB)
+		// serves the pack in parts, listed in window.HORACERO_PACK_PARTS (tools/web_site_build.py writes it): they are
+		// fetched in order into one buffer, handed to the engine as the pack, and the bar follows the parts and the
+		// engine's own download together.
+		const parts = window.HORACERO_PACK_PARTS || null;
+		if (!parts) {
+			engine.startGame({
+				'onProgress': function (current, total) {
+					showProgress(current > 0 && total > 0 ? current / total : 0);
+				},
+			}).then(() => {
+				setStatusMode('hidden');
+			}, displayFailureNotice);
+			return;
+		}
+		let packLoaded = 0;
+		let engineLoaded = 0;
+		let engineTotal = sizes['index.wasm'] || 0;
+		function showBoth() {
+			showProgress((packLoaded + engineLoaded) / Math.max(1, packTotal + engineTotal));
+		}
+
+		async function fetchParts() {
+			const pack = new Uint8Array(packTotal);
+			for (const part of parts) {
+				const response = await fetch(part);
+				if (!response.ok) {
+					throw new Error(T('No se pudo descargar el juego ({status}). Recargá la página para volver a intentarlo.').replace('{status}', response.status));
+				}
+				const reader = response.body.getReader();
+				for (;;) {
+					const { done, value } = await reader.read();
+					if (done) {
+						break;
+					}
+					if (packLoaded + value.length > pack.length) {
+						throw new Error(T('La descarga del juego no es la esperada. Recargá la página para volver a intentarlo.'));
+					}
+					pack.set(value, packLoaded);
+					packLoaded += value.length;
+					showBoth();
+				}
+			}
+			if (packLoaded !== pack.length) {
+				throw new Error(T('La descarga del juego se cortó. Recargá la página para volver a intentarlo.'));
+			}
+			return pack.buffer;
+		}
+
+		engine.config.update({
+			'onProgress': function (current, total) {
+				engineLoaded = current;
+				if (total > 0) {
+					engineTotal = total;
+				}
+				showBoth();
+			},
+		});
+		Promise.all([
+			engine.init(GODOT_CONFIG['executable']),
+			fetchParts().then((buffer) => engine.preloadFile(buffer, 'index.pck')),
+		]).then(() => engine.start({
+			'args': ['--main-pack', 'index.pck'].concat(GODOT_CONFIG['args'] || []),
+		})).then(() => {
+			setStatusMode('hidden');
+		}, displayFailureNotice);
+	}
+}());
+		</script>
+	</body>
+</html>

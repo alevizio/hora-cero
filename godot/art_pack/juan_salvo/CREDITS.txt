@@ -1,0 +1,24 @@
+JUAN SALVO (Hora Cero)
+
+Author:      Santiago Siri; the rifle, Ale (Alejandro Vizio).
+Permission:  granted to Ale (Alejandro Vizio) for use in Hora Cero, and to redistribute it in this repository for
+             use with Hora Cero, October 2026.
+Licence:     no public licence. All rights reserved by its authors. NOT covered by the repository's MIT licence or
+             by CC BY 4.0: do not reuse it outside Hora Cero without asking its authors.
+Character:   Juan Salvo is a character of the comic by Héctor Germán Oesterheld and Francisco Solano López, used
+             with the permission of its rights holders (NOTICE).
+
+Files:
+  juan_salvo.glb                          the blue-suit survivor (a Meshy AI biped on a 61-bone Mixamo skeleton,
+                                          10,390 triangles in one mesh), made ready for the game by
+                                          python3 tools/juan_suit.py <its original .glb>: in metres with Y up, a
+                                          standing rest with the rifle across his chest in both hands, the rifle on a
+                                          bone of its own (art/juan_salvo/source/rifle.glb), the clips Idle, Walk, Run
+                                          and Jump. The original file is not in the repository.
+  juan_salvo_suit_basecolor.png           its colour, normal and metal-roughness maps (2048, 1024 and 512 px)
+  juan_salvo_suit_normal.png
+  juan_salvo_suit_metallic_roughness.png
+  juan_salvo_rifle_*_v4.png               the rifle's maps, from Ale's earlier Juan
+  portrait.png                            his HUD portrait (768 x 768): the avatar that came with the model
+
+To build the game without it, empty the slot's "file" and "portrait" in ../manifest.json: a neutral stand-in shows.

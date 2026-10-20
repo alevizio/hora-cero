@@ -1,0 +1,42 @@
+{
+ "date": "17 October 2026",
+ "intro_html": "<p><b>Read this first.</b> I could not listen to any of this. Every judgement below comes from measurements, and they are crude. Please listen before anything ships, starting with Benteveo.</p><p><b>How the voices were made.</b> Each neighbour's voice was designed from a written Spanish description with Qwen3-TTS VoiceDesign. Each description named the man, his age and timbre, and the old Buenos Aires sound: <i>ll</i>/<i>y</i> as a buzzing \"zh\" [ʒ], aspirated <i>s</i>, the Italian rise and fall, and <i>vos</i>. Every candidate read the same short test: <i>ll</i>/<i>y</i> words, <i>vos</i>, <i>c</i>/<i>z</i> words, then an urgent shout. 56 candidates in all: 12 for Hornero, 12 for Lechuza, 24 for Benteveo and 8 for Biguá. Then all 64 lines, Spanish and English, were cloned three times each from the chosen design take with Qwen3-TTS Base. The best take was picked by what Whisper heard, then by how closely it matches the design voice (ECAPA), then by length and pitch. Benteveo is moved down two semitones in the game. The English lines are cloned from the Spanish voice, so they carry its accent. No recording of anyone was used.</p><p><b>The accent check.</b> For every <i>ll</i>/<i>y</i> word in a test take, I measured whether the consonant hisses (energy at 3–8 kHz, compared with an <i>s</i> in the same take). A [ʒ] or [ʃ] hisses; the [ʝ]/[j] of Spain, Mexico and most other Spanish does not. Where there was hiss, I checked whether voicing ran under it (energy below 400 Hz). The 1958 [ʒ] is voiced; today's porteño [ʃ] is not. To see whether the check means anything, the same model read the same text in a Madrid voice and a Mexico City voice (both below). Those four takes hissed on 1 <i>ll</i>/<i>y</i> word in 5 at most. The chosen porteños hissed on 2–4 of 4–5. In the final Spanish game lines, all 9 <i>ll</i>/<i>y</i> sounds hiss above the Madrid/Mexico level: 4 voiced, 5 voiceless.</p><p><b>What that means, honestly.</b> The model clearly knows the Rioplatense hiss: these voices have it and the Madrid and Mexico voices don't. But much of it is the <i>modern</i> voiceless \"sh\" of today's Buenos Aires, not the voiced \"zh\" of 1958, even though every description asked for the buzz. Nothing here measures the Italian melody beyond the pitch range, or the aspirated <i>s</i>. Whisper's language ID cannot tell Rioplatense from any other Spanish. My expectation is that a porteño will hear voices with a Rioplatense flavour on a fairly neutral synthetic base: a few telling sounds, not a 1958 Boca accent. That is the limit of a designed synthetic voice without a reference recording. For the English, Whisper is less sure these four are speaking English (mean P(English) 0.71–0.83) than it is for Wren, Rook, Merle and Rype (0.86–0.98). Its mishearings are the classic Spanish-speaker ones: \"live\" heard as \"leave\", \"fuse\" as \"foose\", \"done\" as \"don't\", \"yeta\" as \"dieta\". So the accent comes through. Whether it reads as Argentine or as Spanish-speaking in general can't be measured.</p><p><b>Pitch.</b> These are medians of the calm lines in the game. Biguá is about 88 Hz, the bass. Hornero is about 113 Hz. Lechuza is about 165 Hz, a thin older voice. Benteveo is about 205 Hz after the shift. The urgent lines run 6–9 semitones higher. For comparison, Rook is about 90–100 Hz, Wren about 110 (about 80 Hz in his shifted English) and Rype about 140. Biguá sits at Rook's pitch and Hornero near Wren's. They never share an operation.</p>",
+ "calibration": {
+  "M2": "Calibration, never cast: the same model and text, described as a man from Madrid. No hiss on any ll/y word.",
+  "X1": "Calibration, never cast: described as a man from Mexico City. Hiss on 1 of 5 ll/y words."
+ },
+ "people": {
+  "hornero": {
+   "verdict": "Recommended: Z2. Of Hornero's 12 candidates it came closest to the 1958 buzz: \"llueve\", \"yo\" and \"ayer\" all hiss with voicing under them (\"calle\" and \"ya\" came out as a plain [j]). Whisper heard every word, Spanish 97%. Its urgent half rises 7 semitones, so his spotted and hurt lines have some alarm. At about 113 Hz in the game he sits between Biguá and Lechuza. Honest guess: a calm, dry middle-aged porteño with a few clear \"zh\"s, not a heavy accent.",
+   "candidates": {
+    "Z2": "118 Hz; Whisper es 97%, all words right; ll/y: 3 of 5 hiss, all 3 voiced (zh); melody range 10 st.",
+    "A1": "Runner-up. 94 Hz, the warmest and deepest baritone of the twelve; words all right; ll/y 2 of 5 (one voiced). Its urgent half barely rises (+2 st), and it would sit on top of Biguá's pitch.",
+    "Z3": "Runner-up. 114 Hz, the most sing-song of Hornero's candidates (21 st range); ll/y 2 of 5, both voiceless (the modern 'sh'). The one to try if Z2 sounds too plain."
+   }
+  },
+  "lechuza": {
+   "verdict": "Recommended: A1. A thin, older voice, as the description asked. Whisper heard every word, Spanish 97%. Both of its hissing ll/y words (\"yo\", \"ya\") are voiced, the 1958 sound; \"calle\" and \"allá\" did not hiss. About 165 Hz in the game, clearly apart from Hornero and Biguá. Listen for whether he sounds 55 or younger; nothing I measured tells age.",
+   "candidates": {
+    "A1": "163 Hz; Whisper es 97%, all words right; ll/y: 2 of 4 hiss, both voiced (zh); urgent half +5 st.",
+    "Z4": "Runner-up. 134 Hz, lower and drier; ll/y 2 of 4, both voiceless ('sh'); the urgent half hardly rises.",
+    "A2": "Runner-up for timbre only. 130 Hz, lively melody (16 st), but no hiss on any ll/y: by my check it sounds like the Madrid and Mexico voices."
+   }
+  },
+  "benteveo": {
+   "verdict": "Recommended, with a warning: C3. The model kept reading 'muchacho', 'canillita' and 'pícaro' as a child or a woman: 20 of his 24 candidates came out above 200 Hz, with a woman's or child's timbre. C3 is the liveliest voice of all 56 (21 st melody range) and hisses on 4 of 5 ll/y words (2 voiced, 2 voiceless). Its low notes (110 Hz) and formants (F3 about 2.6 kHz) look male, but the speaker-embedding check was split almost evenly between male and woman/child. Its exclamations went up to about 230 Hz, so the game moves him down 2 semitones, to about 205 Hz. Listen to him first. If he sounds like a girl, recast B2, the most clearly male candidate, and take the shift off or reduce it.",
+   "candidates": {
+    "C3": "198 Hz in the design (205 Hz in the game after −2 st); Whisper es 97%, words 98% ('Chepos' for 'Che, vos'); ll/y 4 of 5 hiss (allá, ya voiced; llueve, yo voiceless).",
+    "B2": "Runner-up. 160 Hz, the most clearly male of the 24; ll/y 3 of 5, all voiceless ('sh'); quieter and less cheeky.",
+    "E2": "Runner-up. 174 Hz; words all right; ll/y 3 of 5 (2 voiced); its shout jumps 15 semitones and may squeak."
+   }
+  },
+  "bigua": {
+   "verdict": "Recommended: A4. The deepest voice of all 56 (89 Hz), and the most consistent hiss: all 4 ll/y words. But all 4 are voiceless, so this is today's porteño 'sh', not the 1958 'zh'. Of the four, Biguá is the most clearly Buenos Aires and the least 1958. Whisper heard every word, Spanish 97%. His shout rises 6.5 semitones and 7 dB. If the period buzz matters more than depth, A1 hisses on all 4 with 2 voiced, but it sits on Hornero's pitch.",
+   "candidates": {
+    "A4": "89 Hz, the bass; Whisper es 97%, all words right; ll/y: 4 of 4 hiss, all voiceless ('sh').",
+    "A1": "Runner-up. 105–110 Hz; ll/y 4 of 4 hiss, 2 voiced (orilla, ya): more 1958, but too close to Hornero.",
+    "A2": "Runner-up. 110 Hz; ll/y 3 of 4 (1 voiced); clean and calm."
+   }
+  }
+ }
+}
