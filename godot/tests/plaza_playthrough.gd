@@ -11,7 +11,7 @@ extends SceneTree
 ##           arcade's lights back, opens the subte's service gate and brings the group by the Cabildo down the service
 ##           stair; Biguá leaves the colectivo for the group by the Belgrano monument and then the two by the Casa
 ##           Rosada, and leads each back to it, the last of them in as the second cascarudo comes up Hipólito Yrigoyen.
-##           Juan Salvo comes in off Avenida de Mayo half a minute in and walks along the north of the square toward the
+##           Juan Salvo comes in off Avenida de Mayo in the first second and walks along the north of the square toward the
 ##           tram; the cascarudo leaves it for him, and he drives it off with his rifle before it reaches him. Through
 ##           the first wave (the snow does not touch him), while the squad waits it out under cover, he crosses to the
 ##           Casa Rosada's shut gates, where a man from the Pirámide and the one left by the flagpole have run in a
@@ -205,26 +205,31 @@ func _lechuza(k: Kit) -> void:
 			if _all(k, _group("south"), "safe") and k.arrived("lechuza"):
 				_next(k, "lechuza", "the south's two in the subte")
 
-## Biguá: the Belgrano monument's group and the two by the Casa Rosada to the colectivo.
+## Biguá: the colectivo east along Yrigoyen to the three at the Balcarce stop who cannot walk (they board where they
+## stand); then the Belgrano monument's group and the two by the Casa Rosada to it, where it now waits.
 func _bigua(k: Kit) -> void:
-	var colectivo: Vector2 = m(203.5, 138.2)
+	var colectivo: Vector2 = k.game.vehicle_rect("colectivo").get_center()
 	match int(step.bigua):
 		0:
-			k.order("bigua", "guide", _group("belgrano")[0])
-			_next(k, "bigua", "out to the Belgrano monument")
+			k.order("bigua", "drive")
+			_next(k, "bigua", "takes the colectivo east to the stop by Balcarce")
 		1:
+			if _all(k, _group("parada"), "safe") and k.arrived("bigua"):
+				k.order("bigua", "guide", _group("belgrano")[0])
+				_next(k, "bigua", "out to the Belgrano monument")
+		2:
 			if k.arrived("bigua") and k.game.followers_of("bigua").size() == _group("belgrano").size():
 				k.order("bigua", "move", colectivo)
 				_next(k, "bigua", "leads them to the colectivo")
-		2:
+		3:
 			if _all(k, _group("belgrano"), "safe") and k.arrived("bigua"):
 				k.order("bigua", "guide", _group("rosada")[0])
 				_next(k, "bigua", "out to the two by the Casa Rosada")
-		3:
+		4:
 			if k.arrived("bigua") and k.game.followers_of("bigua").size() == _group("rosada").size():
 				k.order("bigua", "move", colectivo)
 				_next(k, "bigua", "leads them to the colectivo")
-		4:
+		5:
 			if _all(k, _group("rosada"), "safe") and k.arrived("bigua"):
 				_next(k, "bigua", "the Casa Rosada's two in the colectivo")
 
@@ -259,7 +264,7 @@ func _salvo(k: Kit) -> void:
 			var runners: Array = _runners(k)
 			if k.arrived("salvo") and not k.game.followers_of("salvo").is_empty():
 				if runners.is_empty():
-					k.order("salvo", "move", m(203.5, 138.2))
+					k.order("salvo", "move", k.game.vehicle_rect("colectivo").get_center())
 					_next(k, "salvo", "leads them to the colectivo")
 				else:
 					k.order("salvo", "guide", runners[0])
@@ -322,7 +327,7 @@ func _rescue() -> void:
 	var came: Array = []
 	for e: Dictionary in k.events_of("creature"):
 		if not bool(e.again): came.append(str(e.id))
-	_expect(came == ["c1", "c2", "c3"], "the three cascarudos came up the avenues: %s" % str(came))
+	_expect(came.size() >= 5 and came.slice(0, 2) == ["c1", "c2"] and not came.has("c6"), "five of the six cascarudos came up the avenues before the night was won: %s" % str(came))
 	var drawn_by_bell: bool = false
 	for e: Dictionary in k.events_of("drawn"): drawn_by_bell = drawn_by_bell or (str(e.noise) == "bell" and "c1" in (e.ids as Array))
 	_expect(drawn_by_bell, "the bell drew the first one to the tram")

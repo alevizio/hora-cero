@@ -15,8 +15,8 @@ dest_files=["res://.godot/imported/decal_a.png-f0aa1a4edbf5d151010316e69d6df935.
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=4
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

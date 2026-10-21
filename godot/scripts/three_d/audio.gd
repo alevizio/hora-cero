@@ -103,6 +103,7 @@ const CUES: Dictionary = {
 	&"claws": [["cascarudo_step_1", "cascarudo_step_2", "cascarudo_step_3"], -5.0, MID, 0.05],
 	&"rasp": [["cascarudo_rasp_1", "cascarudo_rasp_2"], -2.0, MID, 0.03],
 	&"rattle": [["cascarudo_rattle"], 0.0, FAR, 0.03],
+	&"call": [["cascarudo_call_1", "cascarudo_call_2"], 3.0, FAR, 0.03],
 	&"shell": [["cascarudo_shell"], 0.0, MID, 0.04],
 	&"lunge": [["cascarudo_lunge"], -1.0, MID, 0.03],
 	&"overturn": [["cascarudo_overturn"], 0.0, MID, 0.0],
@@ -502,6 +503,9 @@ func on_sim_event(event: Dictionary) -> void:
 				_later(0.32, &"bell", at, -5.0, 0.985)
 		"pickup":
 			pass  # the heave is played as the lift starts (ACTION_TICKS)
+		"took":
+			# a rescue's gear taken: the rifle's bolt worked, the hood's strap pulled tight
+			_play(&"bolt" if str(event.get("kind", "")) == "rifle" else &"cinch", by)
 		"drop":
 			_play(&"bush" if bool(event.get("hidden", false)) else &"body_drop", by)
 		"trap_set":
@@ -567,6 +571,8 @@ func on_sim_event(event: Dictionary) -> void:
 		"death":
 			_later(0.15, &"body_fall", _whereabouts(str(event.get("id", ""))))
 		"creature":
+			# it announces itself as it comes in: the rattle from down the avenue, then its call, heard across the square
+			_later(0.4, &"call", Vector2(float(event.get("x", 0.0)), float(event.get("y", 0.0))), 0.0, _beast_pitch(str(event.get("id", ""))))
 			# a cascarudo comes into the square (or back into it): its long rattle from the edge it comes in by
 			_play(&"rattle", at, 0.0, _beast_pitch(str(event.get("id", ""))))
 		"creature_hit":

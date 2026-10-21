@@ -15,10 +15,10 @@ dest_files=["res://.godot/imported/pwalls_a.webp-37a0f7895bd84d2fa1554b9d088a0f0
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=4
+compress/high_quality=true
 compress/lossy_quality=0.7
-compress/uastc_level=0
+compress/uastc_level=1
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/channel_pack=0

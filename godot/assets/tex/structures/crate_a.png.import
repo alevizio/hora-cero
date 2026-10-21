@@ -15,8 +15,8 @@ dest_files=["res://.godot/imported/crate_a.png-7c0b6cab99a53d9b306d6c1dc2c57b95.
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=4
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

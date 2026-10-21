@@ -1540,6 +1540,26 @@ def cascarudo_rattle(sr, rng):
     return finish(far_away(x, sr, rng, 2.8), sr, -6.0, 3.0, 200.0)
 
 
+for _i, (_swell, _strokes, _seed) in enumerate([(1.1, [(0.22, 55, 110, 0.7), (0.26, 90, 170, 0.9), (0.34, 120, 230, 1.0), (0.3, 200, 90, 0.8)], 0),
+                                                (0.9, [(0.2, 60, 120, 0.75), (0.3, 100, 210, 1.0), (0.26, 190, 110, 0.85), (0.36, 120, 60, 0.7)], 1)], start=1):
+    @sound("cascarudo_call_%d" % _i, LO)
+    def _cascarudo_call(sr, rng, swell=_swell, strokes=_strokes):
+        """A cascarudo coming into the square announces itself (two variants): the whole body droning as a slow stroke
+        sets its low modes going and swells, then the file driven hard, strokes that quicken into a screech and fall
+        back, its mandibles snapping as it comes, a long hiss under all of it; closer than the rattle and louder:
+        heard across the square."""
+        x = buf(2.7, sr)
+        place(x, stroke(sr, rng, swell, 28.0, 70.0, LOW_CHITIN), 0.0, sr, 0.9)
+        at = swell * 0.75
+        for dur, rate_from, rate_to, amp in strokes:
+            place(x, stroke(sr, rng, dur, rate_from, rate_to, CHITIN if rate_from > 100 else LOW_CHITIN), at, sr, amp)
+            at += dur + rng.uniform(0.02, 0.05)
+        place(x, mandibles(sr, rng), at - 0.1, sr, 0.8)
+        place(x, mandibles(sr, rng), at + 0.02, sr, 0.9)
+        place(x, hiss(sr, rng, 2.2, 700, 4800, 0.5), 0.15, sr, 0.3)
+        return finish(far_away(x, sr, rng, 1.4, -10.0), sr, -3.0, 3.0, 90.0)
+
+
 @sound("cascarudo_shell")
 def cascarudo_shell(sr, rng):
     """A rifle bullet striking a cascarudo's shell: a hard crack, the hollow body under it booming short and dry,

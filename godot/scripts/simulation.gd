@@ -221,6 +221,8 @@ var rescue_on: bool = false
 var vehicles: Dictionary = {}
 ## Cloths taken so far (data "canvases"): canvas id -> unit id. A spent cloth stays on the list.
 var canvases_taken: Dictionary = {}
+## The gear left about a rescue's square (data "gear": a hood and mask, a rifle) that has been taken: gear id -> who.
+var gear_taken: Dictionary = {}
 ## The snow has buried the square (data snowfall.bury): whoever was out in it is lost.
 var buried_square: bool = false
 ## Serial numbers handed to people as they join a chain behind an operative (the order they walk in).
@@ -351,8 +353,9 @@ func reset() -> void:
 	_beast_dirty = true
 	vehicles = {}
 	for spec: Dictionary in data.get("vehicles", []):
-		vehicles[str(spec.id)] = {"x": float(spec.x), "y": float(spec.y), "stop": 0, "to": -1, "dir": 1, "driver": ""}
+		vehicles[str(spec.id)] = {"x": float(spec.x), "y": float(spec.y), "stop": int(spec.get("start", 0)), "to": -1, "dir": 1, "driver": ""}
 	canvases_taken = {}
+	gear_taken = {}
 	buried_square = false
 	_rank_serial = 0
 	_snow_level = ""
@@ -628,6 +631,10 @@ func order_drive(vehicle_id: String = "") -> bool:
 func order_canvas(canvas_id: String = "") -> bool:
 	return _issue(selected(), {"type": "canvas", "target": canvas_id})
 
+## Gear left about the square (data "gear"): go and take it (the one named, or the nearest left he can use).
+func order_take(gear_id: String = "") -> bool:
+	return _issue(selected(), {"type": "take", "target": gear_id})
+
 ## A rescue: helps a squad mate who has fallen in the snow back on his feet.
 func order_help(unit_id: String) -> bool:
 	return _issue(selected(), {"type": "help", "target": unit_id})
@@ -675,6 +682,7 @@ func perform(action_id: String, target: Variant = null) -> bool:
 		"call": return order_call()
 		"drive": return order_drive(target if target is String else "")
 		"canvas": return order_canvas(target if target is String else "")
+		"take": return order_take(target if target is String else "")
 		"help": return target is String and order_help(target)
 		"interact": return interact()
 		"cancel": return cancel_order()
@@ -1040,6 +1048,8 @@ func _issue_order(unit: Dictionary, order: Dictionary) -> bool:
 				"lost": return _refuse(_snow_text("lostRefuse", "The snow has covered them."))
 			if str(person.state) == "follow" and str(person.follow_id) == str(unit.id):
 				return _refuse(_snow_text("following", "They are already following %s.") % unit.name)
+			if bool(person.get("stuck", false)):
+				return _refuse(_snow_text("stuckRefuse", "They are too far gone to walk another step. Bring the colectivo to them."))
 			if followers_of(str(unit.id)).size() >= lead_of(unit):
 				return _refuse(_snow_text("full", "%s is leading as many as he can. Bring them in first.") % unit.name)
 			spot = position_of(person)
@@ -1097,6 +1107,23 @@ func _issue_order(unit: Dictionary, order: Dictionary) -> bool:
 					return _refuse("%s cannot get to it from here." % unit.name)
 			total = float(_snowfall().get("canvasTime", CANVAS_TIME))
 			message = _named(str(canvas.get("order", "%s goes for the cloth.")), str(unit.name))
+		"take":
+			var item: Dictionary = _gear_for(str(order.get("target", "")), here)
+			if item.is_empty():
+				return _refuse(_snow_text("noGear", "There is nothing left there to take."))
+			var why: String = _gear_refusal(unit, item)
+			if why != "":
+				return _refuse(why)
+			order = order.duplicate()
+			order["target"] = str(item.id)
+			var thing := Vector2(float(item.x), float(item.y))
+			spot = thing
+			if here.distance_to(thing) > CANVAS_REACH_TAKE:
+				route = find_path(here, thing)
+				if route.is_empty():
+					return _refuse("%s cannot get to it from here." % unit.name)
+			total = float(item.get("time", 1.5))
+			message = _named(str(item.get("order", "%s goes for it.")), str(unit.name))
 		"help":
 			var mate: Dictionary = unit_by_id(str(order.get("target", "")))
 			if mate.is_empty() or str(mate.id) == str(unit.id) or not bool(mate.get("fallen", false)) or not bool(mate.alive):
@@ -1470,6 +1497,13 @@ func _process_action(unit: Dictionary, dt: float) -> void:
 				_emit({"type": "canvas", "by": str(unit.id), "canvas": str(canvas.id), "x": float(canvas.x), "y": float(canvas.y)})
 				_finish_order(unit)
 				message = _named(str(canvas.get("take", "%s takes the cloth.")), str(unit.name))
+		"take":
+			var item: Dictionary = gear_by_id(str(unit.order.get("target", "")))
+			if item.is_empty() or gear_taken.has(str(item.id)):
+				_fail_order(unit, _snow_text("gearGone", "Somebody has taken it already."))
+			elif _work_at(unit, Vector2(float(item.x), float(item.y)), CANVAS_REACH_TAKE + 2.0, dt):
+				_take_gear(unit, item)
+				_finish_order(unit)
 		"help":
 			var mate: Dictionary = unit_by_id(str(unit.order.get("target", "")))
 			if mate.is_empty() or not bool(mate.get("fallen", false)) or not bool(mate.alive):
@@ -3059,6 +3093,8 @@ func _drive_refusal(unit: Dictionary, id: String) -> String:
 		return "There is nothing to drive there."
 	if not spec.is_empty() and (spec.get("stops", []) as Array).size() < 2:
 		return _snow_text("stranded", "It is going nowhere tonight.")
+	if not spec.is_empty():
+		return _named(str(spec.get("refuse", "%s cannot drive it.")), str(unit.get("name", "")))
 	for other: Dictionary in data.get("vehicles", []):
 		if (other.get("stops", []) as Array).size() >= 2:
 			return _named(str(other.get("refuse", "%s cannot drive it.")), str(unit.get("name", "")))
@@ -3094,6 +3130,7 @@ func _update_vehicles(dt: float) -> void:
 				_shift(unit, shift)
 		for person: Dictionary in guards:
 			if bool(person.get("person", false)) and str(person.state) != "lost" and str(person.get("carried_by", "")) == "" and aboard.has_point(position_of(person)):
+				if bool(person.get("stuck", false)) and str(person.state) == "crowd": continue
 				_shift(person, shift)
 		state.x = float(state.x) + step
 		if absf(goal - float(state.x)) < 0.01:
@@ -3143,6 +3180,60 @@ func _spend_canvas(unit: Dictionary) -> void:
 	_emit({"type": "canvas_spent", "by": str(unit.id), "canvas": str(unit.canvas.get("id", ""))})
 	unit["canvas"] = {}
 
+## The gear left about the square for whoever gets to it first (data "gear": {id, kind, label, x, y, time, order,
+## take} and what it gives: "suit" true, with a "look", for a hood and mask; "gun" for a rifle).
+func gear() -> Array:
+	return data.get("gear", [])
+
+func gear_by_id(id: String) -> Dictionary:
+	for item: Dictionary in gear():
+		if str(item.id) == id:
+			return item
+	return {}
+
+## The gear an order means: the one named (if nobody has taken it), or the nearest left.
+func _gear_for(id: String, here: Vector2) -> Dictionary:
+	var best: Dictionary = {}
+	var best_d: float = INF
+	for item: Dictionary in gear():
+		if gear_taken.has(str(item.id)) or (id != "" and str(item.id) != id):
+			continue
+		var d: float = here.distance_to(Vector2(float(item.x), float(item.y)))
+		if d < best_d:
+			best = item
+			best_d = d
+	return best
+
+## Why this operative has no use for that gear ("" when he has): a rifle for one with a gun, a suit for Juan Salvo.
+func _gear_refusal(unit: Dictionary, item: Dictionary) -> String:
+	if item.has("gun") and unit.has("gun"):
+		return _named(str(item.get("armed", "%s has a gun already.")), str(unit.name))
+	if bool(item.get("suit", false)) and bool(unit.get("suit", false)):
+		return _named(str(item.get("sealed", "%s is sealed against the snow already.")), str(unit.name))
+	return ""
+
+## He takes it. A rifle makes him a second gun against the cascarudos (with its rounds); a hood and mask seal him
+## against the snow like Juan Salvo's suit, and he is seen in them from then on (the look the gear names, worn the
+## way a uniform is: units[].disguise), the cloth he held no longer needed.
+func _take_gear(unit: Dictionary, item: Dictionary) -> void:
+	gear_taken[str(item.id)] = str(unit.id)
+	var worn: Array = unit.get("gear", [])
+	worn.append(str(item.get("kind", item.id)))
+	unit["gear"] = worn
+	if item.has("gun"):
+		unit["gun"] = (item.gun as Dictionary).duplicate(true)
+		unit.ammo = int(unit.gun.get("ammo", 0))
+		unit.weapon_cooldown = 0.0
+	if bool(item.get("suit", false)):
+		unit["suit"] = true
+		unit.exposure = 0.0
+		_spend_canvas(unit)
+		if str(item.get("look", "")) != "":
+			unit["disguise"] = {"id": str(item.id), "kind": "", "look": str(item.look)}
+	stats["gear"] = int(stats.get("gear", 0)) + 1
+	_emit({"type": "took", "by": str(unit.id), "gear": str(item.id), "kind": str(item.get("kind", "")), "x": float(item.x), "y": float(item.y)})
+	message = _named(str(item.get("take", "%s takes it.")), str(unit.name))
+
 ## The people of the rescue (data "people"), as they are kept on the guards' list.
 func people() -> Array:
 	var out: Array = []
@@ -3184,7 +3275,7 @@ func _lead(unit: Dictionary, person: Dictionary) -> int:
 		for other: Dictionary in guards:
 			if not bool(other.get("person", false)) or str(other.id) == str(person.id) or str(other.get("group", "")) != group:
 				continue
-			if not str(other.state) in ["crowd", "panic", "coming"]:
+			if not str(other.state) in ["crowd", "panic", "coming"] or bool(other.get("stuck", false)):
 				continue
 			if position_of(other).distance_to(position_of(person)) <= GROUP_REACH:
 				near.append(other)
@@ -3234,6 +3325,11 @@ func _save(person: Dictionary, shelter_id: String) -> void:
 	message = _snow_text("savedCount", "Under cover: %d of %d.") % [int(counts.saved), int(counts.total)]
 	if int(counts.saved) >= int(counts.need):
 		_complete_objective("people")
+	if bool(person.get("stuck", false)):
+		var waiting: bool = false
+		for other: Dictionary in guards:
+			if bool(other.get("stuck", false)) and str(other.state) != "safe": waiting = true
+		if not waiting: _complete_objective("stop")
 
 ## The k-th spot inside a shelter: round its "inside" point, inside its rectangle, on open ground.
 func _spot_in(shelter: Dictionary, k: int) -> Vector2:
@@ -3260,6 +3356,9 @@ func _update_people(dt: float) -> void:
 				var plan: Dictionary = person.get("panic", {})
 				if not plan.is_empty() and not bool(person.panicked) and time >= float(plan.get("at", INF)):
 					_panic(person)
+				# one too far gone to walk (data people[].stuck) is saved where he stands when cover comes to him: the colectivo
+				elif bool(person.get("stuck", false)) and shelter_at(position_of(person), true) != "":
+					_save(person, shelter_at(position_of(person), true))
 			"follow":
 				_follow(person, speed, dt)
 				if str(person.state) == "follow" and wave and float(person.exposure) >= chilled and not bool(person.warm):
@@ -3500,7 +3599,7 @@ func _call_people(unit: Dictionary) -> void:
 		if not bool(person.get("person", false)):
 			continue
 		var state: String = str(person.state)
-		if not (state in ["crowd", "panic"] or (mode == "follow" and state == "coming")):
+		if bool(person.get("stuck", false)) or not (state in ["crowd", "panic"] or (mode == "follow" and state == "coming")):
 			continue
 		if position_of(person).distance_to(center) <= radius:
 			near.append(person)
@@ -4045,7 +4144,7 @@ func snapshot() -> Dictionary:
 		"noise": noise.duplicate(true), "traps": traps.duplicate(true), "alarm": alarm.duplicate(true),
 		"objectives": objectives.duplicate(true), "stats": stats.duplicate(true),
 		"spawned": _spawned, "trap_serial": _trap_serial, "pending_checkpoint": _pending_checkpoint,
-		"vehicles": vehicles.duplicate(true), "canvases_taken": canvases_taken.duplicate(), "buried_square": buried_square,
+		"vehicles": vehicles.duplicate(true), "canvases_taken": canvases_taken.duplicate(), "gear_taken": gear_taken.duplicate(), "buried_square": buried_square,
 		"rank_serial": _rank_serial, "snow_level": _snow_level}
 
 ## Puts the mission back exactly as snapshot() saw it. Actor dictionaries are replaced, so drop any references to them.
@@ -4079,6 +4178,7 @@ func restore(saved: Dictionary) -> void:
 	_pending_checkpoint = saved.pending_checkpoint
 	vehicles = saved.get("vehicles", {}).duplicate(true)
 	canvases_taken = saved.get("canvases_taken", {}).duplicate()
+	gear_taken = saved.get("gear_taken", {}).duplicate()
 	buried_square = bool(saved.get("buried_square", false))
 	_rank_serial = int(saved.get("rank_serial", 0))
 	_snow_level = str(saved.get("snow_level", ""))
@@ -4187,6 +4287,17 @@ func available_actions(unit_id: String = "") -> Array[Dictionary]:
 				(_snow_text("holding", "%s is already holding a cloth over them.") % unit.name) if holding else (_snow_text("noCanvas", "There is no cloth left to take.") if left == 0 else "")))
 			entry.context = true
 			entry.count = left
+			list.append(entry)
+		if not gear().is_empty():
+			# the gear left about the square: the plate names the nearest piece he can use
+			var left_gear: int = 0
+			for item: Dictionary in gear():
+				if not gear_taken.has(str(item.id)): left_gear += 1
+			var nearest: Dictionary = _gear_for("", position_of(unit))
+			var entry: Dictionary = _action("take", str(nearest.get("label", "")) if not nearest.is_empty() else _snow_text("takeLabel", "Take"), "context", _first(blocked, loaded,
+				_snow_text("noGear", "There is nothing left there to take.") if left_gear == 0 else _gear_refusal(unit, nearest)))
+			entry.context = true
+			entry.count = left_gear
 			list.append(entry)
 	if unit.has("melee"):
 		list.append(_action("takedown", str(unit.melee.get("label", "Takedown")), "target_guard", _first(blocked, loaded)))
@@ -4382,7 +4493,8 @@ func _rescue_things(unit: Dictionary, list: Array[Dictionary], loaded: String) -
 			continue
 		if str(person.state) == "follow" and str(person.follow_id) == str(unit.get("id", "")):
 			continue
-		list.append(_interactable(str(person.id), "person", _snow_text("guideLabel", "Lead in"), position_of(person), 26.0, "guide", str(person.id), _first(down, loaded, full)))
+		var stuck: String = _snow_text("stuck", "Too far gone to walk: bring the colectivo to them.") if bool(person.get("stuck", false)) else ""
+		list.append(_interactable(str(person.id), "person", _snow_text("guideLabel", "Lead in"), position_of(person), 26.0, "guide", str(person.id), _first(down, loaded, _first(stuck, full))))
 	for mate: Dictionary in units:
 		if bool(mate.alive) and bool(mate.get("fallen", false)) and str(mate.id) != str(unit.get("id", "")):
 			list.append(_interactable(str(mate.id), "fallen", _snow_text("helpLabel", "Help up"), position_of(mate), 28.0, "help", str(mate.id), _first(down, loaded)))
@@ -4397,6 +4509,11 @@ func _rescue_things(unit: Dictionary, list: Array[Dictionary], loaded: String) -
 		if int(vehicles[str(spec.id)].to) >= 0:
 			continue
 		list.append(_interactable(str(spec.id), str(spec.get("kind", "vehicle")), str(spec.get("label", "Drive")), vehicle_rect(str(spec.id)).get_center(), 48.0, "drive", str(spec.id), _first(down, loaded)))
+	# the gear left about the square (a rifle, a hood and mask), for whoever can use it
+	for item: Dictionary in gear():
+		if gear_taken.has(str(item.id)):
+			continue
+		list.append(_interactable(str(item.id), str(item.get("kind", "gear")), str(item.get("label", "Take")), Vector2(float(item.x), float(item.y)), 30.0, "take", str(item.id), _first(down, loaded, _gear_refusal(unit, item))))
 	# the creatures in the square, for one who has a gun to drive them off with
 	if unit.has("gun"):
 		var empty: String = "" if int(unit.get("ammo", 0)) > 0 else "%s is out of ammunition." % str(unit.get("name", ""))

@@ -15,8 +15,8 @@ dest_files=["res://.godot/imported/slate_a.png-a57a25c650d5274f25a64b4333b2817e.
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=4
+compress/high_quality=true
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0

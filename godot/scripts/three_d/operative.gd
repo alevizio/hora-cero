@@ -119,6 +119,8 @@ var shape: Dictionary = SHAPE
 var baked: bool = false         # a figure baked from MakeHuman (several textured surfaces)
 var baked_covered: bool = false
 var _xray_tint := Color(0, 0, 0, -1)
+## The clothes the prop was last shown or put away for (show_prop runs once per change of clothes, not every frame).
+var _prop_for: String = "\u0001"
 ## What he has on, if not his own clothes: the id of the guard whose uniform it is, or "shirt" for a stripped guard.
 var _clothes: String = ""
 var shoulder_x: float = 0.185  # this build's shoulder joints
@@ -859,14 +861,14 @@ static func _look(id: String, is_enemy: bool, gkind: String = "", look_name: Str
 				"face": {"cheek": 1.0, "hollow": 0.6, "jawline": 1.2, "chin": 1.1, "nose_w": 0.0080, "nose_out": 0.0225, "stubble": 0.6}, "fig": "hornero"}
 		"lechuza":
 			# the night lineman: long, thin and stooped, fifty-five, a grey-brown canvas work coat with his tool belt over it,
-			# a knitted cap with ear flaps, round steel spectacles, fingerless gloves; the folding ladder on his shoulder
+			# a knitted cap with ear flaps, round steel spectacles, fingerless gloves; his hand lamp on his belt
 			o = {"key": "lechuza", "kind": "lechuza", "n": 0, "top": "6b6251", "legs": "3b3832", "skin": "b08a72",
 				"hair": "8f8a83", "boot": "211e1b", "web": "3d2c1f", "girth": 1.0, "height": 1.03, "coat": false, "build": "lanky", "tache": "",
 				"face": {"cheek": 1.3, "hollow": 1.3, "stubble": 0.7}, "fig": "lechuza", "specs": true}
 		"benteveo":
 			# the newspaper seller: sixteen, slight and quick, a cap too big, a long striped scarf, the bag of the late edition
 			o = {"key": "benteveo", "kind": "benteveo", "n": 0, "top": "6a5642", "legs": "57452f", "skin": "c09878",
-				"hair": "3a2a1e", "boot": "2e241c", "web": "7d6c4c", "girth": 0.96, "height": 0.95, "coat": false, "build": "slight", "tache": "",
+				"hair": "3a2a1e", "boot": "2e241c", "web": "7d6c4c", "girth": 0.93, "height": 0.88, "coat": false, "build": "slight", "tache": "",
 				"face": {"cheek": 0.8, "hollow": 0.3, "stubble": 0.0}, "fig": "benteveo"}
 		"bigua":
 			# the boatman: broad and strong, thirty-five, an oilskin open over a roll-neck jumper, a beanie, rubber boots; a
@@ -970,11 +972,17 @@ func _clothed(actor: Dictionary) -> Dictionary:
 		shirt.bino = false
 		return shirt
 	var disguise: Dictionary = actor.get("disguise", {})
-	if disguise.is_empty(): return own
-	var dressed := _look(str(disguise.get("id", "")), true, str(disguise.get("kind", "")), str(disguise.get("look", ""))).duplicate()
-	dressed.kind = own.kind
-	dressed.gk = ""
-	return dressed
+	var worn := own
+	if not disguise.is_empty():
+		worn = _look(str(disguise.get("id", "")), true, str(disguise.get("kind", "")), str(disguise.get("look", ""))).duplicate()
+		worn.kind = own.kind
+		worn.gk = ""
+	# a rifle found in the square (a rescue's units[].gear): the kit's rifle in the hands of a figure that had none
+	if "rifle" in (actor.get("gear", []) as Array) and not worn.has("cutout"):
+		worn = worn.duplicate()
+		worn["key"] = str(worn.key) + "+rifle"
+		worn["extra_gun"] = "rifle"
+	return worn
 
 ## A look with a baked figure takes its shoulders, torso and head from the figure's measurements.
 static func _apply_fig(o: Dictionary) -> void:
@@ -1056,6 +1064,7 @@ static func _mesh_for(o: Dictionary) -> ArrayMesh:
 				"civil": _gear_civil(k, o)
 				_: _gear_guard(k, o)
 		_: _gear_asset(k, o)
+	if str(o.get("extra_gun", "")) == "rifle": _build_rifle(k)
 	_paint_pass(k, o)
 	var mesh := k.commit()
 	if is_baked:
@@ -2288,9 +2297,9 @@ static func _belt_line(k: Kit, o: Dictionary) -> Vector2:
 
 ## Lechuza: the night lineman's kit. Round steel spectacles; on the leather tool belt over his coat (the baked figure's)
 ## a pouch with the pliers' insulated grips standing out of it on his right hip, the board's sector key and two smaller
-## keys on a steel ring at the front of his left hip, a coil of black electrician's cord on the left side; and the short
-## folding wooden ladder on his right shoulder, standing on edge with its lower rail on the shoulder, hinged at the
-## middle of each rail. He ties guards up with the cord (melee bind): no tool to draw.
+## keys on a steel ring at the front of his left hip, a coil of black electrician's cord on the left side; and his hand
+## lamp, the lineman's lantern, hooked on the belt behind his left hip (the folding ladder he carried on his shoulder
+## until October 21, 2026 read as a plank through his head). He ties guards up with the cord (melee bind): no tool to draw.
 static func _gear_lechuza(k: Kit, o: Dictionary) -> void:
 	_spectacles(k, o, "8b8e90")
 	var bl := _belt_line(k, o)
@@ -2329,34 +2338,22 @@ static func _gear_lechuza(k: Kit, o: Dictionary) -> void:
 		k.torus(at + turn * Vector3(0.004 * i, -0.004 * i, 0.010 * i - 0.010), turn * Basis(Vector3.BACK, PI / 2.0), 0.056 - 0.004 * i, 0.0075, 14, 5)
 	k.paint("3b2a1c", 0.62)
 	k.box(at + turn * Vector3(0, 0.060, 0.0), Vector3(0.010, 0.020, 0.004), turn)
-	# the ladder, carried on the right shoulder: front end a little down, more of it behind him than in front
-	k.bind(CHEST)
-	var along := Vector3(0, -0.20, 1.0).normalized()
-	var up := (Basis(along, 0.38) * Vector3(0, 1.0, 0.20)).normalized()
-	var base := Vector3(-o.shape.shoulder - 0.010, 1.515, -0.04)
-	var rot := Basis(up.cross(along).normalized(), up, along)
-	var s0 := -0.66
-	var s1 := 0.50
-	var gap := 0.29
-	k.paint("75614a", 0.85)
-	for r: int in range(2):
-		var mid := base + up * (gap * float(r)) + along * ((s0 + s1) * 0.5)
-		k.box(mid, Vector3(0.015, 0.024, (s1 - s0) * 0.5), rot)
-	k.paint("65523d", 0.85)
-	var s := s0 + 0.07
-	while s < s1 - 0.04:
-		k.begin(6)
-		var c := base + along * s
-		k.ring(c + up * 0.012, rot.x * 0.012, along * 0.012)
-		k.ring(c + up * (gap - 0.012), rot.x * 0.012, along * 0.012)
-		k.finish()
-		s += 0.235
-	# the hinge on each rail where the two halves fold, and the iron shoes at the feet
+	# the hand lamp: the lineman's lantern hooked on the belt behind his left hip, its glass toward the ground
+	deg = 330.0
+	turn = Basis(Vector3.UP, deg_to_rad(90.0 - deg))
+	at = k.hug(deg, bl.x - 0.062, bl.y + 0.014)
+	k.paint("3a3c3e", 0.45, 0.6)
+	k.begin(8)
+	k.ring(at + turn * Vector3(0, 0.030, 0), turn * Vector3(0.028, 0, 0), turn * Vector3(0, 0, 0.028))
+	k.ring(at + turn * Vector3(0, -0.058, 0), turn * Vector3(0.034, 0, 0), turn * Vector3(0, 0, 0.034))
+	k.finish()
+	k.paint("d9c89a", 0.3, 0.1)
+	k.begin(8)
+	k.ring(at + turn * Vector3(0, -0.058, 0), turn * Vector3(0.031, 0, 0), turn * Vector3(0, 0, 0.031))
+	k.ring(at + turn * Vector3(0, -0.086, 0), turn * Vector3(0.026, 0, 0), turn * Vector3(0, 0, 0.026))
+	k.finish()
 	k.paint("4f5355", 0.4, 0.6)
-	for r: int in range(2):
-		var h := base + up * (gap * float(r)) + along * (-0.05)
-		k.box(h, Vector3(0.018, 0.028, 0.022), rot)
-		k.box(base + up * (gap * float(r)) + along * (s0 + 0.02), Vector3(0.017, 0.026, 0.02), rot)
+	k.torus(at + turn * Vector3(0, 0.046, 0), turn * Basis(Vector3.RIGHT, PI / 2.0), 0.016, 0.0025, 10, 4)
 	k.weather = 1.0
 
 ## Benteveo: the canillita's canvas bag on a strap from his left shoulder, across his chest and his back, to the
@@ -3346,9 +3343,15 @@ func sync(actor: Dictionary, active: bool, dt: float, stopped: bool) -> void:
 		_claim(id)
 	# A change of clothes: an operative in a guard's uniform, a guard left in his shirt sleeves.
 	var clothes := str(actor.get("disguise", {}).get("id", "")) if not enemy else ("shirt" if bool(actor.get("stripped", false)) else "")
+	if not enemy and actor.has("gear"): clothes += "+" + ",".join(PackedStringArray(actor.gear))
 	if clothes != _clothes:
 		_clothes = clothes
 		_dress(_clothed(actor), str(actor.get("id", actor_id)))
+	# an art model's own rifle: a figure in his own clothes keeps it (Juan Salvo); one dressed in found clothes (the
+	# hooded survivor's on a neighbour) carries it only when the rules give him a gun
+	if cutout != null and (first or clothes != _prop_for):
+		_prop_for = clothes
+		cutout.show_prop(enemy or actor.has("gun") or (actor.get("disguise", {}) as Dictionary).is_empty())
 	var px := float(actor.get("x", 0.0)) / 32.0
 	var pz := float(actor.get("y", 0.0)) / 32.0
 	var travel := Vector2(px - position.x, pz - position.z).length()

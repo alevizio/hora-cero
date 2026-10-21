@@ -102,11 +102,12 @@ func _manifest() -> void:
 	# credits: test drawings stay out; the licensed slots with who made them, the licence and the permission
 	var en: Array[String] = ArtPack.credit_lines("en")
 	var credit: String = "Santiago Siri · permiso para usar en Hora Cero · concedido a Ale, octubre de 2026"
+	var hood: String = "The hooded survivor · Ale (Alejandro Vizio), hecho con Codex a partir de fotos de una figura de un amigo artista (por confirmar) · propio; la base de la cabeza, la piel y los ojos son de MakeHuman (CC0 1.0) · de Ale, octubre de 2026"
 	if licensed:
-		check(en.size() == 2 and en[0] == "Cascarudo · " + credit and en[1] == "Juan Salvo · " + credit and not "Test" in " ".join(en) and not "pending" in " ".join(en),
+		check(en.size() == 3 and en[0] == "Cascarudo · " + credit and en[1] == "Juan Salvo · " + credit and en[2] == hood and not "Test" in " ".join(en) and not "pending" in " ".join(en),
 			"The credits name the licensed art, its makers, licence and permission, and leave the test drawings and models out: %s" % [en])
 	else:
-		check(en == ["Licensed art pending: Cascarudo, Juan Salvo."], "No licensed art installed: the credits say what is pending, and leave the test drawings and models out: %s" % [en])
+		check(en == ["Licensed art pending: Cascarudo, Juan Salvo.", hood] or en == [hood, "Licensed art pending: Cascarudo, Juan Salvo."], "No licensed art installed: the credits say what is pending, and leave the test drawings and models out: %s" % [en])
 	# the slots of the Plaza de Mayo: Juan Salvo (a person, his portrait rendered from his model) and the cascarudo (a
 	# creature 4 m long, as high and wide as its model comes out at that, with a lighter copy for far off)
 	var juan: Dictionary = ArtPack.slot("juan_salvo")

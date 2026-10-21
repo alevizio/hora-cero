@@ -21,7 +21,7 @@ const CATALOG_DIR: String = "res://locale/"
 const SECTION: String = "settings"
 const KEY: String = "language"
 ## Mission-data fields that hold ids, codes or names, never text to translate.
-const DATA_IDS: Array[String] = ["id", "kind", "look", "type", "icon", "thing", "cue", "noise", "style", "sound", "theme",
+const DATA_IDS: Array[String] = ["id", "kind", "look", "type", "icon", "glyph", "thing", "cue", "noise", "style", "sound", "theme",
 	"worldName", "progressKey", "color", "material", "_source", "water", "hum", "objective", "by", "who", "unplanted",
 	"coach", "coachOrder", "fig", "span", "at", "path", "number", "tab", "x", "y", "stance", "ability", "boat", "prop", "officers",
 	"seenBy", "closed", "crew", "group", "dark", "vehicle", "art", "rule", "mode", "from"]

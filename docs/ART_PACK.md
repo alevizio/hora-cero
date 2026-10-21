@@ -32,11 +32,16 @@ cascarudo) y para los vehículos de la plaza (`godot/assets/vehicles/`, `art/veh
   a 1024 y el metal-aspereza a 512 (el color queda en 2048: es un solo atlas para toda la figura, con la cara). La
   manera de agarrar el fusil y los dedos salen de su clip RunShoot, que empuña uno, y los clips no le mueven los dedos.
   Sus clips se hicieron a 1,46 m/s (caminar) y 5,21 m/s (correr), medidos del pie apoyado (`clip_speed`). Se viste con
-  el acabado `pbr`. Su retrato del HUD, `juan_salvo/portrait.png` (768 × 768), es el avatar que vino con el modelo (un
-  render 3D, no pintado como los de los vecinos). El Juan anterior, el **Blue Hood Survivor v4** que hizo Ale con Codex a
+  el acabado `pbr`. Su retrato del HUD, `juan_salvo/portrait.png` (768 × 768), está **renderizado en el motor
+  a partir del modelo** y pintado encima en la serie de los vecinos (`tools/dev/salvo_portrait.gd -- <salida.png>
+  juan_salvo 768 p1`, que corre `tools/dev/salvo_portrait_paint.py`). El Juan anterior, el **Blue Hood Survivor v4** que hizo Ale con Codex a
   partir de fotos de una figura de un amigo artista, queda en la carpeta de Ale y lo vuelve a hacer
   `tools/juan_blue_hood.py`; el primero (que refinaba `refine-person`, `tools/person_refine.py`) ya no está
   en este repositorio.
+- **`survivor_hood`**: `survivor_hood/survivor_hood.glb` (1,80 m): el Blue Hood Survivor de Ale, hecho con
+  `tools/juan_blue_hood.py <su .glb> godot/art_pack/survivor_hood/survivor_hood.glb`, con los mismos clips. Desde el
+  21 de octubre de 2026 es la figura del vecino que agarra la capucha y la máscara del camión de Yrigoyen (el equipo
+  de la Plaza, `gear[].look` en `plaza.json`): el juego lo viste con ella como si fuera un uniforme.
 - **`cascarudo`**: `cascarudo/cascarudo.glb` (45.000 triángulos, la escultura de Santiago Siri con la forma intacta y un
   esqueleto en las patas que le pone `tools/art_pack.py rig-creature`: ver la sección 5) y una copia más liviana,
   `cascarudo/cascarudo_lod.glb` (13.499 triángulos, rebajada y con el mismo esqueleto), que el juego dibuja cuando la

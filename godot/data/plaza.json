@@ -304,6 +304,36 @@
    "facing": 300,
    "exposure": 0.26,
    "look": "vecina3"
+  },
+  {
+   "id": "p27",
+   "group": "parada",
+   "x": 7632,
+   "y": 4422,
+   "facing": 270,
+   "exposure": 0.46,
+   "look": "vecina0",
+   "stuck": true
+  },
+  {
+   "id": "p28",
+   "group": "parada",
+   "x": 7699,
+   "y": 4410,
+   "facing": 250,
+   "exposure": 0.58,
+   "look": "vecino2",
+   "stuck": true
+  },
+  {
+   "id": "p29",
+   "group": "parada",
+   "x": 7757,
+   "y": 4435,
+   "facing": 290,
+   "exposure": 0.5,
+   "look": "vecino4",
+   "stuck": true
   }
  ],
  "shelters": [
@@ -433,7 +463,28 @@
    "x": 6378,
    "y": 4382,
    "w": 268,
-   "h": 80
+   "h": 80,
+   "stops": [
+    1856,
+    3328,
+    4800,
+    6378,
+    7552
+   ],
+   "start": 3,
+   "speed": 96.0,
+   "by": [
+    "bigua",
+    "hornero"
+   ],
+   "time": 1.2,
+   "icon": "tram",
+   "verb": "Drive the colectivo",
+   "order": "%s takes the wheel of the 60 and brings it along Yrigoyen to the next stop.",
+   "done": "The colectivo stops. Everyone aboard came with it.",
+   "moving": "The colectivo is already moving.",
+   "refuse": "Only Biguá or Hornero can drive the colectivo.",
+   "unreachable": "%s cannot get to the colectivo from here."
   }
  ],
  "canvases": [
@@ -469,6 +520,46 @@
    "holds": 3,
    "order": "%s goes for the cover on the cart.",
    "take": "%s drags the cover off the vendor's cart. It will keep the snow off a few, for one crossing."
+  }
+ ],
+ "gear": [
+  {
+   "id": "rifle",
+   "kind": "rifle",
+   "label": "Rifle",
+   "x": 8134,
+   "y": 2464,
+   "time": 1.5,
+   "gun": {
+    "label": "Rifle",
+    "ammo": 4,
+    "range": 960,
+    "aim": 0.8,
+    "recover": 2.0,
+    "loud": true,
+    "noise": 3040,
+    "sound": "rifle",
+    "icon": "target",
+    "kit": "a granadero's rifle and four rounds",
+    "prompt": "Loud: every cascarudo hears it. Tap a marked one.",
+    "promptNone": "No cascarudo in range and in sight. Tap away to lower it."
+   },
+   "order": "%s goes for the rifle in the sentry box.",
+   "take": "%s takes the granadero's rifle from the sentry box. Four rounds.",
+   "armed": "%s has a rifle already."
+  },
+  {
+   "id": "mask",
+   "kind": "mask",
+   "label": "Hood and mask",
+   "x": 4646,
+   "y": 4474,
+   "time": 2.5,
+   "suit": true,
+   "look": "art:survivor_hood",
+   "order": "%s goes for the hood and mask in the truck's cab.",
+   "take": "%s pulls on the rubber hood and the mask from the truck. The snow cannot touch him now.",
+   "sealed": "%s is sealed against the snow already."
   }
  ],
  "snowfall": {
@@ -596,7 +687,12 @@
   "tooFew": "The snow has buried the square, and too few were brought in.",
   "lostTooMany": "Too many have been lost to the snow.",
   "wave": "A heavy wave of snow is coming.",
-  "lullNow": "A lull. Bring them in now."
+  "lullNow": "A lull. Bring them in now.",
+  "stuck": "Too far gone to walk: bring the colectivo to them.",
+  "stuckRefuse": "They are too far gone to walk another step. Bring the colectivo to them.",
+  "takeLabel": "Take",
+  "noGear": "There is nothing left there to take.",
+  "gearGone": "Somebody has taken it already."
  },
  "objectives": [
   {
@@ -615,6 +711,11 @@
   {
    "id": "gate",
    "text": "Open the subte's service gate",
+   "optional": true
+  },
+  {
+   "id": "stop",
+   "text": "Bring the colectivo to the ones at the Balcarce stop",
    "optional": true
   }
  ],
@@ -733,7 +834,7 @@
    "suit": true,
    "look": "art:juan_salvo",
    "arrive": {
-    "at": 30.0,
+    "at": 0.5,
     "to": [
      1408,
      2752
@@ -822,6 +923,45 @@
      2816
     ],
     "text": "A third cascarudo comes in off Avenida de Mayo."
+   },
+   {
+    "id": "c4",
+    "at": 120.0,
+    "from": [
+     48,
+     4448
+    ],
+    "to": [
+     1664,
+     3776
+    ],
+    "text": "A cascarudo comes up Hipólito Yrigoyen from the west."
+   },
+   {
+    "id": "c5",
+    "at": 195.0,
+    "from": [
+     8912,
+     1088
+    ],
+    "to": [
+     7232,
+     1536
+    ],
+    "text": "One more cascarudo comes along Rivadavia from the east."
+   },
+   {
+    "id": "c6",
+    "at": 265.0,
+    "from": [
+     48,
+     2848
+    ],
+    "to": [
+     1664,
+     2816
+    ],
+    "text": "Another cascarudo comes in off Avenida de Mayo."
    }
   ],
   "arrive": "A cascarudo comes into the square.",
@@ -1606,6 +1746,15 @@
   },
   {
    "id": "car-3",
+   "x": 8042,
+   "y": 1978,
+   "w": 50,
+   "h": 127,
+   "kind": "car",
+   "see_through": true
+  },
+  {
+   "id": "car-4",
    "x": 8036,
    "y": 3503,
    "w": 62,
@@ -1614,7 +1763,7 @@
    "see_through": true
   },
   {
-   "id": "car-4",
+   "id": "car-5",
    "x": 8042,
    "y": 3732,
    "w": 50,
@@ -1623,27 +1772,18 @@
    "see_through": true
   },
   {
-   "id": "car-5",
-   "x": 993,
-   "y": 1263,
-   "w": 62,
-   "h": 162,
-   "kind": "car",
-   "see_through": true
-  },
-  {
    "id": "car-6",
-   "x": 993,
-   "y": 1474,
+   "x": 8036,
+   "y": 3926,
    "w": 62,
-   "h": 162,
+   "h": 161,
    "kind": "car",
    "see_through": true
   },
   {
    "id": "car-7",
    "x": 993,
-   "y": 1686,
+   "y": 1897,
    "w": 62,
    "h": 161,
    "kind": "car",
@@ -1651,34 +1791,34 @@
   },
   {
    "id": "car-8",
-   "x": 1775,
-   "y": 4500,
-   "w": 162,
-   "h": 62,
+   "x": 993,
+   "y": 3311,
+   "w": 62,
+   "h": 162,
    "kind": "car",
    "see_through": true
   },
   {
    "id": "car-9",
-   "x": 2017,
-   "y": 4506,
-   "w": 126,
-   "h": 50,
+   "x": 993,
+   "y": 3522,
+   "w": 62,
+   "h": 162,
    "kind": "car",
    "see_through": true
   },
   {
    "id": "car-10",
-   "x": 4698,
-   "y": 4498,
-   "w": 204,
-   "h": 67,
+   "x": 999,
+   "y": 3751,
+   "w": 50,
+   "h": 127,
    "kind": "car",
    "see_through": true
   },
   {
    "id": "car-11",
-   "x": 5103,
+   "x": 2319,
    "y": 4500,
    "w": 162,
    "h": 62,
@@ -1687,6 +1827,114 @@
   },
   {
    "id": "car-12",
+   "x": 3151,
+   "y": 4500,
+   "w": 162,
+   "h": 62,
+   "kind": "car",
+   "see_through": true
+  },
+  {
+   "id": "car-13",
+   "x": 3393,
+   "y": 4506,
+   "w": 126,
+   "h": 50,
+   "kind": "car",
+   "see_through": true
+  },
+  {
+   "id": "car-14",
+   "x": 5551,
+   "y": 4500,
+   "w": 162,
+   "h": 62,
+   "kind": "car",
+   "see_through": true
+  },
+  {
+   "id": "car-15",
+   "x": 5967,
+   "y": 4500,
+   "w": 162,
+   "h": 62,
+   "kind": "car",
+   "see_through": true
+  },
+  {
+   "id": "car-16",
+   "x": 6799,
+   "y": 4500,
+   "w": 162,
+   "h": 62,
+   "kind": "car",
+   "see_through": true
+  },
+  {
+   "id": "car-17",
+   "x": 993,
+   "y": 1263,
+   "w": 62,
+   "h": 162,
+   "kind": "car",
+   "see_through": true
+  },
+  {
+   "id": "car-18",
+   "x": 993,
+   "y": 1474,
+   "w": 62,
+   "h": 162,
+   "kind": "car",
+   "see_through": true
+  },
+  {
+   "id": "car-19",
+   "x": 993,
+   "y": 1686,
+   "w": 62,
+   "h": 161,
+   "kind": "car",
+   "see_through": true
+  },
+  {
+   "id": "car-20",
+   "x": 1775,
+   "y": 4500,
+   "w": 162,
+   "h": 62,
+   "kind": "car",
+   "see_through": true
+  },
+  {
+   "id": "car-21",
+   "x": 2017,
+   "y": 4506,
+   "w": 126,
+   "h": 50,
+   "kind": "car",
+   "see_through": true
+  },
+  {
+   "id": "car-22",
+   "x": 4698,
+   "y": 4498,
+   "w": 204,
+   "h": 67,
+   "kind": "car",
+   "see_through": true
+  },
+  {
+   "id": "car-23",
+   "x": 5103,
+   "y": 4500,
+   "w": 162,
+   "h": 62,
+   "kind": "car",
+   "see_through": true
+  },
+  {
+   "id": "car-24",
    "x": 7169,
    "y": 4506,
    "w": 126,
@@ -2118,6 +2366,12 @@
    ],
    [
     252.1,
+    63.8,
+    180,
+    "saloon"
+   ],
+   [
+    252.1,
     112.0,
     0,
     "sedan"
@@ -2127,6 +2381,72 @@
     118.6,
     0,
     "saloon"
+   ],
+   [
+    252.1,
+    125.2,
+    0,
+    "sedan"
+   ],
+   [
+    32.0,
+    61.8,
+    180,
+    "sedan"
+   ],
+   [
+    32.0,
+    106.0,
+    0,
+    "taxi"
+   ],
+   [
+    32.0,
+    112.6,
+    0,
+    "sedan"
+   ],
+   [
+    32.0,
+    119.2,
+    0,
+    "saloon"
+   ],
+   [
+    75.0,
+    141.6,
+    90,
+    "sedan"
+   ],
+   [
+    101.0,
+    141.6,
+    90,
+    "taxi"
+   ],
+   [
+    108.0,
+    141.6,
+    90,
+    "saloon"
+   ],
+   [
+    176.0,
+    141.6,
+    90,
+    "sedan"
+   ],
+   [
+    189.0,
+    141.6,
+    90,
+    "taxi"
+   ],
+   [
+    215.0,
+    141.6,
+    90,
+    "sedan"
    ],
    [
     32.0,
@@ -2514,7 +2834,7 @@
  "copy": {
   "wonTitle": "UNDER\nCOVER",
   "title": "PLAZA\nDE MAYO",
-  "briefing": "Buenos Aires, a winter night in 1958, and for the first time in forty years it is snowing. Half the city has come to the Plaza de Mayo to see it. Within minutes the ones who stay out in it begin to fall: the snow kills whoever it touches. Four neighbours from La Boca happened to be under cover when it began: Hornero at the controls of a tram stopped on Rivadavia, Lechuza under the Cabildo's arcade, Benteveo selling the Sexta on the Catedral's steps, Biguá on a colectivo stranded on Hipólito Yrigoyen. Early in the night Juan Salvo comes in off Avenida de Mayo, sealed in an insulating suit: the snow cannot touch him, he can carry in whoever has fallen, and he has a rifle with a few rounds. Soon the cascarudos come up the avenues, each as big as a car, and knock down whoever they find out in the open. They will not go under the arches or the portico, down into the subte or into the tram, and noise draws them. Bring in as many as you can before the snow buries the square. Watch the waves; move in the lulls.",
+  "briefing": "Buenos Aires, a winter night in 1958, and for the first time in forty years it is snowing. Half the city has come to the Plaza de Mayo to see it. Within minutes the ones who stay out in it begin to fall: the snow kills whoever it touches. Four neighbours from La Boca happened to be under cover when it began: Hornero at the controls of a tram stopped on Rivadavia, Lechuza under the Cabildo's arcade, Benteveo selling the Sexta on the Catedral's steps, Biguá on a colectivo stranded on Hipólito Yrigoyen.\n\nEarly in the night Juan Salvo comes in off Avenida de Mayo, sealed in an insulating suit: the snow cannot touch him, he can carry in whoever has fallen, and he has a rifle with a few rounds. Soon the cascarudos come up the avenues, each as big as a car, and knock down whoever they find out in the open. They will not go under the arches or the portico, down into the subte or into the tram, and noise draws them. Bring in as many as you can before the snow buries the square. Watch the waves; move in the lulls.",
   "mapTip": "Show the whole square",
   "debrief": "By midnight the square was a field of snow, and the Pirámide stood up out of it like a post in a river. Nobody came out from under the arches that night, or down from the tram. In the subte they listened to the snow through the gratings and waited for the morning, and the five of them counted heads.",
   "failureNote": "Lose the whole squad, or bring in too few before the snow buries the square, and it is over. Watch the snow: move in the lulls, wait out the waves under cover, and stop the clock to give orders.",
@@ -2531,8 +2851,46 @@
    "drive": "DRIVE",
    "canvas": "TAKE CLOTH",
    "help": "HELP UP",
-   "rig": "LIGHTS"
+   "rig": "LIGHTS",
+   "take": "TAKE"
   },
+  "howto": [
+   {
+    "id": "lead",
+    "glyph": "hand",
+    "line": "Tap Hornero, Lechuza, Benteveo or Biguá to choose who acts, then tap a person out in the snow: they follow him. Lead them under cover: the portico, the arcade, the subte, the tram, the colectivo."
+   },
+   {
+    "id": "cold",
+    "glyph": "stretcher",
+    "line": "The ring over each head is the cold. It fills out in the snow, faster in a wave, and empties under cover. Full, they fall: Biguá or Juan Salvo can still carry them in."
+   },
+   {
+    "id": "waves",
+    "glyph": "pause",
+    "line": "The snow comes in waves. Wait out the heavy ones under cover and cross in the lulls. PLAN stops the clock: give each an order, then EXECUTE."
+   },
+   {
+    "id": "calls",
+    "glyph": "talk",
+    "line": "Benteveo's shout gathers everyone near him behind him. Hornero's bell, rung from the tram, brings people running to it."
+   },
+   {
+    "id": "wheels",
+    "glyph": "tram",
+    "line": "Hornero drives the tram along Rivadavia and Biguá the colectivo along Yrigoyen. Everyone aboard goes with them: cover on wheels. The three at the Balcarce stop cannot walk: bring the colectivo to them."
+   },
+   {
+    "id": "cascarudos",
+    "glyph": "target",
+    "line": "Cascarudos come up the avenues for whoever is out in the open, and noise draws them. Juan Salvo's rifle drives them off; the rifle in the sentry box arms one more of you."
+   },
+   {
+    "id": "gear",
+    "glyph": "uniform",
+    "line": "A cloth keeps the snow off a few for one crossing. The hood and mask by the truck on Yrigoyen seal one of you against it for the whole night."
+   }
+  ],
   "objectiveHow": {
    "people": {
     "benteveo": "Benteveo: rally a group with his voice, then lead them in",
@@ -2551,6 +2909,11 @@
    "gate": {
     "lechuza": "Lechuza: the service stair at the square's south-west corner",
     "": "Lechuza has the key to the service gate"
+   },
+   "stop": {
+    "bigua": "Biguá: drive the colectivo east along Yrigoyen to the stop by Balcarce",
+    "hornero": "Hornero: drive the colectivo east along Yrigoyen to the stop by Balcarce",
+    "": "The three at the Balcarce stop cannot walk: the colectivo must come to them"
    }
   },
   "hints": {
@@ -2570,7 +2933,9 @@
    "canvas": "An awning or a tarpaulin keeps the snow off whoever holds it and the few close behind him, for one crossing.",
    "gate": "Lechuza has the key to the subte's service stair at the south-west corner: another way under cover.",
    "panic": "In a heavy wave, people already half frozen panic and break away. Lead them in the lulls.",
-   "squad": "One of the squad is down in the snow. Another can help him up, if he gets there in time."
+   "squad": "One of the squad is down in the snow. Another can help him up, if he gets there in time.",
+   "stop": "Three at the 60's stop by Balcarce are too far gone to walk. Biguá can drive the colectivo to them along Yrigoyen: it is cover on wheels, and it brings the people aboard with it.",
+   "gear": "A rifle leans in the sentry box by the Casa Rosada's gate, and the truck at the kerb on Yrigoyen has a rubber hood and a mask: whoever takes them fights the cascarudos, or walks the snow, like Juan Salvo."
   },
   "coach": [
    "start",
@@ -2581,10 +2946,12 @@
    "lechuza",
    "waves",
    "bigua",
+   "stop",
    "salvo",
    "fallen",
    "cascarudos",
    "rifle",
+   "gear",
    "lure",
    "canvas",
    "gate",
@@ -2615,7 +2982,7 @@
     "after": 70.0
    },
    "salvo": {
-    "after": 32.0
+    "after": 2.5
    },
    "cascarudos": {
     "after": 17.0
@@ -2637,6 +3004,12 @@
      4144,
      600
     ]
+   },
+   "stop": {
+    "after": 5.0
+   },
+   "gear": {
+    "after": 48.0
    }
   }
  }

@@ -187,7 +187,7 @@ var fade_for_guards: bool = true
 ## Places that are always kept in view as if somebody stood there (Vemork's hall of cells, cut away for the camera).
 var fade_points: Array[Vector3] = []
 var _fade_clock: float = 0.0
-const FADED := 0.22
+const FADED := 0.34
 ## Comic ink (ink.gd) draws from what is solid on screen: a dithered, half-there building would come out as a mess of
 ## ink, so while it is on a building in the way is taken out altogether (set_ink).
 var _ink_cutaway: bool = false
@@ -258,7 +258,9 @@ func _sync_faders(dt: float) -> void:
 		var a: float = float(fader.alpha)
 		var want: float = float(fader.want)
 		if absf(a - want) < 0.001: continue
-		a = move_toward(a, want, dt * 3.5)
+		# eased: quick to start, settling softly, so a wall never pops in or out
+		a = lerpf(a, want, 1.0 - exp(-dt * 5.0))
+		if absf(a - want) < 0.004: a = want
 		fader.alpha = a
 		for mat: Material in fader.mats:
 			if mat is StandardMaterial3D: (mat as StandardMaterial3D).albedo_color.a = a

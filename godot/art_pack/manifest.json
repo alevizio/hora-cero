@@ -10,14 +10,32 @@
       "file": "juan_salvo/juan_salvo.glb",
       "forward": "+z",
       "origin": "model",
-      "clips": {"idle": "Idle", "walk": "Walk", "run": "Run", "jump": "Jump"},
-      "clip_speed": {"walk": 1.464, "run": 5.206},
+      "clips": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Run",
+        "jump": "Jump"
+      },
+      "clip_speed": {
+        "walk": 1.464,
+        "run": 5.206
+      },
       "prop": "Rifle",
       "finish": "pbr",
       "faces": "right",
       "portrait": "juan_salvo/portrait.png",
-      "views": {"back": "", "crouch": "", "down": ""},
-      "credit": {"author": "Santiago Siri", "licence": "permiso para usar en Hora Cero", "permission": "concedido a Ale, octubre de 2026", "source": "a Meshy AI biped on a Mixamo skeleton (10,390 triangles, 2K textures, nine clips) put into Godot by a friend of Ale's; made ready with tools/juan_suit.py (metres and Y up, a standing rest with the rifle in his hands, Idle/Walk/Run/Jump), which gives him the blue-hood Juan's rifle (art/juan_salvo/source/rifle.glb); his portrait is the avatar that came with it", "contact": ""}
+      "views": {
+        "back": "",
+        "crouch": "",
+        "down": ""
+      },
+      "credit": {
+        "author": "Santiago Siri",
+        "licence": "permiso para usar en Hora Cero",
+        "permission": "concedido a Ale, octubre de 2026",
+        "source": "a Meshy AI biped on a Mixamo skeleton (10,390 triangles, 2K textures, nine clips) put into Godot by a friend of Ale's; made ready with tools/juan_suit.py (metres and Y up, a standing rest with the rifle in his hands, Idle/Walk/Run/Jump), which gives him the blue-hood Juan's rifle (art/juan_salvo/source/rifle.glb); his portrait is the avatar that came with it",
+        "contact": ""
+      }
     },
     "cascarudo": {
       "name": "Cascarudo",
@@ -31,8 +49,51 @@
       "forward": "-z",
       "finish": "chitin",
       "faces": "right",
-      "views": {"back": "", "crouch": "", "down": ""},
-      "credit": {"author": "Santiago Siri", "licence": "permiso para usar en Hora Cero", "permission": "concedido a Ale, octubre de 2026", "source": "cascarudo_godot/cascarudo/cascarudo.glb (its shape as made; its legs rigged and its occlusion and convexity baked in with tools/art_pack.py rig-creature; cascarudo_lod.glb: the same, decimated and rigged alike)", "contact": ""}
+      "views": {
+        "back": "",
+        "crouch": "",
+        "down": ""
+      },
+      "credit": {
+        "author": "Santiago Siri",
+        "licence": "permiso para usar en Hora Cero",
+        "permission": "concedido a Ale, octubre de 2026",
+        "source": "cascarudo_godot/cascarudo/cascarudo.glb (its shape as made; its legs rigged and its occlusion and convexity baked in with tools/art_pack.py rig-creature; cascarudo_lod.glb: the same, decimated and rigged alike)",
+        "contact": ""
+      }
+    },
+    "survivor_hood": {
+      "name": "El de la capucha",
+      "name_en": "The hooded survivor",
+      "kind": "person",
+      "height_m": 1.8,
+      "file": "survivor_hood/survivor_hood.glb",
+      "forward": "+z",
+      "origin": "model",
+      "clips": {
+        "idle": "Idle",
+        "walk": "Walk",
+        "run": "Run",
+        "jump": "Jump",
+        "fall": "Fall",
+        "inspect": "Inspect"
+      },
+      "prop": "Rifle",
+      "finish": "pbr",
+      "faces": "right",
+      "portrait": "",
+      "views": {
+        "back": "",
+        "crouch": "",
+        "down": ""
+      },
+      "credit": {
+        "author": "Ale (Alejandro Vizio), hecho con Codex a partir de fotos de una figura de un amigo artista (por confirmar)",
+        "licence": "propio; la base de la cabeza, la piel y los ojos son de MakeHuman (CC0 1.0)",
+        "permission": "de Ale, octubre de 2026",
+        "source": "Ale's blue-hood survivor (Juan Salvo's model on 19 and 20 October 2026), simplified and its textures scaled down with tools/juan_blue_hood.py (gltfpack -si 0.12 -se 0.02) from blue-hood-survivor-v4 characters/blue_hood/blue_hood_survivor.glb (308,215 triangles, made in Codex on 19 October 2026); worn by whichever neighbour takes the hood and mask from the truck on Yrigoyen (data gear[].look)",
+        "contact": ""
+      }
     },
     "test_walker": {
       "name": "Caminante de prueba",
@@ -41,8 +102,18 @@
       "height_m": 1.76,
       "file": "test/walker.png",
       "faces": "right",
-      "views": {"back": "test/walker_back.png", "crouch": "test/walker_crouch.png", "down": "test/walker_down.png"},
-      "credit": {"author": "Hora Cero (drawn by tools/art_pack.py test-art)", "licence": "CC0 1.0", "permission": "Own work, a neutral test drawing", "source": "tools/art_pack.py", "contact": ""},
+      "views": {
+        "back": "test/walker_back.png",
+        "crouch": "test/walker_crouch.png",
+        "down": "test/walker_down.png"
+      },
+      "credit": {
+        "author": "Hora Cero (drawn by tools/art_pack.py test-art)",
+        "licence": "CC0 1.0",
+        "permission": "Own work, a neutral test drawing",
+        "source": "tools/art_pack.py",
+        "contact": ""
+      },
       "test": true
     },
     "test_blob": {
@@ -53,7 +124,13 @@
       "file": "test/blob.png",
       "faces": "front",
       "views": {},
-      "credit": {"author": "Hora Cero (drawn by tools/art_pack.py test-art)", "licence": "CC0 1.0", "permission": "Own work, a neutral test drawing", "source": "tools/art_pack.py", "contact": ""},
+      "credit": {
+        "author": "Hora Cero (drawn by tools/art_pack.py test-art)",
+        "licence": "CC0 1.0",
+        "permission": "Own work, a neutral test drawing",
+        "source": "tools/art_pack.py",
+        "contact": ""
+      },
       "test": true
     },
     "test_capsule": {
@@ -63,7 +140,13 @@
       "height_m": 1.8,
       "file": "test/capsule.glb",
       "forward": "+z",
-      "credit": {"author": "Hora Cero (made by tools/art_pack.py test-models)", "licence": "CC0 1.0", "permission": "Own work, a neutral test model", "source": "tools/art_pack.py", "contact": ""},
+      "credit": {
+        "author": "Hora Cero (made by tools/art_pack.py test-models)",
+        "licence": "CC0 1.0",
+        "permission": "Own work, a neutral test model",
+        "source": "tools/art_pack.py",
+        "contact": ""
+      },
       "test": true
     },
     "test_crawler": {
@@ -74,7 +157,13 @@
       "length_m": 4.0,
       "file": "test/crawler.glb",
       "forward": "+x",
-      "credit": {"author": "Hora Cero (made by tools/art_pack.py test-models)", "licence": "CC0 1.0", "permission": "Own work, a neutral test model", "source": "tools/art_pack.py", "contact": ""},
+      "credit": {
+        "author": "Hora Cero (made by tools/art_pack.py test-models)",
+        "licence": "CC0 1.0",
+        "permission": "Own work, a neutral test model",
+        "source": "tools/art_pack.py",
+        "contact": ""
+      },
       "test": true
     },
     "test_rigged": {
@@ -84,7 +173,13 @@
       "height_m": 1.8,
       "file": "test/rigged.glb",
       "forward": "+z",
-      "credit": {"author": "Hora Cero (made by tools/art_pack.py test-models)", "licence": "CC0 1.0", "permission": "Own work, a neutral test model", "source": "tools/art_pack.py", "contact": ""},
+      "credit": {
+        "author": "Hora Cero (made by tools/art_pack.py test-models)",
+        "licence": "CC0 1.0",
+        "permission": "Own work, a neutral test model",
+        "source": "tools/art_pack.py",
+        "contact": ""
+      },
       "test": true
     }
   }

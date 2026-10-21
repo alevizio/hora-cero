@@ -75,15 +75,15 @@ const PROMPT_SIZE := Vector2(460,64)
 const SLOT_ORDER := ["stance","melee","gun","tool","context","plan"]
 ## Each plate takes the first of its actions this operative has (an action goes on one plate only): an operative
 ## with no gun (Merle) has his cigarette where the gun would be.
-const SLOT_ACTIONS := {"stance":["stance"],"melee":["takedown","guide"],"gun":["shoot","chat","talk","call"],"tool":["distract","trap","trap_pickup","chat","rig","canvas"]}
+const SLOT_ACTIONS := {"stance":["stance"],"melee":["takedown","guide"],"gun":["shoot","chat","talk","call"],"tool":["distract","trap","trap_pickup","chat","rig","canvas","take"]}
 ## A plate the operative has nothing for (the four of La Boca carry no gun) takes the first of his own skills still off
 ## the bar, in this order: Hornero's gondola, Lechuza's lamp board. A plate still empty after that is left out, and the
 ## rest of the bar closes up (_place_bar), so no operative ever has a blank plate.
 const SPARE_ACTIONS := ["rig","sabotage","unlock","cut","plant"]
-const ACTION_ICONS := {"distract":"throw","trap":"tripwire","trap_pickup":"tripwire","pickup":"carry","drop":"drop","unlock":"key","cut":"cutters","sabotage":"radio","rescue":"rescue","extract":"boat","plant":"charge","chat":"cigarette","uniform":"uniform","rig":"rope","talk":"talk","guide":"hand","call":"talk","drive":"tram","help":"stretcher","canvas":"tarp"}
-const THING_ICONS := {"gate":"key","informant":"rescue","fence":"cutters","radio":"radio","trap":"tripwire","body":"carry","bush":"hide","extraction":"boat","limpet":"limpet","charge":"charge","switch":"switch","home":"gate","uniform":"uniform","rope":"rope","civilian":"talk","phone":"phone","evidence":"smg","skis":"skis","window":"window","duct":"duct","door":"key","cellar":"key","person":"hand","fallen":"stretcher","tram":"tram","canvas":"tarp","creature":"target"}
+const ACTION_ICONS := {"distract":"throw","trap":"tripwire","trap_pickup":"tripwire","pickup":"carry","drop":"drop","unlock":"key","cut":"cutters","sabotage":"radio","rescue":"rescue","extract":"boat","plant":"charge","chat":"cigarette","uniform":"uniform","rig":"rope","talk":"talk","guide":"hand","call":"talk","drive":"tram","help":"stretcher","canvas":"tarp","take":"hand"}
+const THING_ICONS := {"gate":"key","informant":"rescue","fence":"cutters","radio":"radio","trap":"tripwire","body":"carry","bush":"hide","extraction":"boat","limpet":"limpet","charge":"charge","switch":"switch","home":"gate","uniform":"uniform","rope":"rope","civilian":"talk","phone":"phone","evidence":"smg","skis":"skis","window":"window","duct":"duct","door":"key","cellar":"key","person":"hand","fallen":"stretcher","tram":"tram","bus":"tram","canvas":"tarp","creature":"target","rifle":"smg","mask":"uniform"}
 ## Height above the ground (m) at which a tappable thing's marker floats.
-const PIN_LIFT := {"gate":2.5,"informant":2.9,"fence":2.0,"radio":2.4,"trap":0.8,"body":1.0,"bush":1.7,"extraction":1.5,"limpet":1.3,"charge":1.9,"switch":2.4,"rope":1.2,"civilian":2.3,"phone":2.4,"evidence":0.9,"fallen":1.4,"canvas":2.0,"tram":4.2,"lights":3.2,"service":2.2,"creature":2.9}
+const PIN_LIFT := {"gate":2.5,"informant":2.9,"fence":2.0,"radio":2.4,"trap":0.8,"body":1.0,"bush":1.7,"extraction":1.5,"limpet":1.3,"charge":1.9,"switch":2.4,"rope":1.2,"civilian":2.3,"phone":2.4,"evidence":0.9,"fallen":1.4,"canvas":2.0,"tram":4.2,"bus":3.4,"lights":3.2,"service":2.2,"creature":2.9,"rifle":1.3,"mask":1.4}
 const PIN_RADIUS := 18.0
 ## The context slot offers a nearby thing within this many simulation units (5.5 m), a bush to hide a
 ## body in within HIDE_NEAR; farther away it falls back to the next objective.
@@ -93,7 +93,7 @@ const OBJECTIVE_ACTIONS := {"cell":"unlock","informant":"rescue","extract":"extr
 const GUARD_NAMES := {"patrol":"PATROL","sentry":"SENTRY","tower":"TOWER","sergeant":"SERGEANT","reinforcement":"GUARD"}
 ## By the look the mission gives a guard (data "look", digits dropped): who he is, where that says more.
 const LOOK_NAMES := {"sailor":"SAILOR","bootsmann":"BOATSWAIN","ot":"SITE GUARD","watchman":"WATCHMAN"}
-const ORDER_NAMES := {"move":"MOVE","distract":"THROW","pickup":"LIFT BODY","drop":"DROP BODY","trap":"SET TRIPWIRE","trap_pickup":"RECOVER WIRE","cut":"CUT WIRE","sabotage":"SABOTAGE","unlock":"PICK LOCK","rescue":"RESCUE","extract":"TO THE BOAT","plant":"SET CHARGE","chat":"SMOKE","uniform":"CHANGING","rig":"RIG ROPE","talk":"A QUIET WORD","guide":"LEAD IN","call":"CALL","drive":"DRIVE","canvas":"TAKE CLOTH","help":"HELP UP"}
+const ORDER_NAMES := {"move":"MOVE","distract":"THROW","pickup":"LIFT BODY","drop":"DROP BODY","trap":"SET TRIPWIRE","trap_pickup":"RECOVER WIRE","cut":"CUT WIRE","sabotage":"SABOTAGE","unlock":"PICK LOCK","rescue":"RESCUE","extract":"TO THE BOAT","plant":"SET CHARGE","chat":"SMOKE","uniform":"CHANGING","rig":"RIG ROPE","talk":"A QUIET WORD","guide":"LEAD IN","call":"CALL","drive":"DRIVE","canvas":"TAKE CLOTH","help":"HELP UP","take":"TAKE"}
 const HINTS := {
 	"start": "Tap one of yours to choose who acts, then tap the ground to move. Drag to look around.",
 	"cones": "Yellow cones are what guards see. Crouched, you can pass through the pale outer part.",
@@ -964,18 +964,24 @@ func _build_howto() -> void:
 	overlay.visibility_changed.connect(func() -> void:
 		if not overlay.visible: howto_video.stop())
 
+## The cards: the mission's own when it has them (data copy.howto, Hora Cero's), Saboteurs' otherwise.
+func _howto() -> Array:
+	var own: Array=sim.data.get("copy",{}).get("howto",[]) if sim!=null else []
+	return own if not own.is_empty() else HOWTO
+
 ## Card `index` of HOW TO PLAY: its clip, its line, and what the two buttons do from here.
 func show_card(index: int) -> void:
-	howto_page=clampi(index,0,HOWTO.size()-1)
-	var card: Dictionary=HOWTO[howto_page]
-	modal_page.text="HOW TO PLAY  %d / %d" % [howto_page+1,HOWTO.size()]
-	howto_line.text=str(card.line)
+	var cards: Array=_howto()
+	howto_page=clampi(index,0,cards.size()-1)
+	var card: Dictionary=cards[howto_page]
+	modal_page.text=tr("HOW TO PLAY  %d / %d") % [howto_page+1,cards.size()]
+	howto_line.text=tr(str(card.line))
 	var clip: VideoStream=_clip(str(card.id))
 	howto_video.stream=clip
 	howto_video.visible=clip!=null
 	if clip!=null and overlay.visible: howto_video.play()
 	howto_dots.queue_redraw()
-	var last: bool=howto_page==HOWTO.size()-1
+	var last: bool=howto_page==cards.size()-1
 	if howto_page>0: second_button.text="BACK"
 	else: second_button.text="BACK TO MENU" if _howto_back=="menu" else ("MENU" if _howto_back=="title" else "BRIEFING")
 	if not last: begin_button.text="NEXT"
@@ -1000,12 +1006,12 @@ func _on_howto_input(event: InputEvent) -> void:
 	_swipe_from=Vector2.INF
 	if dx>SWIPE:
 		if howto_page>0: show_card(howto_page-1)
-	elif howto_page<HOWTO.size()-1: show_card(howto_page+1)
+	elif howto_page<_howto().size()-1: show_card(howto_page+1)
 	howto_frame.accept_event()
 
 func _paint_howto_poster(c: Canvas) -> void:
 	c.draw_rect(Rect2(Vector2.ZERO,c.size),Color(0.1,0.12,0.09))
-	ActionSlot.glyph(c,str(HOWTO[howto_page].glyph),c.size*0.5,minf(c.size.y*0.4,120.0),Color(IVORY,0.5))
+	ActionSlot.glyph(c,str(_howto()[howto_page].glyph),c.size*0.5,minf(c.size.y*0.4,120.0),Color(IVORY,0.5))
 
 func _paint_howto_frame(c: Canvas) -> void:
 	c.draw_rect(Rect2(Vector2(-3,-3),c.size+Vector2(6,6)),Color(INK,0.92),false,3.0)
@@ -1013,8 +1019,8 @@ func _paint_howto_frame(c: Canvas) -> void:
 
 func _paint_howto_dots(c: Canvas) -> void:
 	var gap: float=22.0
-	var left: float=c.size.x*0.5-gap*(HOWTO.size()-1)*0.5
-	for i: int in range(HOWTO.size()):
+	var left: float=c.size.x*0.5-gap*(_howto().size()-1)*0.5
+	for i: int in range(_howto().size()):
 		var at:=Vector2(left+gap*i,c.size.y*0.5+3.0)
 		if i==howto_page: c.draw_circle(at,6.0,INK,true,-1.0,true)
 		else: c.draw_circle(at,5.0,Color(INK,0.55),false,1.5,true)
@@ -1025,12 +1031,14 @@ func _paint_operatives(c: Canvas) -> void:
 	var count: int=sim.units.size()
 	var stacked: bool=bool(m.stacked)
 	var gap: float=float(m.gap)
-	var cell_w: float=c.size.x if stacked else (c.size.x-gap*(count-1))/count
-	var cell_h: float=(c.size.y-gap*(count-1))/count if stacked else c.size.y
+	var cols: int=int(m.get("cols",1))
+	var rows: int=ceili(float(count)/cols) if stacked else 1
+	var cell_w: float=(c.size.x-14.0*(cols-1))/cols if stacked else (c.size.x-gap*(count-1))/count
+	var cell_h: float=(c.size.y-gap*(rows-1))/rows if stacked else c.size.y
 	var word_size: int=int(m.words)
 	for i: int in range(count):
 		var u: Dictionary=sim.units[i]
-		var at:=Vector2(0,i*(cell_h+gap)) if stacked else Vector2(i*(cell_w+gap),0)
+		var at:=Vector2((i%cols)*(cell_w+14.0),(i/cols)*(cell_h+gap)) if stacked else Vector2(i*(cell_w+gap),0)
 		var side: float=minf(cell_h,float(m.photo))
 		var photo:=Rect2(at,Vector2(side,side))
 		var id: String=str(u.id)
@@ -1071,13 +1079,15 @@ func _card_layout(inner: float) -> Dictionary:
 	var gap: float=20.0 if three else 24.0
 	var across: float=(inner-gap*(count-1))/count
 	var stacked: bool=across<(270.0 if three else 308.0)
-	var m:={"stacked":stacked,"gap":(14.0 if three else 24.0) if stacked else gap,
-		"photo":OPERATIVE_PHOTO if not three else (96.0 if stacked else 104.0),
-		"name":32 if not three else 28,"name_y":30.0 if not three else 27.0,"role_y":52.0 if not three else 47.0,
-		"glyph":30.0 if not three else 26.0,"step":38.0 if not three else 32.0,"glyph_y":76.0 if not three else 69.0,
-		"words":19 if (not three or stacked) else 17,"words_y":112.0 if not three else 101.0,
-		"max_lines":3 if (not three or stacked) else 4}
-	var cell_w: float=inner if stacked else across
+	# five or more on an upright phone go two to a row, in smaller cards, so the squad fits a screen with its text
+	var paired: bool=stacked and count>=5 and inner>=300.0
+	var m:={"stacked":stacked,"paired":paired,"cols":2 if paired else 1,"gap":(14.0 if three else 24.0) if stacked else gap,
+		"photo":OPERATIVE_PHOTO if not three else (72.0 if paired else (96.0 if stacked else 104.0)),
+		"name":32 if not three else (22 if paired else 28),"name_y":30.0 if not three else (21.0 if paired else 27.0),"role_y":52.0 if not three else (37.0 if paired else 47.0),
+		"glyph":30.0 if not three else (22.0 if paired else 26.0),"step":38.0 if not three else (27.0 if paired else 32.0),"glyph_y":76.0 if not three else (55.0 if paired else 69.0),
+		"words":19 if (not three or (stacked and not paired)) else (15 if paired else 17),"words_y":112.0 if not three else (80.0 if paired else 101.0),
+		"max_lines":3 if (not three or (stacked and not paired)) else 4}
+	var cell_w: float=(inner-14.0)*0.5 if paired else (inner if stacked else across)
 	var room: float=cell_w-float(m.photo)-16.0
 	var face: Font=ActionSlot.face("medium")
 	var line_h: float=face.get_height(int(m.words))
@@ -1090,7 +1100,8 @@ func _card_layout(inner: float) -> Dictionary:
 			lines=maxi(lines,mini(int(m.max_lines),ceili(block.y/line_h-0.01)))
 	var one: float=maxf(float(m.photo),float(m.words_y)+line_h*(lines-1)+8.0)
 	if not three: one=maxf(132.0,one)
-	m.row_h=ceilf(one*count+float(m.gap)*(count-1)) if stacked else ceilf(one)
+	var rows: int=ceili(float(count)/2.0) if paired else count
+	m.row_h=ceilf(one*rows+float(m.gap)*(rows-1)) if stacked else ceilf(one)
 	return m
 
 ## An operative's kit, from the mission data: [glyph, word].
@@ -1846,7 +1857,7 @@ func show_howto_from_title() -> void:
 
 ## The brass button: NEXT through the cards, otherwise begin (or return to) the operation.
 func _primary_pressed() -> void:
-	if current_modal=="howto" and howto_page<HOWTO.size()-1: show_card(howto_page+1)
+	if current_modal=="howto" and howto_page<_howto().size()-1: show_card(howto_page+1)
 	elif current_modal=="howto" and _howto_back=="title": command.emit("title")
 	else: command.emit("begin")
 
@@ -2107,6 +2118,7 @@ func _count_max(id: String, unit: Dictionary) -> int:
 		"guide": return int(sim.lead_of(unit))
 		"call": return int(unit.get("call",{}).get("count",-1))
 		"canvas": return sim.canvases().size()
+		"take": return sim.gear().size()
 	return int(unit.trap_kit)
 
 func _offer(id: String, label: String, icon: String, enabled: bool, reason: String, target: Variant, pin: String) -> void:

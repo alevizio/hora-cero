@@ -499,9 +499,11 @@ const ENGLISH = {
 			showProgress((packLoaded + engineLoaded) / Math.max(1, packTotal + engineTotal));
 		}
 
+		let partAt = 0;
 		async function fetchParts() {
 			const pack = new Uint8Array(packTotal);
 			for (const part of parts) {
+				partAt += 1;
 				const response = await fetch(part);
 				if (!response.ok) {
 					throw new Error(T('No se pudo descargar el juego ({status}). Recargá la página para volver a intentarlo.').replace('{status}', response.status));
@@ -535,12 +537,23 @@ const ENGLISH = {
 				showBoth();
 			},
 		});
+		// an error carries where it happened: the step, and for the pack which part and how much had come
+		function at(promise, step) {
+			return promise.catch((e) => {
+				const err = e instanceof Error ? e : new Error(String(e));
+				if (!err.where) {
+					err.where = T(step) + (step === 'while downloading the game'
+						? ' ' + partAt + '/' + parts.length + ' · ' + Math.round(100 * packLoaded / packTotal) + '%' : '');
+				}
+				throw err;
+			});
+		}
 		Promise.all([
-			engine.init(GODOT_CONFIG['executable']),
-			fetchParts().then((buffer) => engine.preloadFile(buffer, 'index.pck')),
-		]).then(() => engine.start({
+			at(engine.init(GODOT_CONFIG['executable']), 'while loading the engine'),
+			at(fetchParts().then((buffer) => engine.preloadFile(buffer, 'index.pck')), 'while downloading the game'),
+		]).then(() => at(engine.start({
 			'args': ['--main-pack', 'index.pck'].concat(GODOT_CONFIG['args'] || []),
-		})).then(() => {
+		}), 'while starting the game')).then(() => {
 			setStatusMode('hidden');
 		}, displayFailureNotice);
 	}

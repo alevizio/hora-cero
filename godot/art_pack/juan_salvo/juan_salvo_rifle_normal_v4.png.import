@@ -18,10 +18,10 @@ dest_files=["res://.godot/imported/juan_salvo_rifle_normal_v4.png-585f5669e8e510
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=4
+compress/high_quality=true
 compress/lossy_quality=0.7
-compress/uastc_level=0
+compress/uastc_level=1
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0

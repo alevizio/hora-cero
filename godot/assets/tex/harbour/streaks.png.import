@@ -15,10 +15,10 @@ dest_files=["res://.godot/imported/streaks.png-3433b38ae479e94d6088ac5ac2f3e0a0.
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=4
+compress/high_quality=true
 compress/lossy_quality=0.7
-compress/uastc_level=0
+compress/uastc_level=1
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=2

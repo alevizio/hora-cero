@@ -15,10 +15,10 @@ dest_files=["res://.godot/imported/ruts_a.png-1782d475d4da3d34a3e0b90f5ae41015.c
 
 [params]
 
-compress/mode=0
-compress/high_quality=false
+compress/mode=4
+compress/high_quality=true
 compress/lossy_quality=0.7
-compress/uastc_level=0
+compress/uastc_level=1
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=2

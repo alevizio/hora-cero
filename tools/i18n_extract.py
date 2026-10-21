@@ -17,7 +17,7 @@ ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "godot")
 SCRIPTS = ["scripts/three_d/hud.gd", "scripts/simulation.gd", "scripts/three_d/main.gd", "scripts/missions.gd",
            "scripts/three_d/front.gd"]
 DATA = ["data/plaza.json", "data/riachuelo.json"]
-DATA_IDS = {"id", "kind", "look", "type", "icon", "thing", "cue", "noise", "style", "sound", "theme", "worldName",
+DATA_IDS = {"id", "kind", "look", "type", "icon", "glyph", "thing", "cue", "noise", "style", "sound", "theme", "worldName",
             "progressKey", "color", "material", "_source", "water", "hum", "objective", "by", "who", "unplanted", "coach",
             "coachOrder", "fig", "span", "at", "path", "number", "tab", "x", "y", "stance", "ability", "boat", "prop",
             "officers", "seenBy", "closed", "crew", "group", "dark", "vehicle", "art", "rule", "mode", "from"}

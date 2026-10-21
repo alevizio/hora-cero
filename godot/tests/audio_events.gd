@@ -207,7 +207,7 @@ func _plaza() -> void:
 	audio.on_sim_event({"type": "struck", "by": "c1", "id": "hornero", "unit": true, "x": tram.x, "y": tram.y})
 	audio.on_sim_event({"type": "creature_dead", "id": "c1", "by": "salvo", "x": juan.x + 400.0, "y": juan.y})
 	for i: int in range(80): audio.update(0.05, false)
-	for file: String in ["cascarudo_rattle", "cascarudo_rasp_", "cascarudo_lunge", "act_body_fall", "cascarudo_overturn", "cascarudo_step_"]:
+	for file: String in ["cascarudo_rattle", "cascarudo_call_", "cascarudo_rasp_", "cascarudo_lunge", "act_body_fall", "cascarudo_overturn", "cascarudo_step_"]:
 		check(_count(audio.trace, file) > 0, "Plaza: heard " + file)
 	# One in the square that goes for somebody: it rasps (no rifle comes up), and its claws are heard as it comes on,
 	# not a man's boots.

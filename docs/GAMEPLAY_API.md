@@ -943,14 +943,27 @@ buries the square at 8:00. Hornero brings the tram along Rivadavia from stop to 
 make for it); Benteveo's shout gathers everyone near behind him and he leads eight; Lechuza mends the Cabildo's arcade
 lights (people will not go into its dark) and unlocks the service gate; Biguá carries in whoever falls. Each of them
 can take a cloth (the café's awning, the kiosk's tarpaulin, the cart's cover) for one crossing. Juan Salvo comes in
-off Avenida de Mayo at 0:30 in his insulating suit: no cold, so he is the one to cross the open square in a wave and
-carry in the fallen, one at a time; he leads two; his rifle has six rounds. Three cascarudos come up the avenues
-(Rivadavia from the east at 0:15, Hipólito Yrigoyen from the east at 1:15, Avenida de Mayo at 2:40), go for whoever is
+off Avenida de Mayo in the first second, in his insulating suit: no cold, so he is the one to cross the open square in
+a wave and carry in the fallen, one at a time; he leads two; his rifle has six rounds. Six cascarudos come up the
+avenues (Rivadavia from the east at 0:15 and 3:15, Hipólito Yrigoyen from the east at 1:15 and from the west at 2:00,
+Avenida de Mayo at 2:40 and 4:25), each announcing itself with a call heard across the square, and go for whoever is
 out in the open and knock them down; noise draws them (Hornero's bell from 80 m, a shout from 16, a shot from 120); a
 hit drives one off for 35 s, three kill it. Their figures and Juan Salvo's are the art pack's licensed models
 (`juan_salvo`, `cascarudo`: a cascarudo 4 m long, so the rules' `creatures.radius` is 56 (1.75 m, half its width) and
 `reach` 2.8 m, from its middle to just past its head). Medals: Nobody left out, The whole squad, Swift
 (under 5:30). Par 5:30.
+
+Since October 21 the colectivo is a vehicle like the tram (`vehicles[].stops` along Yrigoyen, `start` the index of
+the stop it stands at, `by` Biguá and Hornero): cover on wheels, its riders and whoever is safe aboard moving with it.
+Three people at the 60's stop by Balcarce are `stuck` (`people[].stuck`): too far gone to walk, they cannot be led,
+called or gathered with a group, and they board where they stand the moment a shelter's rectangle (the colectivo's)
+covers them; the optional objective `stop` is done when the last of them is in. Gear lies about the square (`gear`:
+`{id, kind, label, x, y, time, order, take}`; order `take`, the nearest piece or the one named, event `took`): a
+rifle in the sentry box by the Casa Rosada's gate (`gun`, four rounds: a second gun against the cascarudos for
+whoever has none) and a rubber hood and mask by the truck on Yrigoyen (`suit` true and a `look`: sealed like Juan
+Salvo, up again by himself when knocked down, and dressed from then on in the look the gear names, through
+`units[].disguise` like a uniform; `units[].gear` lists what he wears, and the figure shows the kit's rifle on one who
+took it). `gear_taken` (gear id -> who) is kept in checkpoints. Juan Salvo refuses both (`armed`, `sealed`).
 
 The scripted run (`tests/plaza_playthrough.gd`, its header tells it in full): in the first light snow Benteveo shouts
 the group by the Catedral into its portico, Hornero takes the tram from stop to stop ringing its bell for the groups

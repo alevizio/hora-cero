@@ -34,8 +34,8 @@ func _expect(condition: bool, explanation: String) -> void:
 
 func _run() -> void:
 	for part: String in ["layout", "reachable", "snowfall", "cold", "falling", "leading", "dark_arcade", "panic", "voice", "bell",
-			"tram", "carrying", "canvas", "lights_and_gate", "the_end", "burial", "medals", "every_order", "checkpoints",
-			"hud_queries", "salvo", "suit", "salvo_carries", "rifle", "creatures_come", "creature_senses", "creature_ground",
+			"tram", "bondi", "carrying", "canvas", "lights_and_gate", "the_end", "burial", "medals", "every_order", "checkpoints",
+			"hud_queries", "salvo", "suit", "salvo_carries", "rifle", "gear", "creatures_come", "creature_senses", "creature_ground",
 			"creature_noise", "creature_checkpoint", "other_operations", "on_file"]:
 		section = part
 		call("_" + part)
@@ -522,8 +522,139 @@ func _tram() -> void:
 	_until(sim, func() -> bool: return int(sim.vehicles.tram.to) >= 0, 10.0)
 	_expect(int(sim.vehicles.tram.to) == 1, "from the end of the line it goes back")
 	_expect(not sim.perform("drive") or true, "a second order while it moves is answered")
+
+## The colectivo: Biguá (or Hornero) drives it along Yrigoyen, stop to stop, its riders with it. The three at the
+## Balcarce stop are too far gone to walk: they cannot be led or called, and board where they stand when it pulls up
+## over them.
+func _bondi() -> void:
+	var sim: RefCounted = _fresh()
+	_steady(sim, 0.5)
+	var spec: Dictionary = data.vehicles[1]
+	var stops: Array = spec.stops
+	var start: Rect2 = sim.vehicle_rect("colectivo")
+	_expect(stops.size() == 5 and int(spec.start) == 3 and is_equal_approx(start.position.x, float(stops[3])), "the 60 stands at the fourth of its five stops")
+	var waiting: Array = []
+	for p: Dictionary in data.people:
+		if bool(p.get("stuck", false)): waiting.append(_person(sim, str(p.id)))
+	_expect(waiting.size() == 3, "three wait at the Balcarce stop (%d)" % waiting.size())
+	for p: Dictionary in waiting:
+		_expect(Rect2(float(stops[4]), start.position.y, start.size.x, start.size.y).has_point(Simulation.position_of(p)), "%s stands where the 60 will stop" % p.id)
+	sim.select("lechuza")
+	_expect(not sim.perform("drive", "colectivo") and sim.message.contains("Biguá"), "only Biguá or Hornero drives it (%s)" % sim.message)
+	_put(sim, "lechuza", Simulation.position_of(waiting[0]) + Vector2(-48.0, 0.0))
+	_expect(not sim.perform("guide", str(waiting[0].id)) and sim.message.contains("colectivo"), "they cannot be led: too far gone to walk (%s)" % sim.message)
+	var found: bool = false
+	for thing: Dictionary in sim.interactables():
+		if str(thing.id) == str(waiting[0].id):
+			found = true
+			_expect(not bool(thing.enabled) and str(thing.reason).contains("colectivo"), "the marker says why (%s)" % thing.reason)
+	_expect(found, "they are marked all the same")
+	# Benteveo's shout passes them over (the man beside him answers it)
+	_put(sim, "benteveo", Simulation.position_of(waiting[1]) + Vector2(0.0, -40.0))
+	var walker: Dictionary = _person(sim, "p1", Simulation.position_of(waiting[1]) + Vector2(0.0, -72.0), 0.0)
+	sim.select("benteveo")
+	_expect(sim.perform("call"), "Benteveo shouts")
+	_run_for(sim, 3.0)
+	_expect(str(walker.state) == "follow", "the man beside him follows (%s)" % walker.state)
+	for p: Dictionary in waiting:
+		_expect(str(p.state) == "crowd", "%s does not answer the call" % p.id)
+	walker.state = "crowd"
+	walker.follow_id = ""
+	_park(sim, [])
 	sim.select("bigua")
-	_expect(not sim.perform("drive", "colectivo"), "the colectivo goes nowhere")
+	_put(sim, "bigua", start.get_center())
+	var rider: Dictionary = _person(sim, "p2", start.get_center() + Vector2(48.0, 0.0), 0.0)
+	sim._save(rider, "colectivo")
+	sim.events.clear()
+	_expect(sim.perform("drive"), "Biguá takes the wheel")
+	_until(sim, func() -> bool: return int(sim.vehicles.colectivo.to) >= 0, 10.0)
+	_expect(int(sim.vehicles.colectivo.to) == 4 and not _events(sim, "drive").is_empty(), "it sets off east, for the Balcarce stop")
+	var bigua: Dictionary = sim.unit_by_id("bigua")
+	_until(sim, func() -> bool: return int(sim.vehicles.colectivo.to) < 0 and bigua.order.is_empty(), 60.0)
+	var now: Rect2 = sim.vehicle_rect("colectivo")
+	_expect(is_equal_approx(now.position.x, float(stops[4])), "it stops at the Balcarce stop (%.0f)" % now.position.x)
+	_expect(now.has_point(Simulation.position_of(bigua)) and now.has_point(Simulation.position_of(rider)) and str(rider.state) == "safe", "Biguá and the rider came with it")
+	for p: Dictionary in waiting:
+		_expect(str(p.state) == "safe" and str(p.shelter) == "colectivo" and now.has_point(Simulation.position_of(p)), "%s boarded where he stood (%s)" % [p.id, p.state])
+	_expect(_objective_done(sim, "stop"), "objective: the colectivo brought to the stop")
+	_expect(_events(sim, "saved").size() == 3, "three saved events (%d)" % _events(sim, "saved").size())
+	# on again: back west, the whole load aboard
+	_expect(sim.perform("drive"), "on again")
+	_until(sim, func() -> bool: return int(sim.vehicles.colectivo.to) >= 0, 10.0)
+	_expect(int(sim.vehicles.colectivo.to) == 3, "from the end of the line it goes back west")
+	_until(sim, func() -> bool: return int(sim.vehicles.colectivo.to) < 0 and sim.unit_by_id("bigua").order.is_empty(), 90.0)
+	now = sim.vehicle_rect("colectivo")
+	_expect(is_equal_approx(now.position.x, float(stops[3])), "to where it stood (%.0f)" % now.position.x)
+	for p: Dictionary in waiting:
+		_expect(now.has_point(Simulation.position_of(p)) and str(p.state) == "safe", "%s rode it there" % p.id)
+
+## The gear: a rifle in the sentry box by the Casa Rosada's gate (a second gun against the cascarudos, four rounds),
+## a hood and mask by the truck on Yrigoyen (sealed against the snow like Juan Salvo, and seen in them from then on).
+func _gear() -> void:
+	var sim: RefCounted = _fresh()
+	_steady(sim, 1.0)
+	_expect(data.gear.size() == 2, "two pieces of gear")
+	var rifle: Dictionary = sim.gear_by_id("rifle")
+	var mask: Dictionary = sim.gear_by_id("mask")
+	_expect(not rifle.is_empty() and not mask.is_empty() and rifle.has("gun") and bool(mask.suit) and str(mask.look).begins_with("art:"), "a rifle, and a hood and mask")
+	for item: Dictionary in [rifle, mask]:
+		_expect(not sim.is_blocked(Vector2(float(item.x), float(item.y))), "%s lies on open ground" % item.id)
+	# Juan Salvo has no use for either
+	var juan: Dictionary = sim.unit_by_id("salvo")
+	juan.away = false
+	_put(sim, "salvo", Vector2(float(rifle.x), float(rifle.y)) + Vector2(-40.0, 0.0))
+	sim.select("salvo")
+	_expect(not sim.perform("take", "rifle") and sim.message.contains("already"), "Juan Salvo has a rifle already (%s)" % sim.message)
+	_expect(not sim.perform("take", "mask") and sim.message.contains("already"), "and is sealed already (%s)" % sim.message)
+	# Lechuza takes the rifle
+	var lechuza: Dictionary = sim.unit_by_id("lechuza")
+	_put(sim, "lechuza", Vector2(float(rifle.x), float(rifle.y)) + Vector2(-64.0, 0.0))
+	sim.select("lechuza")
+	_expect(not lechuza.has("gun"), "Lechuza has no gun")
+	var take: Dictionary = {}
+	for a: Dictionary in sim.available_actions("lechuza"):
+		if str(a.id) == "take": take = a
+	_expect(not take.is_empty() and bool(take.enabled) and int(take.count) == 2 and str(take.label) == "Rifle", "his bar offers the nearest gear, the rifle (%s)" % str(take))
+	sim.events.clear()
+	_expect(sim.perform("take", "rifle") and sim.message.contains("rifle"), "Lechuza goes for it (%s)" % sim.message)
+	_until(sim, func() -> bool: return sim.gear_taken.has("rifle"), 20.0)
+	_expect(str(sim.gear_taken.get("rifle", "")) == "lechuza" and lechuza.has("gun") and int(lechuza.ammo) == 4, "he has it: a rifle and four rounds")
+	_expect(not _events(sim, "took").is_empty() and str(_events(sim, "took")[0].kind) == "rifle", "event took")
+	_expect("rifle" in (lechuza.gear as Array), "worn: the figure shows it")
+	var shoot: bool = false
+	for a: Dictionary in sim.available_actions("lechuza"):
+		if str(a.id) == "shoot": shoot = bool(a.enabled) and int(a.count) == 4
+	_expect(shoot, "shoot is on his bar now")
+	# and a cascarudo in front of him is hit by his shot
+	var beast: Dictionary = _beast(sim, "c1", Simulation.position_of(lechuza) + Vector2(-320.0, 0.0))
+	sim.events.clear()
+	_expect(sim.perform("shoot", "c1"), "he fires")
+	_until(sim, func() -> bool: return not _events(sim, "shot").is_empty(), 10.0)
+	_expect(int(lechuza.ammo) == 3 and int(beast.hits) >= 1, "a round gone, the cascarudo hit (%s, %d hits)" % [str(beast.state), int(beast.hits)])
+	_expect(not sim.perform("take", "rifle") and sim.message != "", "the rifle is gone from the box (%s)" % sim.message)
+	# Hornero takes the hood and mask: sealed, and dressed in them
+	var hornero: Dictionary = sim.unit_by_id("hornero")
+	_put(sim, "hornero", Vector2(float(mask.x), float(mask.y)) + Vector2(-64.0, 0.0))
+	hornero.exposure = 0.6
+	sim.select("hornero")
+	_expect(sim.perform("take") and sim.message.contains("hood"), "Hornero goes for the hood and mask, the nearest left (%s)" % sim.message)
+	_until(sim, func() -> bool: return sim.gear_taken.has("mask"), 20.0)
+	_expect(bool(hornero.suit) and is_zero_approx(float(hornero.exposure)) and str(hornero.disguise.get("look", "")) == str(mask.look), "sealed, warm, and seen in the hood and mask")
+	_put(sim, "hornero", m(150.0, 80.0))
+	_run_for(sim, 20.0)
+	_expect(is_zero_approx(float(hornero.exposure)) and not bool(hornero.fallen), "out in the square: no cold")
+	# knocked down, he gets up by himself like Juan Salvo
+	sim._unit_falls(hornero)
+	_expect(bool(hornero.fallen), "knocked down")
+	_until(sim, func() -> bool: return not bool(hornero.fallen), 20.0)
+	_expect(not bool(hornero.fallen) and bool(hornero.alive), "up again by himself")
+	# a checkpoint keeps what was taken
+	_expect(sim.save_checkpoint(), "a checkpoint")
+	sim.gear_taken = {}
+	sim.load_checkpoint()
+	_expect(sim.gear_taken.size() == 2 and bool(sim.unit_by_id("hornero").suit) and sim.unit_by_id("lechuza").has("gun"), "the checkpoint keeps the gear")
+	for a: Dictionary in sim.available_actions("lechuza"):
+		if str(a.id) == "take": _expect(not bool(a.enabled) and int(a.count) == 0, "nothing left to take: %s" % a.reason)
 
 func _carrying() -> void:
 	var sim: RefCounted = _fresh()
@@ -732,13 +863,13 @@ func _every_order() -> void:
 			sim.select(id)
 			var here: Vector2 = Simulation.position_of(unit)
 			var actions: Array = ["move", "stance", "stance", "distract", "takedown", "shoot", "pickup", "drop", "trap", "trap_pickup", "cut", "sabotage",
-				"unlock", "rescue", "extract", "plant", "chat", "uniform", "rig", "talk", "guide", "call", "drive", "canvas", "help", "interact", "cancel"]
+				"unlock", "rescue", "extract", "plant", "chat", "uniform", "rig", "talk", "guide", "call", "drive", "canvas", "help", "take", "interact", "cancel"]
 			for a: Dictionary in sim.available_actions(id):
 				actions.append(str(a.id))
 			for thing: Dictionary in sim.interactables():
 				actions.append(str(thing.order))
 			for action: String in actions:
-				for target: Variant in [null, "p1", "p12", here + Vector2(64.0, 0.0), "cabildo-lights", "subte-gate", "tram", "colectivo", "awning", "lechuza", "nobody"]:
+				for target: Variant in [null, "p1", "p12", here + Vector2(64.0, 0.0), "cabildo-lights", "subte-gate", "tram", "colectivo", "awning", "rifle", "mask", "lechuza", "nobody"]:
 					var answer: Variant = sim.perform(action, target)
 					_expect(typeof(answer) == TYPE_BOOL, "%s: %s %s answered (%s)" % [id, action, str(target), str(answer)])
 					_expect(sim.message != "", "%s: %s says something" % [id, action])
@@ -825,7 +956,6 @@ func _salvo() -> void:
 	_expect(not spec.is_empty() and bool(spec.suit) and bool(spec.carries) and spec.has("gun") and spec.has("arrive"), "Juan Salvo: sealed suit, carries, a rifle, comes later")
 	_expect(float(spec.arrive.at) > 0.0 and float(spec.arrive.at) < float(data.snowfall.schedule[4][0]), "he comes early in the night, before the first wave (%.0f s)" % float(spec.arrive.at))
 	var sim: RefCounted = _fresh()
-	_steady(sim, 1.0)
 	var juan: Dictionary = sim.unit_by_id("salvo")
 	var edge: Vector2 = Simulation.position_of(juan)
 	_expect(bool(juan.away) and (edge.x < m(3.0, 0.0).x) and edge.y > m(0, 72.0).y and edge.y < m(0, 100.0).y, "not here yet: at the head of Avenida de Mayo, the edge of the map (%s)" % str(edge / 32.0))
@@ -834,19 +964,17 @@ func _salvo() -> void:
 	_expect(not sim._issue(juan, {"type": "move", "x": m(60, 86).x, "y": m(60, 86).y}) and sim.message.contains("not here yet"), "nor given an order (%s)" % sim.message)
 	for a: Dictionary in sim.available_actions("salvo"):
 		_expect(not bool(a.enabled), "his bar is dark before he comes: %s" % a.id)
-	_run_for(sim, 10.0)
 	_expect(is_zero_approx(float(juan.exposure)) and bool(juan.away) and Simulation.position_of(juan) == edge, "away, he takes no cold and does not move")
 	# the night may end without him while he is away (everyone else in)
 	var early: RefCounted = _fresh(false)
 	for p: Dictionary in early.people(): early._save(p, "catedral")
 	early.update(0.05)
 	_expect(early.phase == "won", "with everyone in before he comes, the night is won all the same")
-	# he comes
-	sim.time = float(spec.arrive.at) - 0.1
+	# he comes, in the first second of the night: everyone sees him cross the square from the start
 	sim.events.clear()
 	sim.checkpoint = {}
-	_run_for(sim, 0.3)
-	_expect(not bool(juan.away) and not _events(sim, "arrival").is_empty() and str(_events(sim, "arrival")[0].id) == "salvo", "at %.0f s he comes in: event arrival" % float(spec.arrive.at))
+	_run_for(sim, float(spec.arrive.at) + 0.3)
+	_expect(not bool(juan.away) and not _events(sim, "arrival").is_empty() and str(_events(sim, "arrival")[0].id) == "salvo", "at %.1f s he comes in: event arrival" % float(spec.arrive.at))
 	_expect(sim.message.contains("Juan Salvo") and sim.message.contains("suit"), "the notice says so: %s" % sim.message)
 	var to := Vector2(float(spec.arrive.to[0]), float(spec.arrive.to[1]))
 	_until(sim, func() -> bool: return (juan.path as Array).is_empty(), 40.0)
@@ -1011,14 +1139,14 @@ func _rifle() -> void:
 ## When each comes and from where: waiting off the map, then in along an avenue to the square.
 func _creatures_come() -> void:
 	var arrivals: Array = data.creatures.arrivals
-	_expect(arrivals.size() >= 2 and arrivals.size() <= 4, "two to four cascarudos (%d)" % arrivals.size())
+	_expect(arrivals.size() >= 2 and arrivals.size() <= 8, "two to eight cascarudos (%d)" % arrivals.size())
 	var first: float = INF
 	for spec: Dictionary in arrivals:
 		first = minf(first, float(spec.at))
 		var from := Vector2(float(spec.from[0]), float(spec.from[1]))
 		_expect(from.x < m(3.0, 0).x or from.x > m(277.0, 0).x, "%s comes in from the edge of the map (%s)" % [spec.id, str(from / 32.0)])
 		_expect(str(spec.text).contains("cascarudo"), "and the notice says where: %s" % spec.text)
-	_expect(is_equal_approx(first, 15.0) and first < float(data.units[4].arrive.at), "the first a quarter of a minute in, before Juan Salvo (%.0f s; he comes at %.0f s)" % [first, float(data.units[4].arrive.at)])
+	_expect(is_equal_approx(first, 15.0) and first > float(data.units[4].arrive.at), "the first a quarter of a minute in, Juan Salvo already there (%.0f s; he comes at %.1f s)" % [first, float(data.units[4].arrive.at)])
 	var sim: RefCounted = Simulation.new(data)
 	sim.start()
 	sim.toggle_pause()

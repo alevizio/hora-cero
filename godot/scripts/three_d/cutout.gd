@@ -98,6 +98,9 @@ var _flank: float = 0.0
 var playing: String = ""
 ## A person moved on his own skeleton (rig_person.gd), a creature moved whole (creature_body.gd); or null.
 var rig: RigPerson
+## The model's prop (his rifle) and whether the rig read it: shown or put away by show_prop().
+var _prop_mesh: MeshInstance3D
+var _prop_held: bool = false
 var beast: CreatureBody
 ## The model's mesh drawn from its lighter copy while far (lod_far), and the two meshes.
 var lod_far: bool = false
@@ -580,6 +583,8 @@ func _setup_model(scene: PackedScene) -> void:
 		for mi: MeshInstance3D in meshes:
 			if str(slot.get("prop", "")) != "" and str(mi.name) == str(slot.prop): prop = mi
 		rig = RigPerson.new(skeleton, slot, _anim, prop)
+		_prop_mesh = prop
+		_prop_held = rig.has_prop
 		_anim = null
 	if kind == "creature":
 		var along: float = box.size.x if absf(sin(_turn)) > 0.5 else box.size.z
@@ -756,6 +761,13 @@ static func _local_to(node: Node3D, top: Node3D) -> Transform3D:
 	return xf
 
 # ------------------------------------------------------------------------------------------------ x-ray
+## The prop shown or put away: a neighbour in the hooded survivor's clothes carries its rifle only once he has found a
+## gun of his own; put away, the rig's hands no longer reach for it and the clip has his arms.
+func show_prop(on: bool) -> void:
+	if _prop_mesh == null or rig == null: return
+	_prop_mesh.visible = on
+	rig.has_prop = on and _prop_held
+
 func use_xray(on: bool, figure_mark: Material) -> void:
 	_xray = on
 	if card != null:

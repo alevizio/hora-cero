@@ -127,7 +127,7 @@ func _lechuza() -> void:
 			if _all(_group("south"), "safe") and k.arrived("lechuza"): _next("lechuza", "the south's two in the subte")
 
 func _bigua() -> void:
-	var colectivo: Vector2 = m(203.5, 138.2)
+	var colectivo: Vector2 = k.game.vehicle_rect("colectivo").get_center()
 	match int(step.bigua):
 		0:
 			k.order("bigua", "guide", _group("belgrano")[0]); _next("bigua", "out to the Belgrano monument")
@@ -157,7 +157,7 @@ func _salvo() -> void:
 		5:
 			var runners: Array = _runners()
 			if k.arrived("salvo") and not sim.followers_of("salvo").is_empty():
-				if runners.is_empty(): k.order("salvo", "move", m(203.5, 138.2)); _next("salvo", "leads them to the colectivo")
+				if runners.is_empty(): k.order("salvo", "move", k.game.vehicle_rect("colectivo").get_center()); _next("salvo", "leads them to the colectivo")
 				else: k.order("salvo", "guide", runners[0])
 		6:
 			if k.arrived("salvo") and sim.followers_of("salvo").is_empty(): _next("salvo", "the two from the gates in the colectivo")

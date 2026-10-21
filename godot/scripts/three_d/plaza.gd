@@ -92,6 +92,8 @@ var _stairs: Array = []
 ## without its model), and the fleet out in the city (model -> [[transform, paint, in service]]) drawn as a multimesh a
 ## district; their materials (for the snow).
 var bus: Node3D
+## The gear left about the square (data "gear"), by id: a node each, gone once somebody takes it.
+var _gear_nodes: Dictionary = {}
 var _fleet: Dictionary = {}
 var _vehicle_mats: Array[ShaderMaterial] = []
 ## The night's haze as the atmosphere set it ([depth fog begin, density, colour]), thickened in a wave (_sync_veil).
@@ -146,6 +148,7 @@ func build() -> void:
 	_service_gate()
 	_tram_line()
 	_cart(_r("cart", [88.0, 140.0, 92.0, 142.2]))
+	_gear_props()
 	_cafe_awning(_pair2("awning", Vector2(22.0, 73.6)))
 	_kiosk_tarp(_r("kiosk", [150.3, 33.4, 152.7, 35.1]))
 	_kit_lights()
@@ -1052,7 +1055,9 @@ func update(dt: float, paused: bool) -> void:
 	_sync_snow(false)
 	_sync_veil(dt)
 	_sync_tram()
+	_sync_bus()
 	_sync_cloths()
+	_sync_gear()
 	_sync_mounds()
 	_sync_gate(dt)
 	if creatures != null: creatures.update(dt, paused)
@@ -1174,6 +1179,37 @@ func _sync_tram() -> void:
 	if vr.size == Vector2.ZERO: return
 	var c := vr.get_center() / 32.0
 	tram.position = Vector3(c.x, 0.0, c.y)
+
+## The colectivo (the rules' vehicle "colectivo"): moved with it along Yrigoyen, facing the way it goes.
+func _sync_bus() -> void:
+	if bus == null: return
+	var vr: Rect2 = sim.vehicle_rect("colectivo")
+	if vr.size == Vector2.ZERO: return
+	var c := vr.get_center() / 32.0
+	bus.position = Vector3(c.x, 0.0, c.y)
+	bus.rotation.y = -PI * 0.5 if int((sim.vehicles.get("colectivo", {}) as Dictionary).get("dir", 1)) > 0 else PI * 0.5
+
+## The gear left about the square: the rifle leaning in the sentry box by the Casa Rosada's gate, the hood and mask in
+## a bundle by the truck's cab (data "gear", by id); each gone once somebody takes it.
+func _gear_props() -> void:
+	for item: Dictionary in sim.data.get("gear", []):
+		var at := Vector3(float(item.x) / 32.0, 0.0, float(item.y) / 32.0)
+		var holder := node("Gear_" + str(item.id))
+		var k := Kit.new()
+		if str(item.get("kind", "")) == "rifle":
+			# standing in the corner of the box, its butt on the ground, the barrel up
+			k.box("planks", at + Vector3(0.0, 0.5, 0.0), Vector3(0.05, 1.0, 0.06), Color(0.30, 0.22, 0.14), Color(0.36, 0.26, 0.17))
+			k.box("steel", at + Vector3(0.0, 1.08, -0.02), Vector3(0.025, 0.52, 0.025), Color(0.15, 0.16, 0.17), Color(0.21, 0.22, 0.23))
+		else:
+			# the bundle: the rubber hood and cape folded, the mask on top
+			_props.crate(k, at, Vector3(0.55, 0.3, 0.45), 0.3, 1, Color(0.16, 0.17, 0.19))
+			k.box("rubber", at + Vector3(0.0, 0.36, 0.0), Vector3(0.24, 0.14, 0.18), Color(0.22, 0.24, 0.26), Color(0.30, 0.32, 0.34))
+		commit(k, holder, "Gear", true)
+		_gear_nodes[str(item.id)] = holder
+
+func _sync_gear() -> void:
+	for id: String in _gear_nodes:
+		(_gear_nodes[id] as Node3D).visible = not sim.gear_taken.has(id)
 
 ## The cloths still on their frames; the ones taken, held up over the operatives who carry them.
 func _sync_cloths() -> void:

@@ -163,13 +163,21 @@ TRAM_LEN, TRAM_W = 14.0, 2.6
 TRAM_STOPS = [98.0, 136.0, 174.0]
 TRAM_Z = TRACKS_Z[0]
 COLECTIVO = (199.3, 136.95, 207.7, 139.45)   # (the kit's colectivo, 7.6 x 2.24 m, a tenth larger)
+BUS_STOPS = [58.0, 104.0, 150.0, COLECTIVO[0], 236.0]   # where it can be driven to along Yrigoyen (x of its front); it starts at the fourth
+BUS_START = 3
+PARADA = (238.5, 138.2)                      # the stop by Balcarce, where the ones too far gone to walk wait for it
+GEAR_MASK = (145.2, 139.8)                   # the hood and mask: by the cab of the truck at the kerb on Yrigoyen
+GEAR_RIFLE = (254.2, 77.0)                   # the rifle: in the sentry box by the Casa Rosada's gate
 KIOSK = (150.3, 33.4, 152.7, 35.1)          # a newspaper kiosk on Rivadavia's south pavement (the kit's, 2.4 x 1.7 m)
 CART = (88.0, 140.0, 92.0, 142.2)           # a vendor's cart left on Hipólito Yrigoyen
 AWNING = (22.0, 73.6)                       # a café's awning on the corner of Avenida de Mayo
 # cars of the time parked at the kerbs, the snow settling on them (x, z, heading in degrees: 0 south, 90 east; kind):
 # official cars before the Casa Rosada, a taxi rank on Bolívar, cars and a soda truck along Yrigoyen's far kerb
-PARKED = [(252.1, 44.0, 180, "sedan"), (252.1, 50.6, 180, "sedan"), (252.1, 57.2, 180, "sedan"),
-          (252.1, 112.0, 0, "sedan"), (252.1, 118.6, 0, "saloon"),
+PARKED = [(252.1, 44.0, 180, "sedan"), (252.1, 50.6, 180, "sedan"), (252.1, 57.2, 180, "sedan"), (252.1, 63.8, 180, "saloon"),
+          (252.1, 112.0, 0, "sedan"), (252.1, 118.6, 0, "saloon"), (252.1, 125.2, 0, "sedan"),
+          (32.0, 61.8, 180, "sedan"), (32.0, 106.0, 0, "taxi"), (32.0, 112.6, 0, "sedan"), (32.0, 119.2, 0, "saloon"),
+          (75.0, 141.6, 90, "sedan"), (101.0, 141.6, 90, "taxi"), (108.0, 141.6, 90, "saloon"),
+          (176.0, 141.6, 90, "sedan"), (189.0, 141.6, 90, "taxi"), (215.0, 141.6, 90, "sedan"),
           (32.0, 42.0, 180, "taxi"), (32.0, 48.6, 180, "taxi"), (32.0, 55.2, 180, "taxi"),
           (58.0, 141.6, 90, "sedan"), (65.0, 141.6, 90, "saloon"), (150.0, 141.6, 90, "truck"),
           (162.0, 141.6, 90, "sedan"), (226.0, 141.6, 90, "saloon")]
@@ -185,13 +193,16 @@ LAMPS = [(48.0, 40.0), (95.0, 40.0), (142.0, 40.0), (189.0, 40.0), (236.0, 40.0)
          (110.0, 66.0), (174.0, 66.0), (110.0, 102.0), (174.0, 102.0)]
 START = {"hornero": (104.0, 27.6), "lechuza": (25.8, 112.6), "benteveo": (70.0, 14.4), "bigua": (203.5, 138.2)}
 # Juan Salvo: off the map at the head of Avenida de Mayo until his time, then he walks in to the square's west edge
-SALVO_FROM, SALVO_TO, SALVO_AT = (1.5, 86.0), (44.0, 86.0), 30.0
+SALVO_FROM, SALVO_TO, SALVO_AT = (1.5, 86.0), (44.0, 86.0), 0.5
 # The cascarudos: when each comes (the first a quarter of a minute in, before Juan Salvo), from which avenue (the edge
 # of the map), and its first spot in the square
 CASCARUDOS = [
     ("c1", 15.0, (278.5, 34.0), (226.0, 48.0), "A cascarudo comes along Rivadavia from the east, as big as a car."),
     ("c2", 75.0, (278.5, 139.0), (232.0, 118.0), "Another cascarudo comes up Hipólito Yrigoyen from the east."),
     ("c3", 160.0, (1.5, 89.0), (52.0, 88.0), "A third cascarudo comes in off Avenida de Mayo."),
+    ("c4", 120.0, (1.5, 139.0), (52.0, 118.0), "A cascarudo comes up Hipólito Yrigoyen from the west."),
+    ("c5", 195.0, (278.5, 34.0), (226.0, 48.0), "One more cascarudo comes along Rivadavia from the east."),
+    ("c6", 265.0, (1.5, 89.0), (52.0, 88.0), "Another cascarudo comes in off Avenida de Mayo."),
 ]
 
 obstacles = [
@@ -314,9 +325,35 @@ vehicles = [
      "moving": "The tram is already moving.",
      "refuse": "Only Hornero can drive the tram.",
      "unreachable": "%s cannot get to the tram from here."},
-    # the colectivo stranded on Hipólito Yrigoyen, its doors open: it goes nowhere
+    # the colectivo stopped on Hipólito Yrigoyen, its door open, its engine still warm: Biguá (or Hornero) can take
+    # it along the street to the next stop either way, everyone aboard with it: cover on wheels, and the only way to
+    # the ones at the Balcarce stop who cannot walk
     {"id": "colectivo", "label": "Colectivo", "kind": "bus", "x": u(COLECTIVO[0]), "y": u(COLECTIVO[1]),
-     "w": u(COLECTIVO[2]) - u(COLECTIVO[0]), "h": u(COLECTIVO[3]) - u(COLECTIVO[1])},
+     "w": u(COLECTIVO[2]) - u(COLECTIVO[0]), "h": u(COLECTIVO[3]) - u(COLECTIVO[1]),
+     "stops": [u(x) for x in BUS_STOPS], "start": BUS_START, "speed": 96.0, "by": ["bigua", "hornero"], "time": 1.2, "icon": "tram", "verb": "Drive the colectivo",
+     "order": "%s takes the wheel of the 60 and brings it along Yrigoyen to the next stop.",
+     "done": "The colectivo stops. Everyone aboard came with it.",
+     "moving": "The colectivo is already moving.",
+     "refuse": "Only Biguá or Hornero can drive the colectivo.",
+     "unreachable": "%s cannot get to the colectivo from here."},
+]
+
+# Gear left about the square for whoever gets to it first: a rifle, and a hood and mask that seal a man against the
+# snow the way Juan Salvo's suit does (he is seen in them from then on: the look is the art pack's survivor).
+gear = [
+    {"id": "rifle", "kind": "rifle", "label": "Rifle", "x": u(GEAR_RIFLE[0]), "y": u(GEAR_RIFLE[1]), "time": 1.5,
+     "gun": {"label": "Rifle", "ammo": 4, "range": u(30.0), "aim": 0.8, "recover": 2.0, "loud": True, "noise": u(95.0), "sound": "rifle",
+             "icon": "target", "kit": "a granadero's rifle and four rounds",
+             "prompt": "Loud: every cascarudo hears it. Tap a marked one.",
+             "promptNone": "No cascarudo in range and in sight. Tap away to lower it."},
+     "order": "%s goes for the rifle in the sentry box.",
+     "take": "%s takes the granadero's rifle from the sentry box. Four rounds.",
+     "armed": "%s has a rifle already."},
+    {"id": "mask", "kind": "mask", "label": "Hood and mask", "x": u(GEAR_MASK[0]), "y": u(GEAR_MASK[1]), "time": 2.5,
+     "suit": True, "look": "art:survivor_hood",
+     "order": "%s goes for the hood and mask in the truck's cab.",
+     "take": "%s pulls on the rubber hood and the mask from the truck. The snow cannot touch him now.",
+     "sealed": "%s is sealed against the snow already."},
 ]
 
 # Cloths to hold over people for one crossing: taken, they keep the snow off whoever carries one and the few closest
@@ -351,6 +388,9 @@ GROUPS = [
     ("sw", [(72.0, 114.0, 200, 0.16, {}), (69.4, 116.2, 160, 0.06, {}), (74.2, 117.6, 220, 0.22, {})]),
     ("nw", [(66.0, 50.0, 90, 0.10, {}), (68.6, 48.0, 120, 0.20, {}), (63.4, 52.2, 60, 0.04, {})]),
     ("south", [(114.0, 118.0, 270, 0.14, {}), (116.6, 120.2, 300, 0.26, {})]),
+    # the three at the 60's stop by Balcarce: too far gone to walk another step; the colectivo has to come to them
+    ("parada", [(PARADA[0], PARADA[1], 270, 0.46, {"stuck": True}), (PARADA[0] + 2.1, PARADA[1] - 0.4, 250, 0.58, {"stuck": True}),
+                (PARADA[0] + 3.9, PARADA[1] + 0.4, 290, 0.50, {"stuck": True})]),
 ]
 people = []
 n = 0
@@ -394,6 +434,7 @@ data = {
     "shelters": shelters,
     "vehicles": vehicles,
     "canvases": canvases,
+    "gear": gear,
     "snowfall": {
         "schedule": SCHEDULE, "bury": BURY,
         "rate": {"unit": 75.0, "person": 300.0}, "recover": 28.0,
@@ -416,12 +457,16 @@ data = {
         "lostTooMany": "Too many have been lost to the snow.",
         "wave": "A heavy wave of snow is coming.",
         "lullNow": "A lull. Bring them in now.",
+        "stuck": "Too far gone to walk: bring the colectivo to them.",
+        "stuckRefuse": "They are too far gone to walk another step. Bring the colectivo to them.",
+        "takeLabel": "Take", "noGear": "There is nothing left there to take.", "gearGone": "Somebody has taken it already.",
     },
     "objectives": [
         {"id": "people", "text": "Get everyone under cover"},
         {"id": "shelter", "text": "The squad under cover when the square is buried"},
         {"id": "lights", "text": "Put the arcade's lights back", "optional": True},
         {"id": "gate", "text": "Open the subte's service gate", "optional": True},
+        {"id": "stop", "text": "Bring the colectivo to the ones at the Balcarce stop", "optional": True},
     ],
     "medals": [
         {"id": "everyone", "art": "clean_hands", "label": "Nobody left out", "text": "Everyone in the square was brought in", "rule": "everyone"},
@@ -554,13 +599,23 @@ data = {
     "copy": {
         "wonTitle": "UNDER\nCOVER",
         "title": "PLAZA\nDE MAYO",
-        "briefing": "Buenos Aires, a winter night in 1958, and for the first time in forty years it is snowing. Half the city has come to the Plaza de Mayo to see it. Within minutes the ones who stay out in it begin to fall: the snow kills whoever it touches. Four neighbours from La Boca happened to be under cover when it began: Hornero at the controls of a tram stopped on Rivadavia, Lechuza under the Cabildo's arcade, Benteveo selling the Sexta on the Catedral's steps, Biguá on a colectivo stranded on Hipólito Yrigoyen. Early in the night Juan Salvo comes in off Avenida de Mayo, sealed in an insulating suit: the snow cannot touch him, he can carry in whoever has fallen, and he has a rifle with a few rounds. Soon the cascarudos come up the avenues, each as big as a car, and knock down whoever they find out in the open. They will not go under the arches or the portico, down into the subte or into the tram, and noise draws them. Bring in as many as you can before the snow buries the square. Watch the waves; move in the lulls.",
+        "briefing": "Buenos Aires, a winter night in 1958, and for the first time in forty years it is snowing. Half the city has come to the Plaza de Mayo to see it. Within minutes the ones who stay out in it begin to fall: the snow kills whoever it touches. Four neighbours from La Boca happened to be under cover when it began: Hornero at the controls of a tram stopped on Rivadavia, Lechuza under the Cabildo's arcade, Benteveo selling the Sexta on the Catedral's steps, Biguá on a colectivo stranded on Hipólito Yrigoyen.\n\nEarly in the night Juan Salvo comes in off Avenida de Mayo, sealed in an insulating suit: the snow cannot touch him, he can carry in whoever has fallen, and he has a rifle with a few rounds. Soon the cascarudos come up the avenues, each as big as a car, and knock down whoever they find out in the open. They will not go under the arches or the portico, down into the subte or into the tram, and noise draws them. Bring in as many as you can before the snow buries the square. Watch the waves; move in the lulls.",
         "mapTip": "Show the whole square",
         "debrief": "By midnight the square was a field of snow, and the Pirámide stood up out of it like a post in a river. Nobody came out from under the arches that night, or down from the tram. In the subte they listened to the snow through the gratings and waited for the morning, and the five of them counted heads.",
         "failureNote": "Lose the whole squad, or bring in too few before the snow buries the square, and it is over. Watch the snow: move in the lulls, wait out the waves under cover, and stop the clock to give orders.",
         "checkpointNote": "Checkpoints are also taken when Juan Salvo comes, when the arcade's lights come on and when the service gate opens.",
         "checkpoints": {"start": "the first flakes", "salvo": "Juan Salvo in the square", "cabildo-lights": "the arcade lit", "subte-gate": "the service gate open"},
-        "orderNames": {"guide": "LEAD IN", "call": "CALL", "drive": "DRIVE", "canvas": "TAKE CLOTH", "help": "HELP UP", "rig": "LIGHTS"},
+        "orderNames": {"guide": "LEAD IN", "call": "CALL", "drive": "DRIVE", "canvas": "TAKE CLOTH", "help": "HELP UP", "rig": "LIGHTS", "take": "TAKE"},
+        # HOW TO PLAY, the night's own cards (one line each; the glyph stands in for a clip)
+        "howto": [
+            {"id": "lead", "glyph": "hand", "line": "Tap Hornero, Lechuza, Benteveo or Biguá to choose who acts, then tap a person out in the snow: they follow him. Lead them under cover: the portico, the arcade, the subte, the tram, the colectivo."},
+            {"id": "cold", "glyph": "stretcher", "line": "The ring over each head is the cold. It fills out in the snow, faster in a wave, and empties under cover. Full, they fall: Biguá or Juan Salvo can still carry them in."},
+            {"id": "waves", "glyph": "pause", "line": "The snow comes in waves. Wait out the heavy ones under cover and cross in the lulls. PLAN stops the clock: give each an order, then EXECUTE."},
+            {"id": "calls", "glyph": "talk", "line": "Benteveo's shout gathers everyone near him behind him. Hornero's bell, rung from the tram, brings people running to it."},
+            {"id": "wheels", "glyph": "tram", "line": "Hornero drives the tram along Rivadavia and Biguá the colectivo along Yrigoyen. Everyone aboard goes with them: cover on wheels. The three at the Balcarce stop cannot walk: bring the colectivo to them."},
+            {"id": "cascarudos", "glyph": "target", "line": "Cascarudos come up the avenues for whoever is out in the open, and noise draws them. Juan Salvo's rifle drives them off; the rifle in the sentry box arms one more of you."},
+            {"id": "gear", "glyph": "uniform", "line": "A cloth keeps the snow off a few for one crossing. The hood and mask by the truck on Yrigoyen seal one of you against it for the whole night."},
+        ],
         "objectiveHow": {
             "people": {"benteveo": "Benteveo: rally a group with his voice, then lead them in",
                        "hornero": "Hornero: take the tram along Rivadavia and ring its bell",
@@ -572,6 +627,9 @@ data = {
                        "": "Lechuza can put the arcade's lights back"},
             "gate": {"lechuza": "Lechuza: the service stair at the square's south-west corner",
                      "": "Lechuza has the key to the service gate"},
+            "stop": {"bigua": "Biguá: drive the colectivo east along Yrigoyen to the stop by Balcarce",
+                     "hornero": "Hornero: drive the colectivo east along Yrigoyen to the stop by Balcarce",
+                     "": "The three at the Balcarce stop cannot walk: the colectivo must come to them"},
         },
         "hints": {
             "start": "Tap Hornero, Lechuza, Benteveo or Biguá to choose who acts, then tap a person out in the snow: they follow him in. Drag to look around.",
@@ -591,8 +649,10 @@ data = {
             "gate": "Lechuza has the key to the subte's service stair at the south-west corner: another way under cover.",
             "panic": "In a heavy wave, people already half frozen panic and break away. Lead them in the lulls.",
             "squad": "One of the squad is down in the snow. Another can help him up, if he gets there in time.",
+            "stop": "Three at the 60's stop by Balcarce are too far gone to walk. Biguá can drive the colectivo to them along Yrigoyen: it is cover on wheels, and it brings the people aboard with it.",
+            "gear": "A rifle leans in the sentry box by the Casa Rosada's gate, and the truck at the kerb on Yrigoyen has a rubber hood and a mask: whoever takes them fights the cascarudos, or walks the snow, like Juan Salvo.",
         },
-        "coach": ["start", "exposure", "shelters", "benteveo", "hornero", "lechuza", "waves", "bigua", "salvo", "fallen", "cascarudos", "rifle", "lure",
+        "coach": ["start", "exposure", "shelters", "benteveo", "hornero", "lechuza", "waves", "bigua", "stop", "salvo", "fallen", "cascarudos", "rifle", "gear", "lure",
                   "canvas", "gate", "panic", "squad", "plan"],
         "hintsWhen": {
             "exposure": {"after": 8.0},
@@ -608,6 +668,8 @@ data = {
             "lure": {"who": "hornero", "after": CASCARUDOS[0][1] + 10.0},
             "canvas": {"after": 120.0},
             "gate": {"near": [u(52.0), u(129.5), 600]},
+            "stop": {"after": 5.0},
+            "gear": {"after": 48.0},
         },
     },
 }

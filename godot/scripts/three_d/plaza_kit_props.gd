@@ -537,47 +537,71 @@ func flagpole(pos: Vector3, height: float, wind: Vector3) -> Node3D:
 # ---------------------------------------------------------------------------------------------------------------
 # Lamp posts, palms, trees, benches: one mesh each, many instances
 # ---------------------------------------------------------------------------------------------------------------
-## The square's cast-iron candelabra: a fluted column on a moulded octagonal base, a collar, and from its capital
-## `arms` scrolled arms each carrying a globe, a fifth globe on top; tungsten-warm. (The notes found no source for the
-## 1950s models: this is the familiar porteño type of the plazas, from general knowledge.)
+## The square's cast-iron candelabra, the porteño type of the plazas (the five-globe "farola" of the Plaza de Mayo,
+## Avenida de Mayo and the parks): a moulded base in steps, a tall fluted shaft, a collar, and a capital from which
+## `arms` scrolled arms dip and sweep up, each to a stem with a cast cup, an opal globe and a small cast cap, a hoop
+## joining the arms; the fifth globe on the column's own stem above them; tungsten-warm. About 5.7 m to the top globe.
+## (The notes found no source for the 1950s models: this is the familiar type, from general knowledge.)
 func lamp_post_kit(arms: int) -> Array:
 	var k := Kit.new()
 	var kd := Kit.new()
 	var iron := Color(0.1, 0.11, 0.11)
 	k.push_tint(iron)
-	k.lathe("metal", Vector3.ZERO, PackedVector2Array([Vector2(0.42, 0.0), Vector2(0.42, 0.22), Vector2(0.34, 0.3), Vector2(0.32, 0.62), Vector2(0.24, 0.76), Vector2(0.2, 0.9),
-		Vector2(0.15, 1.05), Vector2(0.13, 3.3), Vector2(0.17, 3.38), Vector2(0.17, 3.48), Vector2(0.12, 3.56), Vector2(0.12, 3.9), Vector2(0.22, 4.02), Vector2(0.22, 4.1), Vector2(0.08, 4.16)]), 8, Color(0.8, 0.8, 0.8), Color.WHITE)
+	# the column: the base in steps, the shaft tapering, the collar, the capital, the stem of the top globe
+	k.lathe("metal", Vector3.ZERO, PackedVector2Array([Vector2(0.5, 0.0), Vector2(0.5, 0.16), Vector2(0.42, 0.22), Vector2(0.4, 0.5), Vector2(0.33, 0.6),
+		Vector2(0.3, 0.88), Vector2(0.23, 0.98), Vector2(0.19, 1.12), Vector2(0.15, 1.3), Vector2(0.125, 3.95), Vector2(0.17, 4.03), Vector2(0.17, 4.14),
+		Vector2(0.13, 4.22), Vector2(0.13, 4.36), Vector2(0.24, 4.46), Vector2(0.25, 4.56), Vector2(0.09, 4.64), Vector2(0.07, 5.0), Vector2(0.12, 5.06),
+		Vector2(0.12, 5.12), Vector2(0.06, 5.18)]), 16)
 	# the flutes: thin ribs up the shaft
-	for i: int in range(8):
-		var a := TAU * float(i) / 8.0
-		k.beam("metal", Vector3(cos(a) * 0.14, 1.1, sin(a) * 0.14), Vector3(cos(a) * 0.125, 3.25, sin(a) * 0.125), 0.03, 0.03, Color(0.8, 0.8, 0.8), Color.WHITE)
+	for i: int in range(10):
+		var a := TAU * float(i) / 10.0
+		k.beam("metal", Vector3(cos(a) * 0.145, 1.35, sin(a) * 0.145), Vector3(cos(a) * 0.125, 3.9, sin(a) * 0.125), 0.03, 0.03, Color(0.8, 0.8, 0.8), Color.WHITE)
 	k.pop_tint()
 	var globes: Array[Vector3] = []
 	for i: int in range(arms):
 		var a := TAU * float(i) / float(arms) + PI * 0.25
 		var d := Vector3(cos(a), 0, sin(a))
-		var path := PackedVector3Array([Vector3(0, 3.7, 0) + d * 0.1, Vector3(0, 3.95, 0) + d * 0.4, Vector3(0, 4.0, 0) + d * 0.75, Vector3(0, 3.92, 0) + d * 0.95, Vector3(0, 3.72, 0) + d * 0.98])
 		k.push_tint(iron)
-		k.tube("metal", path, 0.04, 5, Color.WHITE)
-		# a scroll under the arm
-		k.tube("metal", PackedVector3Array([Vector3(0, 3.5, 0) + d * 0.13, Vector3(0, 3.6, 0) + d * 0.45, Vector3(0, 3.86, 0) + d * 0.62]), 0.025, 4, Color.WHITE)
-		var cup := Vector3(0, 3.98, 0) + d * 0.95
-		k.lathe("metal", cup + Vector3(0, -0.04, 0), PackedVector2Array([Vector2(0.03, -0.1), Vector2(0.1, 0.0), Vector2(0.11, 0.06)]), 8, Color.WHITE, Color.WHITE)
+		# the arm: out of the capital, a dip, then the sweep up to its stem
+		k.tube("metal", PackedVector3Array([Vector3(0, 4.5, 0) + d * 0.2, Vector3(0, 4.44, 0) + d * 0.42, Vector3(0, 4.46, 0) + d * 0.62,
+			Vector3(0, 4.58, 0) + d * 0.78, Vector3(0, 4.76, 0) + d * 0.86, Vector3(0, 4.96, 0) + d * 0.87]), 0.045, 6, Color.WHITE)
+		# the scroll: a curl from the collar up under the arm's dip
+		k.tube("metal", PackedVector3Array([Vector3(0, 4.08, 0) + d * 0.15, Vector3(0, 4.2, 0) + d * 0.4, Vector3(0, 4.38, 0) + d * 0.52,
+			Vector3(0, 4.44, 0) + d * 0.42]), 0.028, 4, Color.WHITE)
+		# the cup the globe sits in
+		var cup := Vector3(0, 4.96, 0) + d * 0.87
+		k.lathe("metal", cup, PackedVector2Array([Vector2(0.05, 0.0), Vector2(0.11, 0.06), Vector2(0.12, 0.12), Vector2(0.09, 0.14)]), 8, Color.WHITE, Color.WHITE)
 		k.pop_tint()
-		globes.append(cup + Vector3(0, 0.06, 0))
-		pk.ridge(k, Vector3(0, 4.02, 0) + d * 0.3, Vector3(0, 4.03, 0) + d * 0.72, Vector3.UP, 0.08, 0.04, 0.01)
-	globes.append(Vector3(0, 4.2, 0))
+		globes.append(cup + Vector3(0, 0.14, 0))
+		pk.ridge(k, Vector3(0, 4.5, 0) + d * 0.45, Vector3(0, 4.62, 0) + d * 0.76, Vector3.UP, 0.08, 0.04, 0.01)
+	# the hoop that joins the arms
+	if arms >= 3:
+		var hoop := PackedVector3Array()
+		for j: int in range(25):
+			var t := TAU * float(j) / 24.0
+			hoop.append(Vector3(cos(t) * 0.62, 4.47, sin(t) * 0.62))
+		k.push_tint(iron)
+		k.tube("metal", hoop, 0.022, 4, Color.WHITE)
+		k.pop_tint()
+	# the fifth globe, on the column's own stem
+	var top := Vector3(0, 5.18, 0)
+	k.push_tint(iron)
+	k.lathe("metal", top, PackedVector2Array([Vector2(0.06, 0.0), Vector2(0.13, 0.06), Vector2(0.14, 0.13), Vector2(0.1, 0.15)]), 8, Color.WHITE, Color.WHITE)
+	k.pop_tint()
+	globes.append(top + Vector3(0, 0.15, 0))
+	# the opal globes (their bottoms at `globes`), each with its cast cap
 	for g: Vector3 in globes:
-		var r := 0.2 if g.y > 4.15 else 0.17
+		var r := 0.23 if g.y > 5.3 else 0.2
 		var prof := PackedVector2Array()
 		for j: int in range(7):
 			var t := -PI * 0.5 + PI * float(j) / 6.0
 			prof.append(Vector2(maxf(cos(t), 0.0) * r, r + sin(t) * r))
-		pk.glow_lathe(kd, g, prof, 10)
-	k.push_tint(iron)
-	k.lathe("metal", Vector3(0, 4.58, 0), PackedVector2Array([Vector2(0.05, 0.0), Vector2(0.02, 0.15), Vector2(0.0, 0.22)]), 6, Color.WHITE, Color.WHITE)
-	k.pop_tint()
-	pk.cone(k, Vector3(0, 4.12, 0), 0.2, 0.06)
+		pk.glow_lathe(kd, g, prof, 12)
+		k.push_tint(iron)
+		k.lathe("metal", g + Vector3(0, 2.0 * r - 0.02, 0), PackedVector2Array([Vector2(0.07, 0.0), Vector2(0.05, 0.04), Vector2(0.0, 0.07)]), 8, Color.WHITE, Color.WHITE)
+		k.pop_tint()
+	# snow on the capital
+	pk.cone(k, Vector3(0, 4.56, 0), 0.25, 0.06)
 	return [k, kd, globes]
 
 ## A Canary Island date palm (Phoenix canariensis) as in the square (eight planted 1900-04 by Thays, about 55 years
@@ -846,10 +870,11 @@ func commit_batches(lamps: Array, palms: Array, trees: Array, benches: Array) ->
 			for i: int in range(items.size()):
 				var t: Transform3D = node.multimesh.get_instance_transform(i)
 				for g: Vector3 in globes:
-					pk.halo(t * (g + Vector3(0, 0.18, 0)), pk.LAMP, 0.85 if g.y < 4.15 else 1.1)
+					# a halo the size of the globe's own glow: the globe reads as opal glass, not as a ball of light
+					pk.halo(t * (g + Vector3(0, 0.2, 0)), pk.LAMP, 0.55 if g.y < 5.3 else 0.7)
 				var foot: Vector3 = items[i][0]
-				pk.pool(foot, 6.5, Color(1.0, 0.58, 0.28) * 0.45)
-				pk.lights.append([foot + Vector3(0, 4.2, 0), pk.LAMP, 1.0, 12.0])
+				pk.pool(foot, 7.0, Color(1.0, 0.58, 0.28) * 0.45)
+				pk.lights.append([foot + Vector3(0, 5.2, 0), pk.LAMP, 1.0, 13.0])
 	if not palms.is_empty():
 		var kinds: Array[ArrayMesh] = [_joined(palm_kit(41)), _joined(palm_kit(42, 10.9)), _joined(palm_kit(43, 9.9))]
 		var heights := [10.4, 10.9, 9.9]
