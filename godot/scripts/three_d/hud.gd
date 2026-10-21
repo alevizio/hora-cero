@@ -193,6 +193,13 @@ class Readout extends Control:
 		var fill: float = 1.0 if alarm else level
 		if fill > 0.02: draw_rect(Rect2(track.position,Vector2(maxf(3.0,roundf(track.size.x*clampf(fill,0,1))),3)),c)
 
+## The readout's plate as wide as its words: 264 px holds the English, but a rescue's Spanish runs long
+## ("A CUBIERTO 29/29 · RÁFAGA EN 59") and hung out over the plate's edge, past the end of its meter.
+func _fit_readout() -> void:
+	if readout==null or status==null: return
+	var room: float=maxf(264.0,size.x-readout.position.x-8.0)
+	readout.size=Vector2(clampf(status.position.x+status.get_minimum_size().x+16.0,264.0,room),STATUS_HEIGHT)
+
 ## The dossier sheet: aged paper, a little foxing and one rubber stamp.
 class Sheet extends PanelContainer:
 	const Kit := preload("res://scripts/three_d/action_slot.gd")
@@ -1386,7 +1393,7 @@ func layout() -> void:
 	var block_width: float=photos_width if (_upright and not four_up) else photos_width+8+CAMERA_SIZE.x
 	# Top left: clock and detection, objectives underneath.
 	readout.position=Vector2(left,top)
-	readout.size=Vector2(264,STATUS_HEIGHT)
+	_fit_readout()
 	objective_block.position=Vector2(left,top+STATUS_HEIGHT+8)
 	_block_limit=maxf(220.0,right-tools_width-14-left)
 	# Landscape: the banners hang top centre, level with the block; it stops short of the widest of them.
@@ -2281,6 +2288,7 @@ func refresh(_unused: Variant = null) -> void:
 		_shown_status=shown
 		if rescue: status.text=_snow_status()
 		else: status.text="ALARM" if alarmed else ("DETECTION %d%%" % shown if shown>=0 else "UNDETECTED")
+		_fit_readout()
 	readout.level=suspicion
 	readout.alarm=alarmed
 	var tone: Color=MUTED if (suspicion<=0.02 and not alarmed) else readout.tone().lightened(0.12)
