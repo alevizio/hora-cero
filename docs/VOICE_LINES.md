@@ -61,12 +61,19 @@ Porteños, so the Spanish is Rioplatense of the time: *vos* (vení, decime, prec
 lunfardo only: *pibe* (lad), *cana* (the law), *junar* (to spot), *rajar* (to clear off), *minga* (no way),
 *yeta* (bad luck), *¡araca!* (look out, an old man's word), *¡la pucha!* (blast), *¡guarda!* (look out). The
 English is plain and a little British, as an Argentine of 1958 would have learned it, and is spoken with the
-same voices, so it keeps their accent. Hornero says least and makes tram jokes; Lechuza is dry and technical;
-Benteveo is quick and cheeky; Biguá speaks in river words. Benteveo never strikes and has nothing to finish, so
-he has no `attack` or `done` lines. His voice is moved down two semitones in both languages (`PITCH` in
-`tools/voice_prep.py`): as designed, his lines sat at about 230 Hz, high enough to risk sounding like a boy
-whose voice has not broken. To change a line, edit `CAST`
-in `tools/voice_riachuelo.py`, delete that line's takes and run its `clone`, `judge`, `pick` and `install` steps.
+same voices, so it keeps their accent. Hornero says least and makes tram jokes; Lechuza, an old man of about
+seventy with many years of night shifts behind him, is dry, slow and ironic; Benteveo, a boy of twelve or
+thirteen, is quick and cheeky; Biguá speaks in river words. Benteveo never strikes and has nothing to finish, so
+he has no `attack` or `done` lines. Since October 20 those two voices are designed for their ages: Lechuza's an
+old man's, cracked and rasping, about 113 Hz in his calm lines (he was about 170); Benteveo's a boy's before it
+breaks, a child's and not an adolescent's: his design take speaks at about 310 Hz, and his lines, nearly all of
+them shouted, come out higher still, about 370 Hz with the alarms near 550 (he was about 220 after the shift).
+Neither is pitch-shifted: Benteveo's first voice, a
+sixteen-year-old's that sat at about 230 Hz, was moved down two semitones by `PITCH` in `tools/voice_prep.py`,
+and that entry is gone. To change a line, edit `CAST` in `tools/voice_riachuelo.py`, delete that line's takes and
+run its `clone`, `judge`, `pick` and `install` steps. To recast one voice, change his `persona` in `CAST`, run
+`design` and `audition`, name the take in `CHOSEN`, and run `split`, `clone`, `judge`, `pick` and `install` with
+his id: the other three's files and provenance rows stay as they are.
 
 ### Hornero (motorman: the tram's controller handle (stun), the tram bell, the keys; works the gondola) — the shipped lines
 

@@ -37,10 +37,10 @@ LEVEL = "loudnorm=I=-20:TP=-2.5:LRA=7"
 EDGES = "afade=t=in:d=0.008,areverse,afade=t=in:d=0.03,areverse"
 # A voice moved down (or up) some semitones before the rest, its formants kept so it sounds deeper rather than
 # bigger: (operative, language): semitones. The long window and smooth transients keep every line heard right.
-# Benteveo (the newspaper boy, tools/voice_riachuelo.py): his designed voice speaks his exclamations at about 230 Hz,
-# high enough to risk sounding like a boy whose voice has not broken; down two, about 205 Hz, he should pass for
-# seventeen, still the highest of the four and well clear of Lechuza (about 165).
-PITCH = {("benteveo", "en"): -2.0, ("benteveo", "es"): -2.0}
+# Benteveo (the newspaper boy, tools/voice_riachuelo.py) was moved down two semitones while he was meant to pass for
+# seventeen; since October 20, 2026 his voice is designed as a boy's of twelve, before it breaks, and is left as
+# designed: nothing is shifted.
+PITCH = {}
 SHIFT = "rubberband=pitch=%.6f:formant=preserved:pitchq=quality:window=long:transients=smooth"
 
 
