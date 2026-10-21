@@ -153,6 +153,7 @@ func build() -> void:
 	_obelisco()
 	_port()
 	_far_streets()
+	_ring()
 	for key: Vector2i in _batches:
 		var b: Batch = _batches[key]
 		triangles += b.idx.size() / 3
@@ -216,6 +217,42 @@ func _blocks() -> Array:
 	for span: Vector2 in [Vector2(-150, -88), Vector2(-76, -14), Vector2(-4, 120), Vector2(128, 242), Vector2(256, 284)]:
 		out.append(block(Rect2(span.x, H + 46.0, span.y - span.x, 40.0), [true, true, true, true], town))
 	return out
+
+## The city going on beyond all that: a plain grid of low blocks wherever nothing stands yet, north, west and south
+## (the port and the river are east), out as far as the widest view reaches (on the web the view grows with the
+## window: a 250 m-tall view at the camera's farthest), so no bare ground shows at the edge of the picture. Built
+## last: each cell is tried against the lots already there, keeps off the avenue's carriageway west of the map and
+## the Plaza de la República, and is cut by the Diagonales like any block.
+func _ring() -> void:
+	var low := {"floors": Vector2i(2, 4), "mansard": 0.2, "dome": 0.0, "depth": 13.0}
+	var inner := Rect2(-150.0, PlazaGround.NORTH_STREET - 58.0, W + 4.0 + 150.0, H + 86.0 - (PlazaGround.NORTH_STREET - 58.0)).grow(6.0)
+	var avenue := Rect2(-720.0, 20.0, 570.0, 128.0)
+	var dn: Array = diagonals[0]
+	var obelisco: Vector2 = (dn[0] as Vector2) + (dn[1] as Vector2) * OBELISCO_S
+	var taken: Array[Rect2] = []
+	for lot: Array in lots:
+		var poly: PackedVector2Array = lot[0]
+		var box := Rect2(poly[0], Vector2.ZERO)
+		for q: Vector2 in poly: box = box.expand(q)
+		taken.append(box.grow(3.0))
+	var gx := -310.0
+	while gx + 62.0 <= W + 4.0:
+		var gz := PlazaGround.NORTH_STREET - 270.0
+		while gz < H + 330.0:
+			var r := Rect2(gx, gz, 62.0, 42.0)
+			var free := not r.intersects(inner) and not r.intersects(avenue) and r.get_center().distance_to(obelisco) > 110.0
+			if free:
+				for t: Rect2 in taken:
+					if r.intersects(t):
+						free = false
+						break
+			if free:
+				var pieces: Array = [block(r, [true, true, true, true], low)]
+				for d: Array in diagonals: pieces = _cut(pieces, d)
+				for piece: Dictionary in pieces:
+					if _thickness(piece.poly) >= 11.0: _lots(_chamfer(piece))
+			gz += 52.0
+		gx += 72.0
 
 ## The Diagonal Norte's own blocks beyond the city's grid, out to the Plaza de la República: on both sides of it, a
 ## block between each cross street, its front on the Diagonal (eight storeys and a mansard, all alike), its ends on the

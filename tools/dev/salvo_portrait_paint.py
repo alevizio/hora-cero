@@ -10,7 +10,7 @@ the Plaza de Mayo: Hornero, Lechuza, Benteveo, Biguá) as one series. Nothing is
   - their canvas: the fine grain of their ground laid over the whole picture, the render and all;
   - their grade: the render's colours drawn part way to theirs (the warmth, the depth of the shadows), their vignette,
     and a fine grain.
-    python3 tools/dev/salvo_portrait_paint.py render.png out.png operatives.webp [side] [p1|p2|p3]
+    python3 tools/dev/salvo_portrait_paint.py render.png out.png operatives.webp [side] [p1|p2|p3|p4]
 The way he was taken (salvo_portrait.gd) sets the weight of the paint: p1 (chiaroscuro) the heaviest oil and a dimmer
 ground, p2 (profile) the darkest ground, p3 (over the shoulder) between.
 Needs numpy, Pillow and opencv-python."""
@@ -30,6 +30,7 @@ STYLES = {
     "p1": {"ground": 0.95, "stroke": 66, "lic": 0.055, "colour": 0.5, "light": 0.12, "lift": 1.38},
     "p2": {"ground": 0.8, "stroke": 78, "lic": 0.045, "colour": 0.45, "light": 0.08, "lift": 1.6},
     "p3": {"ground": 0.95, "stroke": 72, "lic": 0.05, "colour": 0.5, "light": 0.2, "lift": 1.45},
+    "p4": {"ground": 1.0, "stroke": 50, "lic": 0.07, "colour": 0.62, "light": 0.3, "lift": 1.22},
 }
 
 

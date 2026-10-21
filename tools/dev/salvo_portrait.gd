@@ -21,7 +21,7 @@ extends SceneTree
 ## friends' source in art/juan_salvo/portraits/. The render itself is kept in user://salvo_portrait.render.png.
 const Cutout := preload("res://scripts/three_d/cutout.gd")
 const ArtPack := preload("res://scripts/three_d/art_pack.gd")
-const STYLES := ["p1", "p2", "p3"]
+const STYLES := ["p1", "p2", "p3", "p4"]
 
 func _init() -> void:
 	call_deferred("run")
@@ -47,7 +47,7 @@ func run() -> void:
 	e.background_mode = Environment.BG_CLEAR_COLOR
 	e.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	e.ambient_light_color = Color(0.5, 0.52, 0.6)
-	e.ambient_light_energy = {"p1": 0.11, "p2": 0.08, "p3": 0.16}[style]
+	e.ambient_light_energy = {"p1": 0.11, "p2": 0.08, "p3": 0.16, "p4": 0.2}[style]
 	e.tonemap_mode = Environment.TONE_MAPPER_FILMIC
 	e.tonemap_white = 1.6
 	env.environment = e
@@ -69,6 +69,9 @@ func run() -> void:
 		"p1": {"look": Vector3(0.0, h * 0.875, 0.03), "yaw": 30.0, "rise": 0.12, "dist": 1.78},
 		"p2": {"look": Vector3(0.0, h * 0.895, 0.05), "yaw": 80.0, "rise": 0.05, "dist": 1.55},
 		"p3": {"look": Vector3(0.15, h * 0.76, 0.0), "yaw": 155.0, "rise": 0.4, "dist": 3.1},
+		# p4 "mugshot" (for a model with a face: the hooded survivor): head and shoulders near enough to front, the eyes a
+		# little above the middle, framed as the squad's painted portraits are
+		"p4": {"look": Vector3(0.0, h * 0.895, 0.04), "yaw": 24.0, "rise": 0.07, "dist": 1.56},
 	}[style]
 	var look: Vector3 = shot.look
 	var yaw: float = deg_to_rad(float(shot.yaw))
@@ -126,6 +129,12 @@ func _light(world: Node3D, style: String, cam: Camera3D, look: Vector3) -> void:
 			# over his back
 			_lamp(world, look + right * 1.6 + fwd * 1.7 + Vector3.UP * 1.0, Color(1.0, 0.72, 0.42), 6.5, 6.0, true)
 			_sun(world, (fwd * 0.5 + right * 0.2 - Vector3.UP * 0.8).normalized(), Color(0.6, 0.68, 0.85), 0.3, false)
+		"p4":
+			# lit as the painted portraits are: a warm key from the picture's upper left, in front of him, the face in
+			# it; a cold fill from the right and below so the shadow side keeps its shape
+			_lamp(world, look - right * 1.1 - fwd * 1.3 + Vector3.UP * 0.9, Color(1.0, 0.8, 0.58), 9.0, 6.0, true)
+			_sun(world, (-right * 0.6 - fwd * 0.3 + Vector3.UP * 0.35).normalized(), Color(0.58, 0.64, 0.8), 0.22, false)
+			_sun(world, (fwd * 0.15 - Vector3.UP).normalized(), Color(0.62, 0.7, 0.88), 0.25, false)
 
 func _lamp(world: Node3D, at: Vector3, colour: Color, energy: float, reach: float, shadow: bool) -> void:
 	var l := OmniLight3D.new()

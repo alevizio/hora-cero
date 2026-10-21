@@ -67,13 +67,15 @@ func run() -> void:
 			node.set_surface_override_material(i, m)
 		root.add_child(node)
 		var box: AABB = node.get_aabb()
-		# broadside: the camera off to -x looking along +x, so the model's front (-z) is to the left
+		# broadside: the camera off to -x looking along +x, so the model's front (-z) is to the left; the colectivo's
+		# front is +z (tools/vehicles.gd mirrors it for its door), so it is taken from +x
 		var width_m: float = box.size.z + MARGIN * 2.0
 		var height_m: float = box.size.y + MARGIN * 2.0
 		root.size = Vector2i(int(round(width_m * PX_PER_M)), int(round(height_m * PX_PER_M)))
 		cam.size = width_m
-		cam.rotation = Vector3(0, -PI * 0.5, 0)
-		cam.position = Vector3(box.position.x - 20.0, box.get_center().y, box.get_center().z)
+		var from_right: bool = model.begins_with("colectivo")
+		cam.rotation = Vector3(0, PI * 0.5 if from_right else -PI * 0.5, 0)
+		cam.position = Vector3(box.end.x + 20.0 if from_right else box.position.x - 20.0, box.get_center().y, box.get_center().z)
 		await process_frame
 		await process_frame
 		await RenderingServer.frame_post_draw

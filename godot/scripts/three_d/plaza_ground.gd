@@ -333,8 +333,8 @@ func _build_land() -> void:
 	for i: int in range(xs.size() - 1):
 		for j: int in range(zs.size() - 1):
 			cells.append(Rect2(xs[i], zs[j], xs[i + 1] - xs[i], zs[j + 1] - zs[j]))
-	var z0 := -140.0
-	var z1 := map_size.y + 96.0
+	var z0 := -420.0
+	var z1 := map_size.y + 400.0
 	cells.append(Rect2(-700.0, z0, 700.0, z1 - z0))
 	cells.append(Rect2(map_size.x, z0, 150.0, z1 - z0))
 	cells.append(Rect2(0.0, z0, map_size.x, -30.0 - z0))
