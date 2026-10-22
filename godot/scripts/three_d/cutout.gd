@@ -57,8 +57,8 @@ const FINISHES := {
 	# a model that brings its own physical maps (colour, normal, occlusion-roughness-metal: Juan Salvo's blue-hood model):
 	# each of its materials kept, read through the same shader for our night (its normal map and packed maps sampled as
 	# they are), the snow on the hood and shoulders, wet as the night goes on; its glass left as it is
-	"pbr": {"darken": 1.0, "tex_bias": -0.4, "roughness_dry": 0.8, "roughness_wet": 0.42, "specular_value": 0.42,
-		"metallic_value": 0.0, "sky_fill": 0.22, "rim_color": Color(0.62, 0.72, 0.92), "rim_strength": 0.2, "rim_power": 3.0,
+	"pbr": {"darken": 1.0, "tex_bias": -0.6, "roughness_dry": 0.84, "roughness_wet": 0.42, "specular_value": 0.3,
+		"metallic_value": 0.0, "sky_fill": 0.22, "rim_color": Color(0.62, 0.72, 0.92), "rim_strength": 0.15, "rim_power": 3.0,
 		"sheen": 0.0, "snow_up": 0.5, "wet_dark": 0.28, "snow_high": 0.7, "snow_scale_m": 9.0, "snow_k": 0.9},
 	# a beetle's carapace (shaders/art_chitin.gdshader): a very dark olive-brown, polished on the crown, matte in the
 	# joints, a thin-film sheen at grazing angles, worn edges, a cold rim against the snow, the snow dusting its back

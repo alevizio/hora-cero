@@ -551,14 +551,14 @@
   {
    "id": "mask",
    "kind": "mask",
-   "label": "Hood and mask",
+   "label": "Insulating suit",
    "x": 4646,
    "y": 4474,
    "time": 2.5,
    "suit": true,
-   "look": "art:survivor_hood",
-   "order": "%s goes for the hood and mask in the truck's cab.",
-   "take": "%s pulls on the rubber hood and the mask from the truck. The snow cannot touch him now.",
+   "look": "art:juan_suit",
+   "order": "%s goes for the insulating suit in the truck's cab.",
+   "take": "%s pulls on the insulating suit from the truck, hood and mask and all. The snow cannot touch him now.",
    "sealed": "%s is sealed against the snow already."
   }
  ],
@@ -2888,7 +2888,7 @@
    {
     "id": "gear",
     "glyph": "uniform",
-    "line": "A cloth keeps the snow off a few for one crossing. The hood and mask by the truck on Yrigoyen seal one of you against it for the whole night."
+    "line": "A cloth keeps the snow off a few for one crossing. The insulating suit in the truck on Yrigoyen seals one of you against it for the whole night."
    }
   ],
   "objectiveHow": {
@@ -2935,7 +2935,7 @@
    "panic": "In a heavy wave, people already half frozen panic and break away. Lead them in the lulls.",
    "squad": "One of the squad is down in the snow. Another can help him up, if he gets there in time.",
    "stop": "Three at the 60's stop by Balcarce are too far gone to walk. Biguá can drive the colectivo to them along Yrigoyen: it is cover on wheels, and it brings the people aboard with it.",
-   "gear": "A rifle leans in the sentry box by the Casa Rosada's gate, and the truck at the kerb on Yrigoyen has a rubber hood and a mask: whoever takes them fights the cascarudos, or walks the snow, like Juan Salvo."
+   "gear": "A rifle leans in the sentry box by the Casa Rosada's gate, and an insulating suit lies in the truck at the kerb on Yrigoyen: whoever takes them fights the cascarudos, or walks the snow, like Juan Salvo."
   },
   "coach": [
    "start",

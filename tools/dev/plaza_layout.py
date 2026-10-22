@@ -166,7 +166,7 @@ COLECTIVO = (199.3, 136.95, 207.7, 139.45)   # (the kit's colectivo, 7.6 x 2.24 
 BUS_STOPS = [58.0, 104.0, 150.0, COLECTIVO[0], 236.0]   # where it can be driven to along Yrigoyen (x of its front); it starts at the fourth
 BUS_START = 3
 PARADA = (238.5, 138.2)                      # the stop by Balcarce, where the ones too far gone to walk wait for it
-GEAR_MASK = (145.2, 139.8)                   # the hood and mask: by the cab of the truck at the kerb on Yrigoyen
+GEAR_MASK = (145.2, 139.8)                   # the insulating suit: by the cab of the truck at the kerb on Yrigoyen
 GEAR_RIFLE = (254.2, 77.0)                   # the rifle: in the sentry box by the Casa Rosada's gate
 KIOSK = (150.3, 33.4, 152.7, 35.1)          # a newspaper kiosk on Rivadavia's south pavement (the kit's, 2.4 x 1.7 m)
 CART = (88.0, 140.0, 92.0, 142.2)           # a vendor's cart left on Hipólito Yrigoyen
@@ -338,8 +338,8 @@ vehicles = [
      "unreachable": "%s cannot get to the colectivo from here."},
 ]
 
-# Gear left about the square for whoever gets to it first: a rifle, and a hood and mask that seal a man against the
-# snow the way Juan Salvo's suit does (he is seen in them from then on: the look is the art pack's survivor).
+# Gear left about the square for whoever gets to it first: a rifle, and an insulating suit that seals a man against the
+# snow the way Juan Salvo's does (he is seen in it from then on: the look is the art pack's blue suit, Santiago Siri's model).
 gear = [
     {"id": "rifle", "kind": "rifle", "label": "Rifle", "x": u(GEAR_RIFLE[0]), "y": u(GEAR_RIFLE[1]), "time": 1.5,
      "gun": {"label": "Rifle", "ammo": 4, "range": u(30.0), "aim": 0.8, "recover": 2.0, "loud": True, "noise": u(95.0), "sound": "rifle",
@@ -349,10 +349,10 @@ gear = [
      "order": "%s goes for the rifle in the sentry box.",
      "take": "%s takes the granadero's rifle from the sentry box. Four rounds.",
      "armed": "%s has a rifle already."},
-    {"id": "mask", "kind": "mask", "label": "Hood and mask", "x": u(GEAR_MASK[0]), "y": u(GEAR_MASK[1]), "time": 2.5,
-     "suit": True, "look": "art:survivor_hood",
-     "order": "%s goes for the hood and mask in the truck's cab.",
-     "take": "%s pulls on the rubber hood and the mask from the truck. The snow cannot touch him now.",
+    {"id": "mask", "kind": "mask", "label": "Insulating suit", "x": u(GEAR_MASK[0]), "y": u(GEAR_MASK[1]), "time": 2.5,
+     "suit": True, "look": "art:juan_suit",
+     "order": "%s goes for the insulating suit in the truck's cab.",
+     "take": "%s pulls on the insulating suit from the truck, hood and mask and all. The snow cannot touch him now.",
      "sealed": "%s is sealed against the snow already."},
 ]
 
@@ -614,7 +614,7 @@ data = {
             {"id": "calls", "glyph": "talk", "line": "Benteveo's shout gathers everyone near him behind him. Hornero's bell, rung from the tram, brings people running to it."},
             {"id": "wheels", "glyph": "tram", "line": "Hornero drives the tram along Rivadavia and Biguá the colectivo along Yrigoyen. Everyone aboard goes with them: cover on wheels. The three at the Balcarce stop cannot walk: bring the colectivo to them."},
             {"id": "cascarudos", "glyph": "target", "line": "Cascarudos come up the avenues for whoever is out in the open, and noise draws them. Juan Salvo's rifle drives them off; the rifle in the sentry box arms one more of you."},
-            {"id": "gear", "glyph": "uniform", "line": "A cloth keeps the snow off a few for one crossing. The hood and mask by the truck on Yrigoyen seal one of you against it for the whole night."},
+            {"id": "gear", "glyph": "uniform", "line": "A cloth keeps the snow off a few for one crossing. The insulating suit in the truck on Yrigoyen seals one of you against it for the whole night."},
         ],
         "objectiveHow": {
             "people": {"benteveo": "Benteveo: rally a group with his voice, then lead them in",
@@ -650,7 +650,7 @@ data = {
             "panic": "In a heavy wave, people already half frozen panic and break away. Lead them in the lulls.",
             "squad": "One of the squad is down in the snow. Another can help him up, if he gets there in time.",
             "stop": "Three at the 60's stop by Balcarce are too far gone to walk. Biguá can drive the colectivo to them along Yrigoyen: it is cover on wheels, and it brings the people aboard with it.",
-            "gear": "A rifle leans in the sentry box by the Casa Rosada's gate, and the truck at the kerb on Yrigoyen has a rubber hood and a mask: whoever takes them fights the cascarudos, or walks the snow, like Juan Salvo.",
+            "gear": "A rifle leans in the sentry box by the Casa Rosada's gate, and an insulating suit lies in the truck at the kerb on Yrigoyen: whoever takes them fights the cascarudos, or walks the snow, like Juan Salvo.",
         },
         "coach": ["start", "exposure", "shelters", "benteveo", "hornero", "lechuza", "waves", "bigua", "stop", "salvo", "fallen", "cascarudos", "rifle", "gear", "lure",
                   "canvas", "gate", "panic", "squad", "plan"],

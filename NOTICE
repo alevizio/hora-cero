@@ -29,18 +29,18 @@ included in this repository with the author's permission, for use with Hora Cero
 licence or by CC BY 4.0: all rights are reserved by their author, and nothing in this repository grants any right to
 use them outside Hora Cero; ask the author. Each folder has a CREDITS.txt.
 
-  - godot/art_pack/juan_salvo/: the game's Juan Salvo since 20 October 2026, a blue-suit survivor (juan_salvo.glb,
-    on a 61-bone skeleton, with its colour, normal and metal-roughness maps), made ready for the game from its
-    original file (not in this repository) by tools/juan_suit.py, and his HUD portrait (portrait.png), the avatar
-    that came with the model. The rifle in his hands (art/juan_salvo/source/rifle.glb, and its maps,
-    juan_salvo_rifle_*_v4.png) comes from Alejandro Vizio's earlier Juan Salvo and is under these same terms;
+  - godot/art_pack/juan_suit/: the blue-suit survivor (juan_suit.glb, on a 61-bone skeleton, with its colour,
+    normal and metal-roughness maps), made ready for the game from its original file (not in this repository) by
+    tools/juan_suit.py; the game's Juan Salvo on 20-21 October 2026 and, since 21 October, the insulating suit a
+    neighbour finds in the truck on Yrigoyen. The rifle in his hands (art/juan_salvo/source/rifle.glb) comes from
+    Alejandro Vizio's Juan Salvo and is under these same terms;
   - godot/art_pack/cascarudo/: the 3D model of the cascarudo (cascarudo.glb), its shape as made, with a skeleton for
     its legs added by tools/art_pack.py rig-creature (tools/creature_rig.py), and its lighter copy (cascarudo_lod.glb,
     decimated from it and rigged alike);
   - godot/icon.png: the game's icon, a render of the cascarudo's model (tools/dev/creature_icon.gd);
-  (godot/art_pack/survivor_hood/, the hooded survivor a neighbour wears once he takes the hood and mask in the square,
-  is NOT one of these: it is Alejandro Vizio's own model, made from photographs of a friend's figure, its head, skin
-  and eyes from MakeHuman's CC0 base, and it is under LICENSE-ASSETS like the rest of the game's own art;)
+  (godot/art_pack/juan_salvo/, the game's Juan Salvo, is NOT one of these: it is Alejandro Vizio's own model, made
+  from photographs of a friend's figure, its head, skin and eyes from MakeHuman's CC0 base, his portrait painted for
+  it, and it is under LICENSE-ASSETS like the rest of the game's own art;)
   - docs/design/: the PNG exports of the Figma design kit; what they show of Juan Salvo, the cascarudos, the vehicles
     and the icon is under these same terms, and the rest follows LICENSE-ASSETS like the files it shows;
   - art/vehicles/: the Plaza de Mayo's vehicles as delivered (the Línea 60 colectivo, colectivo60_lod1.glb, and its

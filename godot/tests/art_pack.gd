@@ -83,8 +83,11 @@ func _manifest() -> void:
 	var p: Dictionary = ArtPack.slot("juan_salvo")
 	if licensed: check(bool(p.ready) and bool(p.model) and str(p.file) == "res://art_pack/juan_salvo/juan_salvo.glb" and str(p.name) == "Juan Salvo", "Juan Salvo's slot has its licensed model")
 	else: check(not bool(p.ready) and str(p.file) == "" and str(p.name) == "Juan Salvo", "Juan Salvo's slot is pending: no licensed model in this checkout")
-	check(str(p.origin) == "model" and str((p.clips as Dictionary).get("walk", "")) == "Walk" and absf(float((p.clip_speed as Dictionary).get("run", 0.0)) - 5.206) < 0.001 and str(p.prop) == "Rifle" and str(p.finish) == "pbr",
-		"…standing on its own origin, its clips named and the speed its run was made at, its prop, dressed through its own maps")
+	check(str(p.origin) == "model" and str((p.clips as Dictionary).get("walk", "")) == "Walk" and (p.clip_speed as Dictionary).is_empty() and str(p.prop) == "Rifle" and str(p.finish) == "pbr",
+		"…standing on its own origin, its clips named (their speeds measured from them), its prop, dressed through its own maps")
+	var suit: Dictionary = ArtPack.slot("juan_suit")
+	if licensed: check(str(suit.get("file", "")).ends_with("juan_suit/juan_suit.glb") and absf(float((suit.clip_speed as Dictionary).get("run", 0.0)) - 5.206) < 0.001 and str(suit.prop) == "Rifle" and str(suit.get("portrait", "x")) == "",
+		"the insulating suit (the blue-suit model) is a slot of its own: the speed its run was made at, its rifle, no portrait")
 	check(ArtPack.slot("nobody").is_empty(), "No slot for an id the manifest does not have")
 	# looks
 	check(str(ArtPack.parse_look("art:test_blob").id) == "test_blob" and str(ArtPack.parse_look("art:test_blob").kind) == "creature", "art:<slot> names a slot")
@@ -102,12 +105,12 @@ func _manifest() -> void:
 	# credits: test drawings stay out; the licensed slots with who made them, the licence and the permission
 	var en: Array[String] = ArtPack.credit_lines("en")
 	var credit: String = "Santiago Siri · permiso para usar en Hora Cero · concedido a Ale, octubre de 2026"
-	var hood: String = "The hooded survivor · Ale (Alejandro Vizio), hecho con Codex a partir de fotos de una figura de un amigo artista (por confirmar) · propio; la base de la cabeza, la piel y los ojos son de MakeHuman (CC0 1.0) · de Ale, octubre de 2026"
+	var ale: String = "Ale (Alejandro Vizio), hecho con Codex a partir de fotos de una figura de un amigo artista (por confirmar) · propio; la base de la cabeza, la piel y los ojos son de MakeHuman (CC0 1.0) · de Ale, octubre de 2026"
 	if licensed:
-		check(en.size() == 3 and en[0] == "Cascarudo · " + credit and en[1] == "Juan Salvo · " + credit and en[2] == hood and not "Test" in " ".join(en) and not "pending" in " ".join(en),
+		check(en.size() == 3 and en[0] == "Cascarudo · " + credit and en[1] == "Juan Salvo · " + ale and en[2] == "The insulating suit · " + credit and not "Test" in " ".join(en) and not "pending" in " ".join(en),
 			"The credits name the licensed art, its makers, licence and permission, and leave the test drawings and models out: %s" % [en])
 	else:
-		check(en == ["Licensed art pending: Cascarudo, Juan Salvo.", hood] or en == [hood, "Licensed art pending: Cascarudo, Juan Salvo."], "No licensed art installed: the credits say what is pending, and leave the test drawings and models out: %s" % [en])
+		check(en == ["Juan Salvo · " + ale, "Licensed art pending: Cascarudo, The insulating suit."] or en == ["Licensed art pending: Cascarudo, The insulating suit.", "Juan Salvo · " + ale], "No licensed art installed: the credits say what is pending, Juan Salvo's own line stays: %s" % [en])
 	# the slots of the Plaza de Mayo: Juan Salvo (a person, his portrait rendered from his model) and the cascarudo (a
 	# creature 4 m long, as high and wide as its model comes out at that, with a lighter copy for far off)
 	var juan: Dictionary = ArtPack.slot("juan_salvo")
@@ -123,7 +126,7 @@ func _manifest() -> void:
 	check((str(beast.lod).ends_with("cascarudo/cascarudo_lod.glb") if licensed else str(beast.lod) == "") and str(beast.forward) == "-z" and str(beast.finish) == "chitin", "…its lighter copy (when installed), its front at -z, dressed as chitin")
 	var stand_in: Dictionary = ArtPack.parse_look("art:cascarudo")
 	check(licensed or (not bool(stand_in.ready) and float(stand_in.length_m) > float(stand_in.height_m)), "…pending, its stand-in is a plain block as long as the creature")
-	check(str(ArtPack.parse_look("art:juan_salvo").credit.get("source", "")).contains("tools/juan_suit.py"), "…and where Juan Salvo's files came from")
+	check(str(ArtPack.parse_look("art:juan_salvo").credit.get("source", "")).contains("blue_hood_survivor.glb") and (not licensed or str(ArtPack.parse_look("art:juan_suit").credit.get("source", "")).contains("tools/juan_suit.py")), "…and where the files came from")
 	check(ArtPack.slot("criatura_pendiente").is_empty(), "the old pending creature's slot is gone")
 	check(is_zero_approx(ArtPack.forward_turn({"forward": "+z"})) and is_equal_approx(ArtPack.forward_turn({"forward": "-z"}), PI) and is_equal_approx(ArtPack.forward_turn({"forward": "+x"}), -PI / 2.0) and is_zero_approx(ArtPack.forward_turn({"forward": "sideways"})), "a model's front: +z by glTF's custom, or as the slot says")
 
@@ -300,7 +303,7 @@ func _licensed_models() -> void:
 	var juan: Node3D = Cutout.new()
 	root.add_child(juan)
 	juan.setup(ArtPack.slot("juan_salvo"))
-	check(juan.rig != null and juan.rig.has_prop and str(juan.rig.grip) == "r", "Juan Salvo's model: moved on his own skeleton, his rifle in his hands, his right on the stock (its butt the broad end)")
+	check(juan.rig != null and juan.rig.has_prop and str(juan.rig.grip) in ["r", "l"], "Juan Salvo's model: moved on his own skeleton, his rifle in his hands")
 	check(juan.call("_model_meshes").size() <= 14, "…his parts on his skeleton (%d)" % juan.call("_model_meshes").size())
 	var clock: Array[float] = [0.0]
 	var pose := func(extra: Dictionary, seconds: float) -> void:
@@ -317,7 +320,7 @@ func _licensed_models() -> void:
 	var head_up: float = (bone.call("head") as Vector3).y
 	var tip: Vector3 = juan.muzzle()
 	# (his head bone is at the base of his skull, and his Idle stands with soft knees)
-	check(head_up > 1.45 and tip.y < 1.3, "standing: his own Idle, the rifle held low across him (head %.2f, muzzle %.2f m up)" % [head_up, tip.y])
+	check(head_up > 1.45 and tip.y < 1.5, "standing: his own Idle, the rifle held across him (head %.2f, muzzle %.2f m up)" % [head_up, tip.y])
 	# walking at the squad's pace (2.6 m/s): his Walk, not his Run, at the neighbours' cadence (operative.gd: about 3 steps
 	# a second), the feet passing each other, a foot on the ground staying where it was put (he stands still here: the
 	# ground goes by under him at his speed)

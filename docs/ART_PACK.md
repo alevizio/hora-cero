@@ -20,28 +20,21 @@ derechos (cada carpeta tiene su `CREDITS.txt`, y el `NOTICE` lo explica). Lo mis
 (el modelo original de Juan Salvo y sus retratos en `art/juan_salvo/`, el ícono del juego, que es un render del
 cascarudo) y para los vehículos de la plaza (`godot/assets/vehicles/`, `art/vehicles/`).
 
-- **`juan_salvo`**: `juan_salvo/juan_salvo.glb` (1,80 m, esqueleto de Mixamo de 61 huesos con dedos, clips Idle, Walk,
-  Run y Jump, el fusil como pieza aparte, «Rifle»). Desde el 20 de octubre de 2026 es el sobreviviente de traje azul
-  de Santiago Siri: un bípedo hecho con Meshy AI (10.390 triángulos, una sola malla con texturas de
-  2K: color, normales y metal-aspereza), capucha y traje azules, visor, respirador, mochila y cinto con cartucheras. Su
-  paquete original queda fuera del repositorio; el del juego lo hace `python3 tools/juan_suit.py <su .glb>`: pasa sus
-  huesos a metros con Y arriba (venía envuelto en un giro desde Z arriba y dos escalas), le da un reposo de pie con el
-  fusil cruzado en las dos manos como lo llevaba el Juan anterior (el suyo era un cuadro de su caminata, con un pie en
-  el aire; la piel queda atada como vino), le pone el fusil del Juan anterior (`art/juan_salvo/source/rifle.glb`) en
-  un hueso propio bajo el pecho, junta sus vértices repetidos, deja solo los clips que usa el juego y baja las normales
-  a 1024 y el metal-aspereza a 512 (el color queda en 2048: es un solo atlas para toda la figura, con la cara). La
-  manera de agarrar el fusil y los dedos salen de su clip RunShoot, que empuña uno, y los clips no le mueven los dedos.
-  Sus clips se hicieron a 1,46 m/s (caminar) y 5,21 m/s (correr), medidos del pie apoyado (`clip_speed`). Se viste con
-  el acabado `pbr`. Su retrato del HUD, `juan_salvo/portrait.png` (768 × 768), está **renderizado en el motor
-  a partir del modelo** y pintado encima en la serie de los vecinos (`tools/dev/salvo_portrait.gd -- <salida.png>
-  juan_salvo 768 p1`, que corre `tools/dev/salvo_portrait_paint.py`). El Juan anterior, el **Blue Hood Survivor v4** que hizo Ale con Codex a
-  partir de fotos de una figura de un amigo artista, queda en la carpeta de Ale y lo vuelve a hacer
-  `tools/juan_blue_hood.py`; el primero (que refinaba `refine-person`, `tools/person_refine.py`) ya no está
-  en este repositorio.
-- **`survivor_hood`**: `survivor_hood/survivor_hood.glb` (1,80 m): el Blue Hood Survivor de Ale, hecho con
-  `tools/juan_blue_hood.py <su .glb> godot/art_pack/survivor_hood/survivor_hood.glb`, con los mismos clips. Desde el
-  21 de octubre de 2026 es la figura del vecino que agarra la capucha y la máscara del camión de Yrigoyen (el equipo
-  de la Plaza, `gear[].look` en `plaza.json`): el juego lo viste con ella como si fuera un uniforme.
+- **`juan_salvo`**: `juan_salvo/juan_salvo.glb` (1,80 m): el **Blue Hood Survivor v4** de Ale (hecho con Codex a partir
+  de fotos de una figura de un amigo artista; campera de cuero, capucha azul, máscara, mochila, fusil), pasado por
+  `tools/juan_blue_hood.py <su .glb> godot/art_pack/juan_salvo/juan_salvo.glb` (gltfpack lo simplifica a un octavo de
+  sus triángulos y baja sus texturas), clips Idle, Walk, Run, Jump, Fall e Inspect, el fusil como pieza aparte
+  («Rifle»). Fue Juan el 19 y 20 de octubre de 2026, y lo vuelve a ser desde el 21 (Ale lo prefirió al traje azul
+  después de ver los retratos). Su retrato del HUD, `juan_salvo/portrait.png` (768 × 768), es el pintado para él en la
+  serie de los vecinos (el generador de imágenes de Figma).
+- **`juan_suit`**: `juan_suit/juan_suit.glb`: el sobreviviente de traje azul de Santiago Siri (un bípedo hecho con
+  Meshy AI, 10.390 triángulos, texturas de 2K, capucha y traje azules, visor, respirador, mochila), preparado por
+  `python3 tools/juan_suit.py <su .glb>` (metros y Y arriba, reposo de pie con el fusil del Juan de la capucha en las
+  manos, clips Idle/Walk/Run/Jump, `clip_speed` medido). Fue Juan Salvo el 20 y 21 de octubre; desde el 21 es el
+  **traje aislante** que un vecino encuentra en el camión de Yrigoyen (`gear[].look` en `plaza.json`): el juego lo
+  viste con él como si fuera un uniforme. Sin retrato. El Juan de los amigos de antes queda en
+  `art/juan_salvo/source/snowfall_survivor.glb` (`refine-person`, `tools/person_refine.py`) y sus retratos en
+  `art/juan_salvo/portraits/`.
 - **`cascarudo`**: `cascarudo/cascarudo.glb` (45.000 triángulos, la escultura de Santiago Siri con la forma intacta y un
   esqueleto en las patas que le pone `tools/art_pack.py rig-creature`: ver la sección 5) y una copia más liviana,
   `cascarudo/cascarudo_lod.glb` (13.499 triángulos, rebajada y con el mismo esqueleto), que el juego dibuja cuando la

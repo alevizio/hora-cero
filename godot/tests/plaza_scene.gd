@@ -423,17 +423,20 @@ func _licensed(sim: RefCounted) -> void:
 	for mi: MeshInstance3D in meshes:
 		if mi.skin == null or mi.cast_shadow != GeometryInstance3D.SHADOW_CASTING_SETTING_OFF: skinned = false
 	check(skinned and meshes.size() <= 14, "his model's parts on its skeleton, with no shadow from the sky (%d parts)" % meshes.size())
-	# dressed for the night: each of his own materials (his suit's and his rifle's: colour, normal map, packed maps)
-	# through the finish
+	# dressed for the night: each of his own materials (colour, normal map, packed maps) through the finish, his visor's
+	# glass as it comes
 	var dressed: int = 0
 	var maps: int = 0
+	var glass: int = 0
 	for mi: MeshInstance3D in meshes:
 		for k: int in range(mi.mesh.get_surface_count()):
 			var m: Material = mi.get_surface_override_material(k)
 			if m is ShaderMaterial:
 				dressed += 1
 				if (m as ShaderMaterial).get_shader_parameter("use_normal") == true and (m as ShaderMaterial).get_shader_parameter("use_orm") == true: maps += 1
-	check(dressed == 2 and maps == 2, "dressed for the night: his own materials and maps (%d, %d with their maps)" % [dressed, maps])
+			elif mi.get_active_material(k) is BaseMaterial3D and (mi.get_active_material(k) as BaseMaterial3D).transparency != BaseMaterial3D.TRANSPARENCY_DISABLED:
+				glass += 1
+	check(dressed >= 20 and maps >= 8 and glass >= 1, "dressed for the night: his own materials and maps (%d, %d with their maps), his visor's glass as it comes (%d)" % [dressed, maps, glass])
 	check(cut.rig.has_prop and cut.muzzle() is Vector3, "his rifle in his hands, its muzzle known for the flash")
 	var b: Node = main.hud.portrait_buttons["salvo"]
 	var pic: Dictionary = ArtPack.portrait(ArtPack.slot("juan_salvo"))

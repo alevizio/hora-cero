@@ -1,186 +1,186 @@
 {
-  "format": 1,
-  "about": "Art made by people with permission, shown as paper cut-outs or models. See docs/ART_PACK.md. Slots with no file show a neutral grey stand-in with a plate (LICENSED ART PENDING and the slot's name). The models of juan_salvo and cascarudo are licensed art, all rights reserved by their authors and in this repository with their permission for use with Hora Cero only (NOTICE); emptying their file, lod and portrait brings the stand-ins back. Check with: python3 tools/art_pack.py check",
-  "slots": {
-    "juan_salvo": {
-      "name": "Juan Salvo",
-      "name_en": "Juan Salvo",
-      "kind": "person",
-      "height_m": 1.8,
-      "file": "juan_salvo/juan_salvo.glb",
-      "forward": "+z",
-      "origin": "model",
-      "clips": {
-        "idle": "Idle",
-        "walk": "Walk",
-        "run": "Run",
-        "jump": "Jump"
-      },
-      "clip_speed": {
-        "walk": 1.464,
-        "run": 5.206
-      },
-      "prop": "Rifle",
-      "finish": "pbr",
-      "faces": "right",
-      "portrait": "juan_salvo/portrait.png",
-      "views": {
-        "back": "",
-        "crouch": "",
-        "down": ""
-      },
-      "credit": {
-        "author": "Santiago Siri",
-        "licence": "permiso para usar en Hora Cero",
-        "permission": "concedido a Ale, octubre de 2026",
-        "source": "a Meshy AI biped on a Mixamo skeleton (10,390 triangles, 2K textures, nine clips) put into Godot by a friend of Ale's; made ready with tools/juan_suit.py (metres and Y up, a standing rest with the rifle in his hands, Idle/Walk/Run/Jump), which gives him the blue-hood Juan's rifle (art/juan_salvo/source/rifle.glb); his portrait is the avatar that came with it",
-        "contact": ""
-      }
-    },
-    "cascarudo": {
-      "name": "Cascarudo",
-      "name_en": "Cascarudo",
-      "kind": "creature",
-      "height_m": 3.27,
-      "length_m": 4.0,
-      "width_m": 3.53,
-      "file": "cascarudo/cascarudo.glb",
-      "lod": "cascarudo/cascarudo_lod.glb",
-      "forward": "-z",
-      "finish": "chitin",
-      "faces": "right",
-      "views": {
-        "back": "",
-        "crouch": "",
-        "down": ""
-      },
-      "credit": {
-        "author": "Santiago Siri",
-        "licence": "permiso para usar en Hora Cero",
-        "permission": "concedido a Ale, octubre de 2026",
-        "source": "cascarudo_godot/cascarudo/cascarudo.glb (its shape as made; its legs rigged and its occlusion and convexity baked in with tools/art_pack.py rig-creature; cascarudo_lod.glb: the same, decimated and rigged alike)",
-        "contact": ""
-      }
-    },
-    "survivor_hood": {
-      "name": "El de la capucha",
-      "name_en": "The hooded survivor",
-      "kind": "person",
-      "height_m": 1.8,
-      "file": "survivor_hood/survivor_hood.glb",
-      "forward": "+z",
-      "origin": "model",
-      "clips": {
-        "idle": "Idle",
-        "walk": "Walk",
-        "run": "Run",
-        "jump": "Jump",
-        "fall": "Fall",
-        "inspect": "Inspect"
-      },
-      "prop": "Rifle",
-      "finish": "pbr",
-      "faces": "right",
-      "portrait": "",
-      "views": {
-        "back": "",
-        "crouch": "",
-        "down": ""
-      },
-      "credit": {
-        "author": "Ale (Alejandro Vizio), hecho con Codex a partir de fotos de una figura de un amigo artista (por confirmar)",
-        "licence": "propio; la base de la cabeza, la piel y los ojos son de MakeHuman (CC0 1.0)",
-        "permission": "de Ale, octubre de 2026",
-        "source": "Ale's blue-hood survivor (Juan Salvo's model on 19 and 20 October 2026), simplified and its textures scaled down with tools/juan_blue_hood.py (gltfpack -si 0.12 -se 0.02) from blue-hood-survivor-v4 characters/blue_hood/blue_hood_survivor.glb (308,215 triangles, made in Codex on 19 October 2026); worn by whichever neighbour takes the hood and mask from the truck on Yrigoyen (data gear[].look)",
-        "contact": ""
-      }
-    },
-    "test_walker": {
-      "name": "Caminante de prueba",
-      "name_en": "Test walker",
-      "kind": "person",
-      "height_m": 1.76,
-      "file": "test/walker.png",
-      "faces": "right",
-      "views": {
-        "back": "test/walker_back.png",
-        "crouch": "test/walker_crouch.png",
-        "down": "test/walker_down.png"
-      },
-      "credit": {
-        "author": "Hora Cero (drawn by tools/art_pack.py test-art)",
-        "licence": "CC0 1.0",
-        "permission": "Own work, a neutral test drawing",
-        "source": "tools/art_pack.py",
-        "contact": ""
-      },
-      "test": true
-    },
-    "test_blob": {
-      "name": "Mancha de prueba",
-      "name_en": "Test blob",
-      "kind": "creature",
-      "height_m": 2.8,
-      "file": "test/blob.png",
-      "faces": "front",
-      "views": {},
-      "credit": {
-        "author": "Hora Cero (drawn by tools/art_pack.py test-art)",
-        "licence": "CC0 1.0",
-        "permission": "Own work, a neutral test drawing",
-        "source": "tools/art_pack.py",
-        "contact": ""
-      },
-      "test": true
-    },
-    "test_capsule": {
-      "name": "Cápsula de prueba",
-      "name_en": "Test capsule",
-      "kind": "person",
-      "height_m": 1.8,
-      "file": "test/capsule.glb",
-      "forward": "+z",
-      "credit": {
-        "author": "Hora Cero (made by tools/art_pack.py test-models)",
-        "licence": "CC0 1.0",
-        "permission": "Own work, a neutral test model",
-        "source": "tools/art_pack.py",
-        "contact": ""
-      },
-      "test": true
-    },
-    "test_crawler": {
-      "name": "Bloque de prueba",
-      "name_en": "Test block",
-      "kind": "creature",
-      "height_m": 2.0,
-      "length_m": 4.0,
-      "file": "test/crawler.glb",
-      "forward": "+x",
-      "credit": {
-        "author": "Hora Cero (made by tools/art_pack.py test-models)",
-        "licence": "CC0 1.0",
-        "permission": "Own work, a neutral test model",
-        "source": "tools/art_pack.py",
-        "contact": ""
-      },
-      "test": true
-    },
-    "test_rigged": {
-      "name": "Poste articulado de prueba",
-      "name_en": "Test rigged post",
-      "kind": "person",
-      "height_m": 1.8,
-      "file": "test/rigged.glb",
-      "forward": "+z",
-      "credit": {
-        "author": "Hora Cero (made by tools/art_pack.py test-models)",
-        "licence": "CC0 1.0",
-        "permission": "Own work, a neutral test model",
-        "source": "tools/art_pack.py",
-        "contact": ""
-      },
-      "test": true
-    }
+ "format": 1,
+ "about": "Art made by people with permission, shown as paper cut-outs or models. See docs/ART_PACK.md. Slots with no file show a neutral grey stand-in with a plate (LICENSED ART PENDING and the slot's name). The models of juan_salvo and cascarudo are licensed art, all rights reserved by their authors and in this repository with their permission for use with Hora Cero only (NOTICE); emptying their file, lod and portrait brings the stand-ins back. Check with: python3 tools/art_pack.py check",
+ "slots": {
+  "juan_salvo": {
+   "name": "Juan Salvo",
+   "name_en": "Juan Salvo",
+   "kind": "person",
+   "height_m": 1.8,
+   "file": "juan_salvo/juan_salvo.glb",
+   "forward": "+z",
+   "origin": "model",
+   "clips": {
+    "idle": "Idle",
+    "walk": "Walk",
+    "run": "Run",
+    "jump": "Jump",
+    "fall": "Fall",
+    "inspect": "Inspect"
+   },
+   "prop": "Rifle",
+   "finish": "pbr",
+   "faces": "right",
+   "portrait": "juan_salvo/portrait.png",
+   "views": {
+    "back": "",
+    "crouch": "",
+    "down": ""
+   },
+   "credit": {
+    "author": "Ale (Alejandro Vizio), hecho con Codex a partir de fotos de una figura de un amigo artista (por confirmar)",
+    "licence": "propio; la base de la cabeza, la piel y los ojos son de MakeHuman (CC0 1.0)",
+    "permission": "de Ale, octubre de 2026",
+    "source": "Ale's blue-hood survivor, simplified and its textures scaled down with tools/juan_blue_hood.py (gltfpack -si 0.12 -se 0.02) from blue-hood-survivor-v4 characters/blue_hood/blue_hood_survivor.glb (308,215 triangles, made in Codex on 19 October 2026); Juan Salvo's model on 19-20 October and again since 21 October (Ale: the leather jacket and the blue hood of his portrait); his HUD portrait is the painted one made for it (Figma's image generator, in the neighbours' series)",
+    "contact": ""
+   }
+  },
+  "juan_suit": {
+   "name": "El traje aislante",
+   "name_en": "The insulating suit",
+   "kind": "person",
+   "height_m": 1.8,
+   "file": "juan_suit/juan_suit.glb",
+   "forward": "+z",
+   "origin": "model",
+   "clips": {
+    "idle": "Idle",
+    "walk": "Walk",
+    "run": "Run",
+    "jump": "Jump"
+   },
+   "clip_speed": {
+    "walk": 1.464,
+    "run": 5.206
+   },
+   "prop": "Rifle",
+   "finish": "pbr",
+   "faces": "right",
+   "portrait": "",
+   "views": {
+    "back": "",
+    "crouch": "",
+    "down": ""
+   },
+   "credit": {
+    "author": "Santiago Siri",
+    "licence": "permiso para usar en Hora Cero",
+    "permission": "concedido a Ale, octubre de 2026",
+    "source": "a Meshy AI biped on a Mixamo skeleton (10,390 triangles, 2K textures, nine clips) put into Godot by a friend of Ale's; made ready with tools/juan_suit.py (metres and Y up, a standing rest with the rifle in his hands, Idle/Walk/Run/Jump), which gives him the blue-hood Juan's rifle (art/juan_salvo/source/rifle.glb). Juan Salvo's own model from 20 to 21 October 2026; since then the insulating suit a neighbour finds in the truck on Yrigoyen (plaza.json gear[].look)",
+    "contact": ""
+   }
+  },
+  "cascarudo": {
+   "name": "Cascarudo",
+   "name_en": "Cascarudo",
+   "kind": "creature",
+   "height_m": 3.27,
+   "length_m": 4.0,
+   "width_m": 3.53,
+   "file": "cascarudo/cascarudo.glb",
+   "lod": "cascarudo/cascarudo_lod.glb",
+   "forward": "-z",
+   "finish": "chitin",
+   "faces": "right",
+   "views": {
+    "back": "",
+    "crouch": "",
+    "down": ""
+   },
+   "credit": {
+    "author": "Santiago Siri",
+    "licence": "permiso para usar en Hora Cero",
+    "permission": "concedido a Ale, octubre de 2026",
+    "source": "cascarudo_godot/cascarudo/cascarudo.glb (its shape as made; its legs rigged and its occlusion and convexity baked in with tools/art_pack.py rig-creature; cascarudo_lod.glb: the same, decimated and rigged alike)",
+    "contact": ""
+   }
+  },
+  "test_walker": {
+   "name": "Caminante de prueba",
+   "name_en": "Test walker",
+   "kind": "person",
+   "height_m": 1.76,
+   "file": "test/walker.png",
+   "faces": "right",
+   "views": {
+    "back": "test/walker_back.png",
+    "crouch": "test/walker_crouch.png",
+    "down": "test/walker_down.png"
+   },
+   "credit": {
+    "author": "Saboteurs (drawn by tools/art_pack.py test-art)",
+    "licence": "CC0 1.0",
+    "permission": "Own work, a neutral test drawing",
+    "source": "tools/art_pack.py",
+    "contact": ""
+   },
+   "test": true
+  },
+  "test_blob": {
+   "name": "Mancha de prueba",
+   "name_en": "Test blob",
+   "kind": "creature",
+   "height_m": 2.8,
+   "file": "test/blob.png",
+   "faces": "front",
+   "views": {},
+   "credit": {
+    "author": "Saboteurs (drawn by tools/art_pack.py test-art)",
+    "licence": "CC0 1.0",
+    "permission": "Own work, a neutral test drawing",
+    "source": "tools/art_pack.py",
+    "contact": ""
+   },
+   "test": true
+  },
+  "test_capsule": {
+   "name": "Cápsula de prueba",
+   "name_en": "Test capsule",
+   "kind": "person",
+   "height_m": 1.8,
+   "file": "test/capsule.glb",
+   "forward": "+z",
+   "credit": {
+    "author": "Saboteurs (made by tools/art_pack.py test-models)",
+    "licence": "CC0 1.0",
+    "permission": "Own work, a neutral test model",
+    "source": "tools/art_pack.py",
+    "contact": ""
+   },
+   "test": true
+  },
+  "test_crawler": {
+   "name": "Bloque de prueba",
+   "name_en": "Test block",
+   "kind": "creature",
+   "height_m": 2.0,
+   "length_m": 4.0,
+   "file": "test/crawler.glb",
+   "forward": "+x",
+   "credit": {
+    "author": "Saboteurs (made by tools/art_pack.py test-models)",
+    "licence": "CC0 1.0",
+    "permission": "Own work, a neutral test model",
+    "source": "tools/art_pack.py",
+    "contact": ""
+   },
+   "test": true
+  },
+  "test_rigged": {
+   "name": "Poste articulado de prueba",
+   "name_en": "Test rigged post",
+   "kind": "person",
+   "height_m": 1.8,
+   "file": "test/rigged.glb",
+   "forward": "+z",
+   "credit": {
+    "author": "Saboteurs (made by tools/art_pack.py test-models)",
+    "licence": "CC0 1.0",
+    "permission": "Own work, a neutral test model",
+    "source": "tools/art_pack.py",
+    "contact": ""
+   },
+   "test": true
   }
+ }
 }

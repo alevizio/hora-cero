@@ -637,7 +637,7 @@ func _gear() -> void:
 	_put(sim, "hornero", Vector2(float(mask.x), float(mask.y)) + Vector2(-64.0, 0.0))
 	hornero.exposure = 0.6
 	sim.select("hornero")
-	_expect(sim.perform("take") and sim.message.contains("hood"), "Hornero goes for the hood and mask, the nearest left (%s)" % sim.message)
+	_expect(sim.perform("take") and sim.message.contains("suit"), "Hornero goes for the insulating suit, the nearest left (%s)" % sim.message)
 	_until(sim, func() -> bool: return sim.gear_taken.has("mask"), 20.0)
 	_expect(bool(hornero.suit) and is_zero_approx(float(hornero.exposure)) and str(hornero.disguise.get("look", "")) == str(mask.look), "sealed, warm, and seen in the hood and mask")
 	_put(sim, "hornero", m(150.0, 80.0))

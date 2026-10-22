@@ -106,7 +106,7 @@ personajes de la historieta, que se usan con el permiso de sus derechohabientes.
 
 Están en:
 
-- `godot/art_pack/juan_salvo/` y `godot/art_pack/cascarudo/` (los slots `juan_salvo` y `cascarudo` de
+- `godot/art_pack/juan_suit/` y `godot/art_pack/cascarudo/` (los slots `juan_suit` y `cascarudo` de
   `godot/art_pack/manifest.json`), y `art/juan_salvo/` (el fusil que lleva Juan Salvo);
 - `godot/icon.png` (el ícono);
 - `godot/assets/vehicles/` (los modelos listos para el juego, que hace `tools/vehicles.gd`) y `art/vehicles/` (los
@@ -250,7 +250,7 @@ permission.
 
 They are in:
 
-- `godot/art_pack/juan_salvo/` and `godot/art_pack/cascarudo/` (the `juan_salvo` and `cascarudo` slots of
+- `godot/art_pack/juan_suit/` and `godot/art_pack/cascarudo/` (the `juan_suit` and `cascarudo` slots of
   `godot/art_pack/manifest.json`), and `art/juan_salvo/` (the rifle Juan Salvo carries);
 - `godot/icon.png` (the icon);
 - `godot/assets/vehicles/` (the game-ready meshes, made by `tools/vehicles.gd`) and `art/vehicles/` (the models as

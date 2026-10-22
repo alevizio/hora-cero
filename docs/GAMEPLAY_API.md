@@ -960,7 +960,7 @@ called or gathered with a group, and they board where they stand the moment a sh
 covers them; the optional objective `stop` is done when the last of them is in. Gear lies about the square (`gear`:
 `{id, kind, label, x, y, time, order, take}`; order `take`, the nearest piece or the one named, event `took`): a
 rifle in the sentry box by the Casa Rosada's gate (`gun`, four rounds: a second gun against the cascarudos for
-whoever has none) and a rubber hood and mask by the truck on Yrigoyen (`suit` true and a `look`: sealed like Juan
+whoever has none) and an insulating suit by the truck on Yrigoyen, Santiago Siri's blue-suit model (`suit` true and a `look` "art:juan_suit": sealed like Juan
 Salvo, up again by himself when knocked down, and dressed from then on in the look the gear names, through
 `units[].disguise` like a uniform; `units[].gear` lists what he wears, and the figure shows the kit's rifle on one who
 took it). `gear_taken` (gear id -> who) is kept in checkpoints. Juan Salvo refuses both (`armed`, `sealed`).

@@ -2,13 +2,13 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d0n0043ibk3ww"
+uid="uid://bnberpniyo2pe"
 path="res://.godot/imported/juan_salvo_rifle_basecolor_v4.png-609a30144ca39edd3e473a001f1e4549.ctex"
 metadata={
 "vram_texture": false
 }
 generator_parameters={
-"md5": "932e3403e0ca1939138050799e191919"
+"md5": "d1b45c6ef36a0f2ca79ad04323d2768c"
 }
 
 [deps]
@@ -24,7 +24,7 @@ compress/lossy_quality=0.7
 compress/uastc_level=1
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
-compress/normal_map=0
+compress/normal_map=2
 compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
@@ -40,4 +40,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0
