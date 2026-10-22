@@ -107,7 +107,8 @@ const HINTS := {
 	"both": "You command the whole squad. Tap another portrait and use them together.",
 	"radio": "Optional: sabotage it, and no reinforcements come.",
 	"wire": "The marked span of the wire can be cut. Tap it.",
-	"informant": "He can't crouch. Move him from cover to cover."}
+	"informant": "He can't crouch. Move him from cover to cover.",
+	"map_edge": "The map ends here. Drag the other way, or zoom out to see the whole of it."}
 ## Teaching lines that wait for a quiet moment (none showing) before they appear, in this order of priority.
 const COACH_ORDER := ["start","cell","takedown","cones","plan","both","radio"]
 const HINT_SECONDS := 9.0

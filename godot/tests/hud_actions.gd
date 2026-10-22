@@ -593,24 +593,29 @@ func coach() -> void:
 	check(hud._obj_how!="","The objective says how: %s" % hud._obj_how)
 
 ## Android's Back button: lowers an armed weapon, steps back through the dossier, opens and closes the menu.
+## One press of Android's Back (main.gd takes a second request within a fifth of a second for the same press).
+func back() -> void:
+	main._back_at=-1000
+	main._notification(Node.NOTIFICATION_WM_GO_BACK_REQUEST)
+
 func back_button() -> void:
 	fresh()
-	main._notification(Node.NOTIFICATION_WM_GO_BACK_REQUEST)
+	back()
 	check(hud.overlay.visible and hud.current_modal=="menu" and sim.paused,"Back opens the pause menu")
-	main._notification(Node.NOTIFICATION_WM_GO_BACK_REQUEST)
+	back()
 	check(not hud.overlay.visible and not sim.paused,"…and Back again returns to the operation")
 	main._command("menu")
 	hud._menu_pressed("howto")
 	hud.show_card(2)
-	main._notification(Node.NOTIFICATION_WM_GO_BACK_REQUEST)
+	back()
 	check(hud.current_modal=="howto" and hud.howto_page==1,"Back turns HOW TO PLAY back a card")
-	main._notification(Node.NOTIFICATION_WM_GO_BACK_REQUEST)
-	main._notification(Node.NOTIFICATION_WM_GO_BACK_REQUEST)
+	back()
+	back()
 	check(hud.current_modal=="menu","…and from the first card returns to the menu")
 	main._command("begin")
 	main._slot("melee")
 	check(main.armed=="takedown","(a takedown armed)")
-	main._notification(Node.NOTIFICATION_WM_GO_BACK_REQUEST)
+	back()
 	check(main.armed=="" and not hud.overlay.visible,"Back lowers what is armed before anything else")
 
 ## The browser build: the canvas follows the window (in CSS pixels), the camera shows more of the barrio in a

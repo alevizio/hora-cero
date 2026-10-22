@@ -62,6 +62,7 @@ func run() -> void:
 	await _title()
 	Feedback.address = ADDRESS
 	await _layout()
+	await _android_back()
 	await _pause_questions()
 	await _won()
 	await _spanish()
@@ -420,3 +421,22 @@ func _spanish() -> void:
 	Lang.use("en")
 	front.open()
 	await frames(2)
+
+## Android's Back: Godot 4.7.2 delivers one press twice (its key handler and the activity's own dispatch, 95 ms
+## apart). The second request must not quit the game from the menu the first one just returned to; a press on its
+## own takes a page back to the menu.
+func _android_back() -> void:
+	var front: Control = main.front
+	front.open("settings")
+	await frames(3)
+	main.notification(Node.NOTIFICATION_WM_GO_BACK_REQUEST)
+	main.notification(Node.NOTIFICATION_WM_GO_BACK_REQUEST)
+	await frames(3)
+	check(main.mode == "title" and front.visible and front.page == "", "Back delivered twice from a page: the menu, the game still running")
+	var since: int = Time.get_ticks_msec()
+	while Time.get_ticks_msec() - since < 350: await process_frame
+	front.open("settings")
+	await frames(3)
+	main.notification(Node.NOTIFICATION_WM_GO_BACK_REQUEST)
+	await frames(3)
+	check(front.visible and front.page == "", "Back from SETTINGS, a moment later: the menu")

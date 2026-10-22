@@ -31,7 +31,7 @@
     "author": "Ale (Alejandro Vizio), hecho con Codex a partir de fotos de una figura de un amigo artista (por confirmar)",
     "licence": "propio; la base de la cabeza, la piel y los ojos son de MakeHuman (CC0 1.0)",
     "permission": "de Ale, octubre de 2026",
-    "source": "Ale's blue-hood survivor, simplified and its textures scaled down with tools/juan_blue_hood.py (gltfpack -si 0.12 -se 0.02) from blue-hood-survivor-v4 characters/blue_hood/blue_hood_survivor.glb (308,215 triangles, made in Codex on 19 October 2026); Juan Salvo's model on 19-20 October and again since 21 October (Ale: the leather jacket and the blue hood of his portrait); his HUD portrait is the painted one made for it (Figma's image generator, in the neighbours' series)",
+    "source": "Ale's blue-hood survivor, simplified and its textures scaled down with tools/juan_blue_hood.py (gltfpack -si 0.25 -se 0.02: 75,520 triangles, DETAIL=high since 21 October; 0.12 before) from blue-hood-survivor-v4 characters/blue_hood/blue_hood_survivor.glb (308,215 triangles, made in Codex on 19 October 2026); Juan Salvo's model on 19-20 October and again since 21 October (Ale: the leather jacket and the blue hood of his portrait); his HUD portrait is the painted one made for it (Figma's image generator, in the neighbours' series)",
     "contact": ""
    }
   },

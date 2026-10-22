@@ -82,6 +82,11 @@ var camera_max:=Vector2(39,24)
 var camera_home:=Vector3(19.5,0,13.0)
 var zoom_home: float=29.0
 var zoom_max: float=64.0
+## The finger's own target during a drag, unclamped; INF between gestures. Past the map's edge the camera
+## follows it at EDGE_GIVE of the speed and no farther than EDGE_REACH, and eases back when the finger lifts.
+var _pan_raw: Vector3=Vector3.INF
+const EDGE_GIVE: float=0.35
+const EDGE_REACH: float=2.5
 
 func _ready() -> void:
 	Missions.boot()
@@ -642,14 +647,35 @@ func _ground_tap(point: Vector2) -> void:
 	else: _feedback(sim.perform("move",point))
 
 # --- camera gestures ---------------------------------------------------------------------------------------
-func _pan_pixels(delta: Vector2) -> void:
+func _pan_pixels(delta: Vector2, give: bool=true) -> void:
 	var middle: Vector2=get_viewport().get_visible_rect().size/2
 	var a: Variant=ground_at(middle)
 	var b: Variant=ground_at(middle+delta)
 	if a is Vector3 and b is Vector3:
-		desired_target+=a-b
-		_clamp_target()
+		if not give:
+			desired_target+=a-b
+			_clamp_target()
+			_update_camera(1,true)
+			return
+		if not _pan_raw.is_finite(): _pan_raw=desired_target
+		_pan_raw+=a-b
+		var inside:=Vector3(clampf(_pan_raw.x,camera_min.x,camera_max.x),0,clampf(_pan_raw.z,camera_min.y,camera_max.y))
+		var over: Vector3=_pan_raw-inside
+		over=Vector3(_give(over.x),0,_give(over.z))
+		desired_target=inside+over
+		if over!=Vector3.ZERO: hud.hint("map_edge")
 		_update_camera(1,true)
+
+## The finger lifts: the camera eases back inside the map (the lerp in _update_camera does the easing).
+func _pan_release() -> void:
+	if not _pan_raw.is_finite(): return
+	_pan_raw=Vector3.INF
+	_clamp_target()
+
+## How far the camera goes past the edge for a finger `raw` metres past it: EDGE_GIVE of the way at first, never
+## beyond EDGE_REACH, and always still answering the finger.
+func _give(raw: float) -> float:
+	return signf(raw)*EDGE_REACH*(1.0-exp(-absf(raw)*EDGE_GIVE/EDGE_REACH))
 
 func _clamp_target() -> void:
 	desired_target.x=clampf(desired_target.x,camera_min.x,camera_max.x)
@@ -730,7 +756,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMagnifyGesture:
 		_zoom(event.factor)
 	elif event is InputEventPanGesture:
-		_pan_pixels(-event.delta*24.0)
+		_pan_pixels(-event.delta*24.0,false)
 	elif event is InputEventMouseButton:
 		if event.button_index in [MOUSE_BUTTON_LEFT,MOUSE_BUTTON_MIDDLE,MOUSE_BUTTON_RIGHT]:
 			if event.pressed:
@@ -741,6 +767,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			else:
 				if mouse_held and not mouse_dragged and event.button_index==MOUSE_BUTTON_LEFT: _world_tap(event.position)
 				mouse_held=false
+				_pan_release()
 		elif event.pressed:
 			if event.button_index==MOUSE_BUTTON_WHEEL_UP: _zoom(1.12)
 			elif event.button_index==MOUSE_BUTTON_WHEEL_DOWN: _zoom(1/1.12)
@@ -759,7 +786,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			touch_positions.erase(event.index)
 			touch_starts.erase(event.index)
 			touch_moved.erase(event.index)
-			if touch_positions.is_empty(): multi_touch=false
+			if touch_positions.is_empty():
+				multi_touch=false
+				_pan_release()
 	elif event is InputEventScreenDrag and touch_positions.has(event.index):
 		if touch_positions.size()>=2:
 			var keys: Array=touch_positions.keys()
@@ -778,10 +807,20 @@ func _unhandled_input(event: InputEvent) -> void:
 			if event.position.distance_to(touch_starts[event.index])>12: touch_moved[event.index]=true
 			if touch_moved[event.index]: _pan_pixels(event.position-previous)
 
+## When Android's Back was last handled (see _notification).
+var _back_at: int=-1000
+
 func _notification(what: int) -> void:
 	if what==NOTIFICATION_APPLICATION_PAUSED and sim!=null and sim.phase=="playing" and not sim.paused:
 		sim.toggle_pause()
-	if what==NOTIFICATION_WM_GO_BACK_REQUEST: _go_back()
+	if what==NOTIFICATION_WM_GO_BACK_REQUEST:
+		# Android delivers one Back press twice (Godot 4.7.2's key handler and the activity's own dispatch, 95 ms
+		# apart): a second request within a fifth of a second is the same press, or the second one would quit
+		# the game from the menu the first one just returned to
+		var now: int=Time.get_ticks_msec()
+		if now-_back_at<200: return
+		_back_at=now
+		_go_back()
 
 ## Android's Back: out of an armed action, back a page in the dossier, otherwise into the pause menu. Only
 ## the briefing before a mission (or the debrief) leaves the app.

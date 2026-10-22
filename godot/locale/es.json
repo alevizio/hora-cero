@@ -951,6 +951,7 @@
   "walking: faster, seen across a whole sight cone": "de pie: más rápido, visible en todo el cono de visión",
   "white snowsuit": "traje de nieve blanco",
   "wire cutters": "cortaalambres",
-  "with %s, in the open": "con %s, al descubierto"
+  "with %s, in the open": "con %s, al descubierto",
+  "The map ends here. Drag the other way, or zoom out to see the whole of it.": "Acá termina el mapa. Arrastrá hacia el otro lado o alejá para verlo entero."
  }
 }

@@ -6,7 +6,7 @@ extends SceneTree
 ## feet ("prowl" with nowhere to go: its legs shuffle round as it turns).
 ## Run (rendered, not headless):
 ##   godot --path godot --rendering-driver opengl3 --script ../tools/dev/turntable.gd -- \
-##     <id> <look|-> <out dir> <frames> [width height view_m centre_y] [enemy 0/1] [kind|-] [state]
+##     <id> <look|-> <out dir> <frames> [width height view_m centre_y] [enemy 0/1] [kind|-] [state] [pitch deg]
 ## e.g. hornero - /tmp/tt/hornero 96          salvo art:juan_salvo /tmp/tt/salvo 96 400 720 2.3 0.98
 ##      c1 art:cascarudo /tmp/tt/cascarudo 96 960 720 4.6 1.7 1 creature prowl
 ## The frames go to <out dir>/f_000.png ... (the first turn settles the model and is not kept).
@@ -28,6 +28,8 @@ func run() -> void:
 	var enemy: bool = args.size() > 8 and args[8] == "1"
 	var kind: String = args[9] if args.size() > 9 and args[9] != "-" else ""
 	var state: String = args[10] if args.size() > 10 else "patrol"
+	## how far the camera looks down (the kit's boots card is taken from above)
+	var pitch: float = deg_to_rad(float(args[11])) if args.size() > 11 else 0.1
 	DirAccess.make_dir_recursive_absolute(out_dir)
 	root.size = Vector2i(width, height)
 	root.transparent_bg = true
@@ -64,8 +66,8 @@ func run() -> void:
 	cam.keep_aspect = Camera3D.KEEP_HEIGHT
 	cam.size = view_m
 	# a little above the middle of the figure, looking a touch down
-	cam.rotation = Vector3(-0.1, 0, 0)
-	cam.position = Vector3(0, centre_y + 10.0 * sin(0.1), 10.0 * cos(0.1))
+	cam.rotation = Vector3(-pitch, 0, 0)
+	cam.position = Vector3(0, centre_y + 10.0 * sin(pitch), 10.0 * cos(pitch))
 	root.add_child(cam)
 	cam.current = true
 	var dt := 1.0 / 24.0
